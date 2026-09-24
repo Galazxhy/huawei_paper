@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2024.1.3)  24 SEP 2026 15:10
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2024.1.3)  24 SEP 2026 15:14
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1114,11 +1114,11 @@ Package fontspec Info: Font family 'SimHei(0)' created for font 'SimHei' with
 
 [1
 
-] (./manuscript.toc)
+] (./manuscript.toc [2])
 \tf@toc=\write5
 \openout5 = `manuscript.toc'.
 
- [2] [3
+ [3] [4
 
 ]
 
@@ -1146,103 +1146,50 @@ Package fontspec Info: Font family 'FangSong(0)' created for font 'FangSong'
 (fontspec)             <->"FangSong/OT:script=hani;language=dflt;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
- [4]
+ [5]
 File: figures/fig4_1_quality_structure.pdf Graphic file (type pdf)
 <use figures/fig4_1_quality_structure.pdf>
- [5] [6]
+ [6] [7]
 File: figures/fig4_2_quality_evidence.pdf Graphic file (type pdf)
 <use figures/fig4_2_quality_evidence.pdf>
- [7]
+ [8]
 Overfull \hbox (0.37376pt too wide) detected at line 372
 [][][]\OML/cmm/m/it/12.045 R[] \OT1/cmr/m/n/12.045 = []  \OML/cmm/m/it/12.045 Q[] \OT1/cmr/m/n/12.045 = [] \OML/cmm/m/it/12.045 v[]H[];  v[] \OT1/cmr/m/n/12.045 = []\OML/cmm/m/it/12.045 :
  []
 
 File: figures/fig4_3_conflict_resolution.pdf Graphic file (type pdf)
 <use figures/fig4_3_conflict_resolution.pdf>
-[8] [9]
+[9] [10]
 File: figures/fig4_4_mixture_mechanism.pdf Graphic file (type pdf)
 <use figures/fig4_4_mixture_mechanism.pdf>
- [10]
+ [11]
 File: figures/fig4_5_transfer_boundary.pdf Graphic file (type pdf)
 <use figures/fig4_5_transfer_boundary.pdf>
- [11]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 565.
- [12]
-
-LaTeX Warning: Reference `eq:classic-scaling-law' on page 13 undefined on input line 603.
-
-
-LaTeX Warning: Reference `eq:loss-normalization' on page 13 undefined on input line 620.
-
-
-LaTeX Warning: Reference `eq:classic-scaling-law' on page 13 undefined on input line 635.
-
-[13]
-
-LaTeX Warning: Reference `eq:inner-linear-ls' on page 14 undefined on input line 672.
-
-[14]
-
-LaTeX Warning: Reference `fig:scaling-compute-pair' on page 15 undefined on input line 699.
-
-
-LaTeX Warning: Reference `fig:scaling-compute-pair' on page 15 undefined on input line 699.
-
+ [12] [13] [14]
 File: figures/traditional_scaling_law_quad_ab.png Graphic file (type bmp)
 <figures/traditional_scaling_law_quad_ab.png>
 File: figures/traditional_scaling_law_loss_vs_steps_law_b.png Graphic file (type bmp)
 <figures/traditional_scaling_law_loss_vs_steps_law_b.png>
-
-LaTeX Warning: Reference `tab:multi-source-validation' on page 15 undefined on input line 720.
-
-
-LaTeX Warning: Reference `fig:validation-extrapolation-pair' on page 15 undefined on input line 720.
-
-
-LaTeX Warning: Reference `fig:validation-extrapolation-pair' on page 15 undefined on input line 741.
-
 File: figures/traditional_scaling_law_validation_a.png Graphic file (type bmp)
 <figures/traditional_scaling_law_validation_a.png>
 File: figures/traditional_scaling_law_extrapolation_a.png Graphic file (type bmp)
 <figures/traditional_scaling_law_extrapolation_a.png>
-[15] [16]
-
-LaTeX Warning: Reference `eq:generalized-composition-response' on page 17 undefined on input line 798.
-
-
-LaTeX Warning: Reference `eq:generalized-composition-response' on page 17 undefined on input line 799.
-
-
-LaTeX Warning: Reference `eq:generalized-scaling-design' on page 17 undefined on input line 800.
-
-[17] (./manuscript.bbl) [18
+ [15] [16] [17] (./manuscript.bbl) [18
 
 ] [19
 
 ] [20
 
 ] (./manuscript.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `manuscript.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `manuscript.out':
-(rerunfilecheck)             Before: 35982E8C3C14655933B616881C414D04;5447
-(rerunfilecheck)             After:  178EC9381FA2E33DEB00D471AB789708;7730.
+Package rerunfilecheck Info: File `manuscript.out' has not changed.
+(rerunfilecheck)             Checksum: A5DF267634094B2B5F1E70C8C20BC024;7248.
  )
 (\end occurred when \iftrue on line 69 was incomplete) 
 Here is how much of TeX's memory you used:
- 26857 strings out of 476683
- 603579 string characters out of 5802725
+ 26850 strings out of 476683
+ 603444 string characters out of 5802725
  1898012 words of memory out of 5000000
- 46591 multiletter control sequences out of 15000+600000
+ 46584 multiletter control sequences out of 15000+600000
  530606 words of font info for 184 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  103i,15n,133p,474b,849s stack positions out of 10000i,1000n,20000p,200000b,200000s
