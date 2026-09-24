@@ -3,11 +3,26 @@
 \contentsline {subsection}{\numberline {1\hskip 0.05em\relax .\hskip 0.05em\relax 2}问题的提出}{3}{subsection.1.2}%
 \contentsline {section}{\numberline {2}模型的假设}{4}{section.2}%
 \contentsline {section}{\numberline {3}符号说明}{4}{section.3}%
-\contentsline {section}{\numberline {4}模型的建立}{4}{section.4}%
+\contentsline {section}{\numberline {4}问题一}{4}{section.4}%
 \contentsline {subsection}{\numberline {4\hskip 0.05em\relax .\hskip 0.05em\relax 1}问题一分析}{4}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4\hskip 0.05em\relax .\hskip 0.05em\relax 2}算法示例}{4}{subsection.4.2}%
-\contentsline {section}{附录 \numberline {A}MATLAB 源程序}{6}{appendix.1.A}%
-\contentsline {subsection}{\numberline {A\hskip 0.05em\relax .\hskip 0.05em\relax 1}第1问程序}{6}{subsection.1.A.1}%
-\contentsline {section}{附录 \numberline {B}Python 源程序}{7}{appendix.1.B}%
-\contentsline {subsection}{\numberline {B\hskip 0.05em\relax .\hskip 0.05em\relax 1}第2问程序}{7}{subsection.1.B.1}%
+\contentsline {section}{\numberline {5}问题二}{4}{section.5}%
+\contentsline {subsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 1}问题二的分析}{4}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 2}问题二的模型建立}{5}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 2\hskip 0.05em\relax .\hskip 0.05em\relax 1}经典标度律的参数辨识模型建立与验证}{5}{subsubsection.5.2.1}%
+\contentsline {paragraph}{损失尺度归一化}{5}{paragraph*.4}%
+\contentsline {paragraph}{可分离非线性最小二乘法}{6}{paragraph*.5}%
+\contentsline {paragraph}{自适应结构早停}{6}{paragraph*.6}%
+\contentsline {paragraph}{经典标度律的拟合、验证与外推}{7}{paragraph*.7}%
+\contentsline {subsubsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 2\hskip 0.05em\relax .\hskip 0.05em\relax 2}经典标度律的外推与广义标度律的设计}{7}{subsubsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 2\hskip 0.05em\relax .\hskip 0.05em\relax 3}广义标度律的估计模型建立}{9}{subsubsection.5.2.3}%
+\contentsline {subsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 3}问题二的结果}{9}{subsection.5.3}%
+\contentsline {subsubsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 3\hskip 0.05em\relax .\hskip 0.05em\relax 1}广义标度律各因素边际效用与弹性分析}{9}{subsubsection.5.3.1}%
+\contentsline {subsubsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 3\hskip 0.05em\relax .\hskip 0.05em\relax 2}广义标度律下领域数据间关系分析}{9}{subsubsection.5.3.2}%
+\contentsline {subsubsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 3\hskip 0.05em\relax .\hskip 0.05em\relax 3}广义标度律指导下的大模型训练方案选择与验证}{9}{subsubsection.5.3.3}%
+\contentsline {section}{参考文献}{10}{section*.11}%
+\contentsline {section}{附录 \numberline {A}MATLAB 源程序}{11}{appendix.1.A}%
+\contentsline {subsection}{\numberline {A\hskip 0.05em\relax .\hskip 0.05em\relax 1}第1问程序}{11}{subsection.1.A.1}%
+\contentsline {section}{附录 \numberline {B}Python 源程序}{12}{appendix.1.B}%
+\contentsline {subsection}{\numberline {B\hskip 0.05em\relax .\hskip 0.05em\relax 1}第2问程序}{12}{subsection.1.B.1}%
 \contentsfinish 

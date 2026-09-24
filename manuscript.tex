@@ -13,7 +13,8 @@
 %\setmonofont{Consolas}
 %\setcounter{tocdepth}{3}   % 调整目录深度
 
-\usepackage{subfig}
+\usepackage{subcaption}
+\usepackage{amsmath}
 \usepackage{siunitx}
 
 \usepackage{colortbl}
@@ -121,7 +122,7 @@
 %\end{tabularx}
 
 
-\section{模型的建立}
+\section{问题一}
 
 \subsection{问题一分析}
 题目要求建立模型描述折叠桌的动态变化图，由于在折叠时用力大小的不同，我们不能描述在某一时刻折叠桌的具体形态，但我们可以用每根木条的角度变化来描述折叠桌的动态变化。首先，我们知道折叠桌前后左右对称，我们可以运用几何知识求出四分之一木条的角度变化。最后，根据初始时刻和最终形态两种状态求出桌腿木条开槽的长度
@@ -145,6 +146,242 @@
     \end{minipage}
 \end{center}
 \vspace{2ex}
+
+\section{问题二}
+
+\subsection{问题二的分析}
+
+经典标度律通常将训练 Token 视为同质资源，重点描述参数规模和数据规模对模型损失的影响。然而，随着高质量语料逐渐稀缺，不同数据在信息密度、噪声水平、知识覆盖和任务相关性方面呈现出显著差异，单纯增加参数量或训练 Token 数已不足以准确解释模型能力的增长规律。如果忽略这种数据异质性，模型不仅会高估低质量数据的边际价值，还会掩盖领域结构失衡造成的性能瓶颈，从而难以回答数据质量提升、领域配比调整与模型规模扩张之间能否相互替代这一关键问题。因此，将数据质量和领域配比纳入标度律，是从“规模驱动”转向“规模与数据价值协同驱动”的必要拓展，也是实现有限算力下精细化资源配置的理论基础。
+
+数据结构决定了这一拓展不能简单地用一个质量系数修正训练 Token 数。设训练数据来自 $m$ 个领域，配比 $\boldsymbol p$ 满足 $p_i\geq0$ 与 $\sum_{i=1}^{m}p_i=1$，任一来源份额的增加必然挤占其他来源；质量评分 $Q_i$ 则由数据分级给定，在现有配比实验中对每个来源保持固定。若把完整配比压缩为平均质量 $\sum_i p_iQ_i$ 或单一有效数据量，质量等级相同但知识内容不同的来源将无法区分，跨评估目标的差异化响应也会被掩盖。同时，固定的 $Q_i$ 与来源身份交织，不能仅凭这些实验识别独立提高质量的效应。可观测的模型--数据规模组合较少，不同体系的原始损失又存在尺度偏移，因此盲目增加交互项或直接混合损失均会削弱参数的可辨识性。
+
+基于上述约束，本文采用“经典规模基线---组成响应---独立质量校准”的分层建模框架。首先，对多来源损失进行尺度归一化，利用自适应结构早停识别稳健的经典标度指数；随后针对任意评估目标，在规模基线上叠加配比响应项，以质量加权份额 $p_iQ_i$ 表示分级质量与投入的联合暴露，以中心化对数比特征刻画单纯形上的相对组成，并允许响应幅度随 $N$、$D$ 变化。该设计保留了经典标度律对规模收益递减的解释，同时允许相同质量等级的不同来源产生不同的损失变化。受规模锚点数量限制，扩展模型沿用前述经典指数，而不从配比实验中重新辨识所有规模参数。
+
+
+\subsection{问题二的模型建立}
+
+\subsubsection{经典标度律的参数辨识模型建立与验证}
+
+为刻画模型规模、训练数据量与验证损失之间的基本数量关系，本文采用经典标度律
+\begin{equation}
+    L(N,D)=E+A N^{-\alpha}+B D^{-\beta},
+    \label{eq:classic-scaling-law}
+\end{equation}
+其中，$N$ 表示模型参数量，$D$ 表示训练 Token 数，$L$ 表示验证集交叉熵损失；$E$ 是规模趋于充分时仍无法消除的不可约损失，$A$ 与 $B$ 分别控制参数规模项和数据规模项的幅度，$\alpha$ 与 $\beta$ 则刻画两类资源的边际收益衰减速度。为保证模型具有明确的物理含义，估计过程中施加
+\begin{equation}
+    0\leq E<\min_i L_i,\qquad
+    A>0,\quad B>0,\quad \alpha>0,\quad \beta>0
+\end{equation}
+等约束。由式~\eqref{eq:classic-scaling-law}可知，随着 $N$ 或 $D$ 增大，预测损失单调下降，但改善幅度逐渐减小，因而能够自然描述大模型训练中的收益递减现象。
+
+\paragraph{损失尺度归一化}
+
+不同模型体系可能采用不同的分词器、验证语料和损失统计口径，即使其学习曲线具有相似形状，原始 Loss 的位置和尺度也可能存在系统差异。若直接比较原始损失，模型族之间的整体平移或缩放会被误判为标度结构失效。为此，本文将主拟合来源的 Loss 定义为参考尺度，并假设第 $j$ 个外部来源的观测损失满足仿射观测关系
+\begin{equation}
+    L_{ji}^{\mathrm{obs}}
+    =a_j+b_j L_{ji}^{\mathrm{ref}}+\varepsilon_{ji},
+    \qquad b_j>0,
+    \label{eq:loss-affine-map}
+\end{equation}
+其中，$a_j$ 描述损失基线差异，$b_j$ 描述损失单位或动态范围差异，$\varepsilon_{ji}$ 为无法由统一尺度解释的结构残差。相应地，将外部观测映射到参考尺度：
+\begin{equation}
+    \widetilde L_{ji}
+    =\frac{L_{ji}^{\mathrm{obs}}-a_j}{b_j}.
+    \label{eq:loss-normalization}
+\end{equation}
+主拟合来源取 $a_0=0$、$b_0=1$，因此其训练过程保持在原始可解释的 Loss 尺度上；其他来源经式~\eqref{eq:loss-normalization}归一化后再参与验证与结构选择。
+
+为防止利用同一批验证标签完成校准后又在原样本上评价，本文采用按训练轨迹或模型族分簇的交叉归一化。对于待评价簇 $c$，仅使用其余簇估计
+\begin{equation}
+    (\widehat a_j^{(-c)},\widehat b_j^{(-c)})
+    =\arg\min_{a\in\mathbb R,\,b>0}
+    \sum_{i:\,g(i)\neq c}
+    \left[L_{ji}^{\mathrm{obs}}-
+        \left(a+b\widehat L_{ji}^{\mathrm{ref}}\right)\right]^2,
+    \label{eq:cross-fitted-normalization}
+\end{equation}
+再使用 $\widehat a_j^{(-c)}$ 和 $\widehat b_j^{(-c)}$ 归一化留出簇。该处理只消除来源间的仿射尺度差异，不改变留出轨迹的排序、曲率和局部偏差，因而归一化后的剩余误差仍能反映标度规律的跨体系可迁移性。为保持评价透明性，本文同时保留未经校准的原始尺度误差，并将其解释为“结构误差与观测尺度偏移”的合成结果。
+
+\paragraph{可分离非线性最小二乘法}
+
+式~\eqref{eq:classic-scaling-law}对五个参数整体而言是非线性模型，但当指数 $(\alpha,\beta)$ 给定后，$E$、$A$ 和 $B$ 构成线性参数。令
+\begin{equation}
+    \boldsymbol y=(L_1,\ldots,L_n)^{\mathsf T},\qquad
+    \boldsymbol\theta=(E,A,B)^{\mathsf T},
+\end{equation}
+并构建设计矩阵
+\begin{equation}
+    \boldsymbol X(\alpha,\beta)=
+    \begin{bmatrix}
+        1      & N_1^{-\alpha} & D_1^{-\beta} \\
+        1      & N_2^{-\alpha} & D_2^{-\beta} \\
+        \vdots & \vdots        & \vdots       \\
+        1      & N_n^{-\alpha} & D_n^{-\beta}
+    \end{bmatrix}.
+\end{equation}
+于是，在任意候选指数对下，内层问题可写为带物理约束的线性最小二乘
+\begin{equation}
+    \widehat{\boldsymbol\theta}(\alpha,\beta)
+    =\arg\min_{\boldsymbol\theta}
+    \left\|\boldsymbol y-
+    \boldsymbol X(\alpha,\beta)\boldsymbol\theta\right\|_2^2.
+    \label{eq:inner-linear-ls}
+\end{equation}
+将内层解析解代回后，原问题被压缩为仅关于两个指数的轮廓残差平方和
+\begin{equation}
+    S(\alpha,\beta)
+    =\left\|\boldsymbol y-
+    \boldsymbol X(\alpha,\beta)
+    \widehat{\boldsymbol\theta}(\alpha,\beta)\right\|_2^2.
+    \label{eq:profile-sse}
+\end{equation}
+本文先在指数区间内设置等距节点进行粗网格搜索，再以当前最优点为中心实施局部模式搜索，并逐次将搜索步长减半，直至步长小于 $10^{-7}$。
+相较于同时对五个参数进行无结构的非线性优化，该可分离非线性最小二乘方法将高维耦合问题转化为“外层低维指数搜索+内层线性求解”，既降低了初值敏感性，也便于在每个指数候选点严格检查参数正性和不可约损失边界。
+
+\paragraph{自适应结构早停}
+
+指数自由度越高，越容易把数据噪声读作真实的标度结构差异，因此本文按由简到繁、以外部验证收益为准的顺序逐层释放指数自由度。
+第一层令 $\alpha=\beta=s$，对共享指数 $s$ 进行一维搜索；第二层以第一层最优值 $s^{\ast}$ 为锚点，分别考察“固定 $\beta=s^{\ast}$、释放 $\alpha$”和“固定 $\alpha=s^{\ast}$、释放 $\beta$”两个并列候选；只有当单方向释放产生稳定的外部收益时，第三层才进入 $(\alpha,\beta)$ 均自由的二维搜索。每个候选指数点仍由式~\eqref{eq:inner-linear-ls}估计 $E$、$A$ 和 $B$，因此该过程并未引入新的标度律项，而是在同一标准模型内部逐步增加指数自由度。
+
+不同来源的可信度、判别难度与统计稳定性并不相同，因此本文不预先固定其权重。记 $r_j$ 为可信度先验，$d_j$ 为基准模型在该来源上的验证难度，$\sigma_j$ 为按轨迹或模型族分簇 Bootstrap 得到的分数标准差，则定义稳定性因子和原始权重
+\begin{equation}
+    s_j=\frac{1}{1+\sigma_j/d_j},
+    \qquad
+    u_j=r_j d_j^{\eta}s_j,
+\end{equation}
+并在给定上下限后将 $u_j$ 归一化为 $w_j$。较困难但稳定、且证据可靠的来源因而获得较高权重；高度相关、半合成或波动较大的来源则不会主导结构选择。权重在比较候选结构之前一次确定并冻结，以避免针对某个候选模型事后调整评价标准。
+
+候选结构的最终选择分数定义为
+\begin{equation}
+    J_m=\sum_j w_j \operatorname{MedAPE}_{jm}
+    +\lambda\max(0,k_m),
+    \label{eq:early-stopping-score}
+\end{equation}
+其中，$\operatorname{MedAPE}$ 衡量归一化后的相对预测偏差, $k_m$ 为有效自由参数数目，第二项用于要求新增指数自由度给出足以抵消复杂度增长的外部收益。候选结构首先需要满足主拟合样本上的最低拟合门槛。随后，只有当$ J_m<J_{\mathrm{best}}-\delta $时，才将其视为实质改善并更新历史最优结构。
+
+\paragraph{经典标度律的拟合、验证与外推}
+
+自适应结构早停最终保留参数项与数据项共享指数的简约结构，得到
+\begin{equation}
+    \widehat L(N,D)
+    =1.654679+0.425107N^{-0.293183}
+    +1.205248D^{-0.293183},
+    \label{eq:fitted-classic-scaling-law}
+\end{equation}
+其决定系数为 $0.99938498$，RMSE 为 $0.00848302$。释放参数规模指数仅使选模分数改善 $0.000159$，低于阈值 $\delta=0.002$，因此不增加指数自由度。图~\ref{fig:scaling-compute-pair}(a)表明，增加训练数据量或模型参数量均可降低损失，但边际收益持续递减。将资源投入统一换算为 $C=6ND$ 后，各规模训练轨迹呈现相近的下降趋势；图~\ref{fig:scaling-compute-pair}(b)中的经验下沿包络近似满足 $L=2.2C^{-0.0665}$，刻画了既定计算预算下可达到的效率前沿。
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/traditional_scaling_law_quad_ab.png}
+        \caption{}
+        \label{fig:classic-scaling-components}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/traditional_scaling_law_loss_vs_steps_law_b.png}
+        \caption{}
+        \label{fig:compute-loss}
+    \end{subfigure}
+    \caption{经典标度律的资源标度与计算效率：(a) 参数规模、数据规模与验证损失的标度关系；(b) 不同参数规模下计算量与验证损失的关系，虚线为经验下沿包络。}
+    \label{fig:scaling-compute-pair}
+\end{figure}
+
+为检验跨来源迁移能力，本文提取独立训练轨迹的最终收敛点，并采用留一轨迹或留一模型族的仿射尺度校准。表~\ref{tab:multi-source-validation}与图~\ref{fig:validation-extrapolation-pair}(a)显示，归一化后的四类数据均保持较高秩相关性。
+公开文献观测的误差相对较高，但考虑数据质量、网络结构与训练策略造成的差异，仍在标准标度律的描述范围内。
+
+\begin{table}[htbp]
+    \centering
+    \caption{经典标度律的多来源样本外验证结果}
+    \label{tab:multi-source-validation}
+    \small
+    \resizebox{\textwidth}{!}{%
+        \begin{tabular}{lrrrrr}
+            \toprule
+            验证来源      & 样本数  & 原始 RMSE  & 归一化 RMSE & 中位相对误差 & Spearman 系数 \\
+            \midrule
+            独立模型族收敛终点 & 7    & 0.855373 & 0.014636 & 0.70\% & 1.0000      \\
+            连续插值训练轨迹  & 4000 & 0.011422 & 0.011445 & 0.28\% & 0.9998      \\
+            跨模型族实验    & 57   & 0.289767 & 0.088138 & 1.57\% & 0.9758      \\
+            公开文献实验观测  & 44   & 0.191785 & 0.127853 & 5.24\% & 0.9280      \\
+            \bottomrule
+        \end{tabular}}
+\end{table}
+
+图~\ref{fig:validation-extrapolation-pair}(b)进一步给出百亿参数以上的情景外推。经典标度律在固定数据规模下预测损失随参数量缓慢下降，而大模型样本的离散程度明显更高，表明超大规模区间还受到数据质量与训练配置的显著影响。因此，该图用于界定外推趋势和风险，不作为新的外部验证证据，并为后续引入质量变量与领域配比提供依据。
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/traditional_scaling_law_validation_a.png}
+        \caption{}
+        \label{fig:multi-source-validation}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/traditional_scaling_law_extrapolation_a.png}
+        \caption{}
+        \label{fig:large-model-extrapolation}
+    \end{subfigure}
+    \caption{经典标度律的跨来源验证与大模型外推：(a) 损失尺度归一化后的多来源预测一致性，虚线为理想预测，阴影区域表示相对误差不超过 $10\%$；(b) 百亿参数以上模型区间的标度律外推，曲线按中位训练数据量计算。}
+    \label{fig:validation-extrapolation-pair}
+\end{figure}
+
+\subsubsection{经典标度律的外推与广义标度律的设计}
+
+经典标度律揭示了参数规模与训练数据量的损失衰减规律，但其同质 Token 假设无法区分训练语料的质量和来源组成。为分析这一缺口，首先考察实验的可辨识结构，在模型规模与训练 Token 数均固定的条件下，存在数百种不同的语料配比，因而经典标度律对这些实验给出同一预测基线，却无法解释其损失差异。另有 $256$ 组配比在两个模型规模下逐一对应，可比较规模改变后配比响应的形状与幅度。这说明需要在规模基线之外单独建立组成响应，而非仅用总 Token 数代表全部训练数据。与此同时，观测实验仅提供三个不同的 $(N,D)$ 规模锚点，其中较大模型的 $N$ 与 $D$ 同时变化；若连同组成效应重新估计全部规模指数，将产生明显的参数混淆。因此沿用前文估计的 $\alpha$、$\beta$，将新增参数集中用于刻画组成效应及其跨规模变化。
+
+其次，训练配比属于单纯形，提高某一来源的份额必然压缩其他来源，故各 $p_i$ 不是相互独立的投入量。仅以平均质量 $\sum_i p_iQ_i$ 概括语料，会把质量相近但知识内容不同的来源混为一谈。只用原始份额又难以直接表达来源之间的相对替代。基于这一约束，采用质量加权份额 $p_iQ_i$ 记录各来源的有效投入，并以中心化对数比刻画相对组成。但现有质量评分对每个来源固定，$p_iQ_i$ 与 $p_i$ 在统计上不能区分独立的质量改善效应，因此这一项只表示给定质量分级下的组成暴露，不能作质量因果效应解释。
+
+最后，逐行配对的跨规模配比为检验“响应形状相对稳定、作用幅度随规模改变”的可分离假设提供了依据。用规模幂函数调节组成响应的幅度，既与经典标度律的形式协调，也避免为每个规模重新拟合一套配比函数；以参考规模归一化该幅度，并将组成响应在参考样本上中心化，可减少其与损失截距之间的混淆。由于配比维度随来源数增长，估计时还须施加正则化以控制方差。设训练语料包含任意 $m$ 个来源，$\boldsymbol p=(p_1,\ldots,p_m)$ 满足 $p_i\geq0$、$\sum_i p_i=1$，$\boldsymbol Q=(Q_1,\ldots,Q_m)$ 为相应质量属性。对于任意给定的评估目标，由此提出统一的函数结构
+\begin{equation}
+    \begin{aligned}
+        L(N,D,\boldsymbol p,\boldsymbol Q)
+        ={} & E+A N^{-\alpha}
+        +B D^{-\beta}
+        +\left(\frac{N}{N_{0}}\right)^{-\eta}
+        \left(\frac{D}{D_{0}}\right)^{-\zeta}
+        \phi(\boldsymbol Q,\boldsymbol p),
+    \end{aligned}
+    \label{eq:generalized-scaling-design}
+\end{equation}
+其中$(N_{0},D_{0})$ 为参考规模。$E$、$A$ 和 $B$ 决定损失基线，$\alpha$、$\beta$ 为规模指数，$\eta$、$\zeta$ 刻画组成响应随规模变化的程度。两个规模比值在参考规模均为 $1$，故 $\phi$ 直接表示该规模下的损失修正。为避免平均质量 $\sum_i p_iQ_i$ 抹去同等级、不同知识来源之间的差别，将组成响应展开为
+\begin{equation}
+    \begin{aligned}
+        \phi(\boldsymbol Q,\boldsymbol p)
+        ={} & \sum_{i=1}^{m}w_i
+        (p_iQ_i-\bar m_i) +\sum_{i=1}^{m}w_{\mathrm{clr},i}
+        \bigl(\operatorname{clr}_{\varepsilon}(\boldsymbol p)_i
+        -\bar m_{\mathrm{clr},i}\bigr).
+    \end{aligned}
+    \label{eq:generalized-composition-response}
+\end{equation}
+这里 $w_i$ 与 $w_{\mathrm{clr},i}$ 分别为质量加权份额和相对配比的有效权重；$\bar m_i$、$\bar m_{\mathrm{clr},i}$ 是对应特征在参考规模拟合样本上的均值，使 $\phi$ 在该样本上均值为零。其中，中心化对数比定义为
+\begin{equation}
+    \operatorname{clr}_{\varepsilon}(\boldsymbol p)_i
+    =\log(p_i+\varepsilon)
+    -\frac{1}{m}\sum_{j=1}^{m}\log(p_j+\varepsilon).
+    \label{eq:generalized-clr-definition}
+\end{equation}
+式~\eqref{eq:generalized-composition-response}中的 $p_iQ_i$ 记录质量加权的来源投入，中心化对数比反映单纯形上的相对结构，$\varepsilon>0$ 用于处理零占比。
+拟合时对这两组特征进行标准化与正则化，并将所得系数换算为式~\eqref{eq:generalized-composition-response}中的有效权重。
+不同评估目标均采用式~\eqref{eq:generalized-scaling-design}的函数结构，但 $E$、$A$、$B$、$\eta$、$\zeta$ 及组成权重分别估计。
+
+\subsubsection{广义标度律的估计模型建立}
+
+\subsection{问题二的结果}
+
+\subsubsection{广义标度律各因素边际效用与弹性分析}
+
+\subsubsection{广义标度律下领域数据间关系分析}
+
+\subsubsection{广义标度律指导下的大模型训练方案选择与验证}
+
+
 
 \clearpage
 
@@ -239,7 +476,6 @@
     \end{Python}
 
 \end{appendices}
-
 
 
 \end{document}

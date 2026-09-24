@@ -503,13 +503,17 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 	{1.25ex\@plus -1ex \@minus -.2ex}%
 	{1.2ex \@plus .2ex}%
 	{\normalfont\normalsize\bfseries}}
+% 注意: 本模板基于 ctexart, 而 ctex 重写了 \@xsect: 在 run-in(段内标题)分支中
+% 用 \CTEX@heading@glue 原样插入 after-skip 作为水平间距, 不像标准 LaTeX 那样取相反数。
+% 因此此处必须写正值(1em); 若沿用 LaTeX 原始的 -1em, 会得到 \hskip -1em,
+% 导致段落标题与后续正文重叠 1em。ctex 下 paragraph/subparagraph 默认 runin=true。
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
 	{3.25ex \@plus1ex \@minus.2ex}%
-	{-1em}%
+	{1em}%
 	{\normalfont\normalsize\bfseries}}
 \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
 	 {3.25ex \@plus1ex \@minus .2ex}%
-	 {-1em}%
+	 {1em}%
 	 {\normalfont\normalsize\bfseries}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,6 +1,17 @@
 \relax 
 \providecommand\zref@newlabel[2]{}
 \providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
 \providecommand*\HyPL@Entry[1]{}
 \HyPL@Entry{0<</S/D>>}
 \HyPL@Entry{1<</S/D>>}
@@ -9,16 +20,61 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {1\hskip 0.05em\relax .\hskip 0.05em\relax 2}问题的提出}{3}{subsection.1.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {2}模型的假设}{4}{section.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3}符号说明}{4}{section.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}模型的建立}{4}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}问题一}{4}{section.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4\hskip 0.05em\relax .\hskip 0.05em\relax 1}问题一分析}{4}{subsection.4.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4\hskip 0.05em\relax .\hskip 0.05em\relax 2}算法示例}{4}{subsection.4.2}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces 算法的名字}}{4}{algorithm.1}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces 算法的名字\relax }}{4}{algorithm.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}问题二}{4}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 1}问题二的分析}{4}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 2}问题二的模型建立}{5}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 2\hskip 0.05em\relax .\hskip 0.05em\relax 1}经典标度律的参数辨识模型建立与验证}{5}{subsubsection.5.2.1}\protected@file@percent }
+\newlabel{eq:classic-scaling-law}{{5.1}{5}{经典标度律的参数辨识模型建立与验证}{equation.5.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{损失尺度归一化}{5}{paragraph*.4}\protected@file@percent }
+\newlabel{eq:loss-affine-map}{{5.3}{5}{损失尺度归一化}{equation.5.3}{}}
+\newlabel{eq:loss-normalization}{{5.4}{5}{损失尺度归一化}{equation.5.4}{}}
+\newlabel{eq:cross-fitted-normalization}{{5.5}{5}{损失尺度归一化}{equation.5.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{可分离非线性最小二乘法}{6}{paragraph*.5}\protected@file@percent }
+\newlabel{eq:inner-linear-ls}{{5.8}{6}{可分离非线性最小二乘法}{equation.5.8}{}}
+\newlabel{eq:profile-sse}{{5.9}{6}{可分离非线性最小二乘法}{equation.5.9}{}}
+\@writefile{toc}{\contentsline {paragraph}{自适应结构早停}{6}{paragraph*.6}\protected@file@percent }
+\newlabel{eq:early-stopping-score}{{5.11}{6}{自适应结构早停}{equation.5.11}{}}
+\@writefile{toc}{\contentsline {paragraph}{经典标度律的拟合、验证与外推}{7}{paragraph*.7}\protected@file@percent }
+\newlabel{eq:fitted-classic-scaling-law}{{5.12}{7}{经典标度律的拟合、验证与外推}{equation.5.12}{}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:classic-scaling-components}{{5.1a}{7}{\relax }{figure.caption.8}{}}
+\newlabel{sub@fig:classic-scaling-components}{{a}{7}{\relax }{figure.caption.8}{}}
+\newlabel{fig:compute-loss}{{5.1b}{7}{\relax }{figure.caption.8}{}}
+\newlabel{sub@fig:compute-loss}{{b}{7}{\relax }{figure.caption.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces 经典标度律的资源标度与计算效率：(a) 参数规模、数据规模与验证损失的标度关系；(b) 不同参数规模下计算量与验证损失的关系，虚线为经验下沿包络。\relax }}{7}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:scaling-compute-pair}{{5.1}{7}{经典标度律的资源标度与计算效率：(a) 参数规模、数据规模与验证损失的标度关系；(b) 不同参数规模下计算量与验证损失的关系，虚线为经验下沿包络。\relax }{figure.caption.8}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces 经典标度律的多来源样本外验证结果\relax }}{7}{table.caption.9}\protected@file@percent }
+\newlabel{tab:multi-source-validation}{{5.1}{7}{经典标度律的多来源样本外验证结果\relax }{table.caption.9}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 2\hskip 0.05em\relax .\hskip 0.05em\relax 2}经典标度律的外推与广义标度律的设计}{7}{subsubsection.5.2.2}\protected@file@percent }
+\newlabel{fig:multi-source-validation}{{5.2a}{8}{\relax }{figure.caption.10}{}}
+\newlabel{sub@fig:multi-source-validation}{{a}{8}{\relax }{figure.caption.10}{}}
+\newlabel{fig:large-model-extrapolation}{{5.2b}{8}{\relax }{figure.caption.10}{}}
+\newlabel{sub@fig:large-model-extrapolation}{{b}{8}{\relax }{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces 经典标度律的跨来源验证与大模型外推：(a) 损失尺度归一化后的多来源预测一致性，虚线为理想预测，阴影区域表示相对误差不超过 $10\%$；(b) 百亿参数以上模型区间的标度律外推，曲线按中位训练数据量计算。\relax }}{8}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:validation-extrapolation-pair}{{5.2}{8}{经典标度律的跨来源验证与大模型外推：(a) 损失尺度归一化后的多来源预测一致性，虚线为理想预测，阴影区域表示相对误差不超过 $10\%$；(b) 百亿参数以上模型区间的标度律外推，曲线按中位训练数据量计算。\relax }{figure.caption.10}{}}
+\newlabel{eq:generalized-scaling-design}{{5.13}{8}{经典标度律的外推与广义标度律的设计}{equation.5.13}{}}
+\newlabel{eq:generalized-composition-response}{{5.14}{8}{经典标度律的外推与广义标度律的设计}{equation.5.14}{}}
+\newlabel{eq:generalized-clr-definition}{{5.15}{9}{经典标度律的外推与广义标度律的设计}{equation.5.15}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 2\hskip 0.05em\relax .\hskip 0.05em\relax 3}广义标度律的估计模型建立}{9}{subsubsection.5.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 3}问题二的结果}{9}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 3\hskip 0.05em\relax .\hskip 0.05em\relax 1}广义标度律各因素边际效用与弹性分析}{9}{subsubsection.5.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 3\hskip 0.05em\relax .\hskip 0.05em\relax 2}广义标度律下领域数据间关系分析}{9}{subsubsection.5.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5\hskip 0.05em\relax .\hskip 0.05em\relax 3\hskip 0.05em\relax .\hskip 0.05em\relax 3}广义标度律指导下的大模型训练方案选择与验证}{9}{subsubsection.5.3.3}\protected@file@percent }
 \citation{mittelbach_latex_2004,wright_latex3_2009,beeton_unicode_2008,vieth_experiences_2009}
 \bibstyle{gmcm}
 \bibdata{reference}
-\@writefile{toc}{\contentsline {section}{附录 \numberline {A}MATLAB 源程序}{6}{appendix.1.A}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A\hskip 0.05em\relax .\hskip 0.05em\relax 1}第1问程序}{6}{subsection.1.A.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{附录 \numberline {B}Python 源程序}{7}{appendix.1.B}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B\hskip 0.05em\relax .\hskip 0.05em\relax 1}第2问程序}{7}{subsection.1.B.1}\protected@file@percent }
+\bibcite{mittelbach_latex_2004}{{1}{2004}{{Mittelbach et~al.}}{{Mittelbach, Goossens, Braams, Carlisle, and Rowley}}}
+\bibcite{wright_latex3_2009}{{2}{2009}{{Wright}}{{}}}
+\bibcite{beeton_unicode_2008}{{3}{2008}{{Beeton et~al.}}{{Beeton, Freytag, and Sargent~III}}}
+\bibcite{vieth_experiences_2009}{{4}{2009}{{Vieth}}{{}}}
+\@writefile{toc}{\contentsline {section}{参考文献}{10}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{附录 \numberline {A}MATLAB 源程序}{11}{appendix.1.A}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A\hskip 0.05em\relax .\hskip 0.05em\relax 1}第1问程序}{11}{subsection.1.A.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{附录 \numberline {B}Python 源程序}{12}{appendix.1.B}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B\hskip 0.05em\relax .\hskip 0.05em\relax 1}第2问程序}{12}{subsection.1.B.1}\protected@file@percent }
 \ttl@finishall
-\gdef \@abspage@last{8}
+\gdef \@abspage@last{13}
