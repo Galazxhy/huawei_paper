@@ -12,6 +12,7 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{tabularx}
+\usepackage{longtable}
 \usepackage{array}
 \usepackage{multirow}
 \usepackage{caption}
@@ -101,34 +102,59 @@
 \end{enumerate}
 
 \subsection{符号说明}
-\begin{table}[htbp]
-    \TableSetup
-    \caption{主要符号说明}
-    \renewcommand{\tabularxcolumn}[1]{m{#1}}
-    \begin{tabularx}{0.94\textwidth}{@{}C{2.9cm}Y@{}}
+{\small
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.08}
+    \setlength{\LTleft}{0pt}
+    \setlength{\LTright}{0pt}
+    \captionof{table}{主要符号说明}\label{tab:notation}
+    \begin{longtable}{@{}C{2.7cm}P{8.3cm}C{2.1cm}@{}}
         \toprule
-        符号                                    & 含义                            \\
+        符号                                            & 含义                                                 & 使用章节  \\
         \midrule
-        $x_{ij}$                              & 样本 $i$ 在第 $j$ 项质量信号上的原始取值     \\
-        $s_{ij}$                              & 指标方向统一后的质量表示，$s_{ij}\in[0,1]$ \\
-        $F_j^{\mathrm{bal}}$                  & 第 $j$ 项信号的域均衡经验分布             \\
-        $\mathcal{P},\mathcal{N},\mathcal{M}$ & 正向、负向与中心适宜指标集合                \\
-        $G_k$、$a_{jk}$                        & 第 $k$ 个信息簇及其簇内指标权重            \\
-        $K$                                   & 信息簇个数，取 $K=9$                 \\
-        $\eta_j$                              & 第 $j$ 项信号的领域间方差占比             \\
-        $Q_i^{(0)}$                           & 样本 $i$ 的初始质量分数                \\
-        $r_{ij}$、$I_{ij}$                     & 标准化异常度与冲突指示变量                 \\
-        $C_i$                                 & 样本 $i$ 的冲突度                   \\
-        $R_{ij}$、$U_i$                        & 证据可靠度与信息簇平均可靠度                \\
-        $Q_i^{*}$                             & 冲突校正后的质量分数                    \\
-        $p_i$                                 & 第 $i$ 个训练域在配方中的份额             \\
-        $z_{mk}$、$\phi(\mathbf{p})$           & 标准化验证损失与总体配比表现                \\
-        $S_{i\leftarrow j}$                   & 份额由领域 $j$ 转向领域 $i$ 的边际替换效应    \\
-        $C_{ij}^{\mathrm{mix}}$               & 领域 $i$ 与 $j$ 的互补指数            \\
-        $\rho_s$                              & Spearman 等级相关系数               \\
+        \endfirsthead
+        \multicolumn{3}{r}{表~\ref{tab:notation}（续）}                                                                \\
+        \toprule
+        符号                                            & 含义                                                 & 使用章节  \\
+        \midrule
+        \endhead
         \bottomrule
-    \end{tabularx}
-\end{table}
+        \endlastfoot                                                                                               \\
+        $L_{mk},L$                                    & 配方 $m$ 在评估目标 $k$ 上的验证损失；$L$ 为给定目标时的简写              & 第4、5节 \\
+        $\mathbf p,p_i$                               & 训练来源配比向量及来源 $i$ 的份额，$\sum_i p_i=1$                 & 第4、5节 \\
+        $\mathbf Q^{(17)}$                            & 问题一由校正质量映射得到的 17 域来源质量向量                           & 第4、5节 \\
+        \midrule
+        $x_{ij},s_{ij}$                               & 样本 $i$ 的第 $j$ 项原始质量信号及方向统一后的表示                     & 第4节   \\
+        $F_j^{\mathrm{bal}}$                          & 第 $j$ 项质量信号的域均衡经验分布                                & 第4节   \\
+        $\mathcal P,\mathcal N,\mathcal M$            & 正向、负向与中心适宜指标集合                                     & 第4节   \\
+        $G_k,a_{jk},K$                                & 信息簇、簇内指标权重及信息簇个数（$K=9$）                            & 第4节   \\
+        $\eta_j$                                      & 第 $j$ 项信号的领域间方差占比                                  & 第4节   \\
+        $Q_i^{(0)},Q_i^*$                             & 样本 $i$ 的初始质量分数与冲突校正质量分数                            & 第4节   \\
+        $r_{ij},I_{ij},C_i$                           & 标准化异常度、冲突指示变量及样本冲突度                                & 第4节   \\
+        $R_{ij},U_i$                                  & 指标证据可靠度及样本的信息簇平均可靠度                                & 第4节   \\
+        $z_{mk}$                                      & 按评估目标标准化后的验证损失                                     & 第4节   \\
+        $\phi(\mathbf p)$                             & 13 个评估目标的总体配比表现，越大越优                               & 第4节   \\
+        $S_{i\leftarrow j},C_{ij}^{\mathrm{mix}}$     & 来源份额的边际替换效应及两来源互补指数                                & 第4节   \\
+        $\rho_s$                                      & Spearman 等级相关系数；不作组成响应幅度使用                         & 第4节   \\
+        \midrule
+        $N,D,C$                                       & 模型参数量、训练 Token 数及近似计算量 $C=6ND$                     & 第5节   \\
+        $E,A,B$                                       & 不可约损失及参数项、数据项的幅度系数                                 & 第5节   \\
+        $\alpha,\beta$                                & 参数量与数据量的经典标度指数                                     & 第5节   \\
+        $a_j,b_j,\widetilde L$                        & 来源 $j$ 的损失仿射校准系数及归一化损失                             & 第5节   \\
+        $\xi,\omega_j,J_m$                            & 验证难度指数、来源验证权重及候选结构评分                               & 第5节   \\
+        $Q_i,\mathbf Q$                               & 通用来源质量及其向量；本文 17 域实例取 $\mathbf Q=\mathbf Q^{(17)}$ & 第5节   \\
+        $\varphi(\mathbf Q,\mathbf p)$                & 逐目标的组成损失修正；不同于 $\phi(\mathbf p)$                   & 第5节   \\
+        $w_i,w_{\mathrm{clr},i}$                      & 质量加权份额与相对配比特征的有效系数                                 & 第5节   \\
+        $\operatorname{clr}_{\varepsilon}(\mathbf p)$ & 加伪计数 $\varepsilon$ 的中心化对数比变换                       & 第5节   \\
+        $N_0,D_0$                                     & 广义律的首个规模归一化锚点                                      & 第5节   \\
+        $\eta,\zeta,M(N,D)$                           & 组成响应的规模指数及调制因子 $M=(N/N_0)^{-\eta}(D/D_0)^{-\zeta}$ & 第5节   \\
+        $\kappa_s,b_s$                                & 锚点 $s$ 的组成响应幅度及规模基线损失                              & 第5节   \\
+        $Q,Q_0,Q_1$                                   & 整体质量等级及比较点 $Q_0=0.6$、$Q_1=0.7$；非样本质量 $Q_i^{(0)}$   & 第5节   \\
+        $\gamma_Q$                                    & 独立质量实验标定的整体质量指数                                    & 第5节   \\
+        $D_\star,\mathbf p_0$                         & 等损失替代的 Token 工作点及参考配比；$D_\star\ne D_0$             & 第5节   \\
+        $g_x,\epsilon_x$                              & 因素 $x$ 的边际降损与损失弹性                                  & 第5节   \\
+    \end{longtable}
+}
 
 \FloatBarrier
 
@@ -154,7 +180,7 @@
 
 附件 A 包含两类相互衔接的数据，A1--A3 给出语料的多维质量信号，A4--A15 给出不同领域配方及其验证损失。
 本问依次解决三个层次的问题。首先在七域样本不均衡条件下构造初始质量 $Q^{(0)}$；随后依据各领域内部的正常指标关系识别异常评价证据，并校正其权重得到 $Q^*$；最后在单纯形约束下建立 17 域训练配比对 13 域验证 Loss 的联合响应。
-$Q^*$ 经 A16 映射为 $Q^{(17)}$，并与总体配比效应 $\phi(\mathbf p)$ 一同作为问题二的数据侧输入。
+$Q^*$ 经 A16 映射为来源质量向量 $\mathbf Q^{(17)}$，并与总体配比效应 $\phi(\mathbf p)$ 一同作为问题二的数据侧输入。
 
 % -----------------------------------------------------
 % 4.1 数据质量评价
@@ -412,8 +438,8 @@ A4/A5 提供 512 组 1M 训练配方及其 13 域验证 Loss；A6/A7 为 1M 同�
 \end{equation}
 $\phi(\mathbf p)$ 越大，表示该配方在 13 个验证域上的总体表现越优。
 
-第二小问得到的七域 $Q^*$ 经 A16 映射到 17 个训练域。由于 $\sum_i p_iQ_i$ 是 $\mathbf p$ 的确定函数，直接作为额外线性项会与配比变量共线。
-因此以指数倾斜 $\widetilde p_i(\gamma)\propto p_i\exp[\gamma(Q_i-\bar Q)]$ 检验质量先验。交叉验证的最优值为 $\gamma=0$，且 $\gamma>0$ 时误差略有增加，说明 A4/A5 无法把“领域身份”与“领域质量”的独立作用分开识别。
+第二小问得到的七域 $Q^*$ 经 A16 映射到 17 个训练域，记为 $\mathbf Q^{(17)}=(Q_1^{(17)},\ldots,Q_{17}^{(17)})$。由于 $\sum_i p_iQ_i^{(17)}$ 是 $\mathbf p$ 的确定函数，直接作为额外线性项会与配比变量共线。
+因此以指数倾斜 $\widetilde p_i(\gamma)\propto p_i\exp[\gamma(Q_i^{(17)}-\bar Q)]$ 检验质量先验。交叉验证的最优值为 $\gamma=0$，且 $\gamma>0$ 时误差略有增加，说明 A4/A5 无法把“领域身份”与“领域质量”的独立作用分开识别。
 本小问据此不引入质量先验，质量的独立边际效应在问题二 B6--B8 的独立质量变化中进一步估计。
 
 \subsubsection{配比--Loss 响应的预测与解释模型}
@@ -513,25 +539,25 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
 
 \FloatBarrier
 
-问题一最终得到三类后续输入，即冲突修正质量 $Q^*$、映射到 17 个训练域的质量描述 $Q^{(17)}$ 以及总体配比效应 $\phi(\mathbf p)$。
+问题一最终得到三类后续输入，即冲突修正质量 $Q^*$、映射到 17 个训练域的质量向量 $\mathbf Q^{(17)}$ 以及总体配比效应 $\phi(\mathbf p)$。
 替换效应 $S_{i\leftarrow j}$ 和互补指数 $C_{ij}^{\mathrm{mix}}$ 用于解释领域结构，$U$ 与 $C$ 用于记录质量评价中的不确定性。
 问题二将在此基础上融合附件 B，建立含参数规模、数据量、质量和领域结构的广义标度关系。
 
 % =====================================================
 % 五、问题二
 % =====================================================
-\section{问题二：广义标度律及质量--规模替代}
+\section{问题二：广义标度律及语料规模--质量、配比替代}
 
-\subsection{问题二的分析}
+\subsection{经典标度律的局限与语料规模--质量、配比分析}
 
 经典标度律通常将训练 Token 视为同质资源，重点描述参数规模和数据规模对模型损失的影响。然而，随着高质量语料逐渐稀缺，不同数据在信息密度、噪声水平、知识覆盖和任务相关性方面呈现出显著差异，单纯增加参数量或训练 Token 数已不足以准确解释模型能力的增长规律。如果忽略这种数据异质性，模型不仅会高估低质量数据的边际价值，还会掩盖领域结构失衡造成的性能瓶颈，从而难以回答数据质量提升、领域配比调整与模型规模扩张之间能否相互替代这一关键问题。因此，将数据质量和领域配比纳入标度律，是从“规模驱动”转向“规模与数据价值协同驱动”的必要拓展，也是实现有限算力下精细化资源配置的理论基础。
 
-数据结构决定了这一拓展不能简单地用一个质量系数修正训练 Token 数。设训练数据来自 $m$ 个领域，配比 $\boldsymbol p$ 满足 $p_i\geq0$ 与 $\sum_{i=1}^{m}p_i=1$，任一来源份额的增加必然挤占其他来源；质量评分 $Q_i$ 则由数据分级给定，在现有配比实验中对每个来源保持固定。若把完整配比压缩为平均质量 $\sum_i p_iQ_i$ 或单一有效数据量，质量等级相同但知识内容不同的来源将无法区分，跨评估目标的差异化响应也会被掩盖。同时，固定的 $Q_i$ 与来源身份交织，不能仅凭这些实验识别独立提高质量的效应。可观测的模型--数据规模组合较少，不同体系的原始损失又存在尺度偏移，因此盲目增加交互项或直接混合损失均会削弱参数的可辨识性。
+数据结构决定了这一拓展不能简单地用一个质量系数修正训练 Token 数。设训练数据来自 $m$ 个领域，配比 $\mathbf p$ 满足 $p_i\geq0$ 与 $\sum_{i=1}^{m}p_i=1$，任一来源份额的增加必然挤占其他来源。来源质量 $Q_i$ 由问题一的数据分级给定；在本文的 17 域实例中，$Q_i=Q_i^{(17)}$，并在现有配比实验中保持固定。若把完整配比压缩为平均质量 $\sum_i p_iQ_i$ 或单一有效数据量，质量等级相同但知识内容不同的来源将无法区分，跨评估目标的差异化响应也会被掩盖。同时，固定的 $Q_i$ 与来源身份交织，不能仅凭这些实验识别独立提高质量的效应。可观测的模型--数据规模组合较少，不同体系的原始损失又存在尺度偏移，因此盲目增加交互项或直接混合损失均会削弱参数的可辨识性。
 
-基于上述约束，本文采用“经典规模基线---组成响应---独立质量校准”的分层建模框架。首先，对多来源损失进行尺度归一化，利用自适应结构早停识别稳健的经典标度指数；随后针对任意评估目标，在规模基线上叠加配比响应项，以质量加权份额 $p_iQ_i$ 表示分级质量与投入的联合暴露，以中心化对数比特征刻画单纯形上的相对组成，并允许响应幅度随 $N$、$D$ 变化。该设计保留了经典标度律对规模收益递减的解释，同时允许相同质量等级的不同来源产生不同的损失变化。受规模锚点数量限制，扩展模型沿用前述经典指数，而不从配比实验中重新辨识所有规模参数。
+基于上述约束，本文采用“经典规模基线---组成响应---独立质量校准”的分层建模框架。首先，对多来源损失进行尺度归一化，利用自适应结构早停识别稳健的经典标度指数。随后针对任意评估目标，在规模基线上叠加配比响应项，以质量加权份额 $p_iQ_i$ 表示分级质量与投入的联合暴露，以中心化对数比特征刻画单纯形上的相对组成，并允许响应幅度随 $N$、$D$ 变化。问题一的 $\phi(\mathbf p)$ 表示越大越优的总体配比表现；为避免混淆，问题二把进入损失式的逐目标组成修正记为 $\varphi(\mathbf Q,\mathbf p)$，两者不作数值等同。该设计保留了经典标度律对规模收益递减的解释，同时允许相同质量等级的不同来源产生不同的损失变化。受规模锚点数量限制，扩展模型沿用前述经典指数，而不从配比实验中重新辨识所有规模参数。
 
 
-\subsection{问题二的模型建立}
+\subsection{广义标度律设计与参数辨识}
 
 \subsubsection{经典标度律的参数辨识模型建立与验证}
 
@@ -540,7 +566,7 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
     L(N,D)=E+A N^{-\alpha}+B D^{-\beta},
     \label{eq:classic-scaling-law}
 \end{equation}
-其中，$N$ 表示模型参数量，$D$ 表示训练 Token 数，$L$ 表示验证集交叉熵损失；$E$ 是规模趋于充分时仍无法消除的不可约损失，$A$ 与 $B$ 分别控制参数规模项和数据规模项的幅度，$\alpha$ 与 $\beta$ 则刻画两类资源的边际收益衰减速度。为保证模型具有明确的物理含义，估计过程中施加
+其中，$N$ 表示模型参数量，$D$ 表示训练 Token 数，$L$ 表示验证集交叉熵损失。$E$ 是规模趋于充分时仍无法消除的不可约损失，$A$ 与 $B$ 分别控制参数规模项和数据规模项的幅度，$\alpha$ 与 $\beta$ 则刻画两类资源的边际收益衰减速度。为保证模型具有明确的物理含义，估计过程中施加
 \begin{equation}
     0\leq E<\min_i L_i,\qquad
     A>0,\quad B>0,\quad \alpha>0,\quad \beta>0
@@ -562,7 +588,7 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
     =\frac{L_{ji}^{\mathrm{obs}}-a_j}{b_j}.
     \label{eq:loss-normalization}
 \end{equation}
-主拟合来源取 $a_0=0$、$b_0=1$，因此其训练过程保持在原始可解释的 Loss 尺度上；其他来源经式~\eqref{eq:loss-normalization}归一化后再参与验证与结构选择。
+主拟合来源取 $a_0=0$、$b_0=1$，因此其训练过程保持在原始可解释的 Loss 尺度上。其他来源经式~\eqref{eq:loss-normalization}归一化后再参与验证与结构选择。
 
 为防止利用同一批验证标签完成校准后又在原样本上评价，本文采用按训练轨迹或模型族分簇的交叉归一化。对于待评价簇 $c$，仅使用其余簇估计
 \begin{equation}
@@ -614,19 +640,19 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
 \paragraph{自适应结构早停}
 
 指数自由度越高，越容易把数据噪声读作真实的标度结构差异，因此本文按由简到繁、以外部验证收益为准的顺序逐层释放指数自由度。
-第一层令 $\alpha=\beta=s$，对共享指数 $s$ 进行一维搜索；第二层以第一层最优值 $s^{\ast}$ 为锚点，分别考察“固定 $\beta=s^{\ast}$、释放 $\alpha$”和“固定 $\alpha=s^{\ast}$、释放 $\beta$”两个并列候选；只有当单方向释放产生稳定的外部收益时，第三层才进入 $(\alpha,\beta)$ 均自由的二维搜索。每个候选指数点仍由式~\eqref{eq:inner-linear-ls}估计 $E$、$A$ 和 $B$，因此该过程并未引入新的标度律项，而是在同一标准模型内部逐步增加指数自由度。
+第一层令 $\alpha=\beta=s$，对共享指数 $s$ 进行一维搜索。第二层以第一层最优值 $s^{\ast}$ 为锚点，分别考察“固定 $\beta=s^{\ast}$、释放 $\alpha$”和“固定 $\alpha=s^{\ast}$、释放 $\beta$”两个并列候选。只有当单方向释放产生稳定的外部收益时，第三层才进入 $(\alpha,\beta)$ 均自由的二维搜索。每个候选指数点仍由式~\eqref{eq:inner-linear-ls}估计 $E$、$A$ 和 $B$，因此该过程并未引入新的标度律项，而是在同一标准模型内部逐步增加指数自由度。
 
 不同来源的可信度、判别难度与统计稳定性并不相同，因此本文不预先固定其权重。记 $r_j$ 为可信度先验，$d_j$ 为基准模型在该来源上的验证难度，$\sigma_j$ 为按轨迹或模型族分簇 Bootstrap 得到的分数标准差，则定义稳定性因子和原始权重
 \begin{equation}
     s_j=\frac{1}{1+\sigma_j/d_j},
     \qquad
-    u_j=r_j d_j^{\eta}s_j,
+    u_j=r_j d_j^{\xi}s_j,
 \end{equation}
-并在给定上下限后将 $u_j$ 归一化为 $w_j$。较困难但稳定、且证据可靠的来源因而获得较高权重；高度相关、半合成或波动较大的来源则不会主导结构选择。权重在比较候选结构之前一次确定并冻结，以避免针对某个候选模型事后调整评价标准。
+并在给定上下限后将 $u_j$ 归一化为 $\omega_j$。较困难但稳定、且证据可靠的来源因而获得较高权重。高度相关、半合成或波动较大的来源则不会主导结构选择。权重在比较候选结构之前一次确定并冻结，以避免针对某个候选模型事后调整评价标准。
 
 候选结构的最终选择分数定义为
 \begin{equation}
-    J_m=\sum_j w_j \operatorname{MedAPE}_{jm}
+    J_m=\sum_j \omega_j \operatorname{MedAPE}_{jm}
     +\lambda\max(0,k_m),
     \label{eq:early-stopping-score}
 \end{equation}
@@ -641,7 +667,7 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
     +1.205248D^{-0.293183},
     \label{eq:fitted-classic-scaling-law}
 \end{equation}
-其决定系数为 $0.99938498$，RMSE 为 $0.00848302$。释放参数规模指数仅使选模分数改善 $0.000159$，低于阈值 $\delta=0.002$，因此不增加指数自由度。图~\ref{fig:scaling-compute-pair}(a)表明，增加训练数据量或模型参数量均可降低损失，但边际收益持续递减。将资源投入统一换算为 $C=6ND$ 后，各规模训练轨迹呈现相近的下降趋势；图~\ref{fig:scaling-compute-pair}(b)中的经验下沿包络近似满足 $L=2.2C^{-0.0665}$，刻画了既定计算预算下可达到的效率前沿。
+其决定系数为 $0.99938498$，RMSE 为 $0.00848302$。释放参数规模指数仅使选模分数改善 $0.000159$，低于阈值 $\delta=0.002$，因此不增加指数自由度。图~\ref{fig:scaling-compute-pair}(a)表明，增加训练数据量或模型参数量均可降低损失，但边际收益持续递减。将资源投入统一换算为 $C=6ND$ 后，各规模训练轨迹呈现相近的下降趋势。图~\ref{fig:scaling-compute-pair}(b)中的经验下沿包络近似满足 $L=2.2C^{-0.0665}$，刻画了既定计算预算下可达到的效率前沿。
 
 \begin{figure}[htbp]
     \centering
@@ -658,7 +684,7 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
         \caption{}
         \label{fig:compute-loss}
     \end{subfigure}
-    \caption{经典标度律的资源标度与计算效率：(a) 参数规模、数据规模与验证损失的标度关系；(b) 不同参数规模下计算量与验证损失的关系，虚线为经验下沿包络。}
+    \caption{经典标度律的资源标度与计算效率：(a) 参数规模、数据规模与验证损失的标度关系。(b) 不同参数规模下计算量与验证损失的关系，虚线为经验下沿包络。}
     \label{fig:scaling-compute-pair}
 \end{figure}
 
@@ -704,38 +730,38 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
     \label{fig:validation-extrapolation-pair}
 \end{figure}
 
-\subsubsection{经典标度律的外推与广义标度律的设计}
+\subsubsection{广义标度律的设计}
 
-经典标度律揭示了参数规模与训练数据量的损失衰减规律，但其同质 Token 假设无法区分训练语料的质量和来源组成。为分析这一缺口，首先考察实验的可辨识结构，在模型规模与训练 Token 数均固定的条件下，存在数百种不同的语料配比，因而经典标度律对这些实验给出同一预测基线，却无法解释其损失差异。另有 $256$ 组配比在两个模型规模下逐一对应，可比较规模改变后配比响应的形状与幅度。这说明需要在规模基线之外单独建立组成响应，而非仅用总 Token 数代表全部训练数据。与此同时，观测实验仅提供三个不同的 $(N,D)$ 规模锚点，其中较大模型的 $N$ 与 $D$ 同时变化；若连同组成效应重新估计全部规模指数，将产生明显的参数混淆。因此沿用前文估计的 $\alpha$、$\beta$，将新增参数集中用于刻画组成效应及其跨规模变化。
+经典标度律揭示了参数规模与训练数据量的损失衰减规律，但其同质 Token 假设无法区分训练语料的质量和来源组成。为分析这一缺口，首先考察实验的可辨识结构，在模型规模与训练 Token 数均固定的条件下，存在数百种不同的语料配比，因而经典标度律对这些实验给出同一预测基线，却无法解释其损失差异。另有 $256$ 组配比在两个模型规模下逐一对应，可比较规模改变后配比响应的形状与幅度。这说明需要在规模基线之外单独建立组成响应，而非仅用总 Token 数代表全部训练数据。与此同时，观测实验仅提供三个不同的 $(N,D)$ 规模锚点，其中较大模型的 $N$ 与 $D$ 同时变化。若连同组成效应重新估计全部规模指数，将产生明显的参数混淆。因此沿用前文估计的 $\alpha$、$\beta$，将新增参数集中用于刻画组成效应及其跨规模变化。
 
 其次，训练配比属于单纯形，提高某一来源的份额必然压缩其他来源，故各 $p_i$ 不是相互独立的投入量。仅以平均质量 $\sum_i p_iQ_i$ 概括语料，会把质量相近但知识内容不同的来源混为一谈。只用原始份额又难以直接表达来源之间的相对替代。基于这一约束，采用质量加权份额 $p_iQ_i$ 记录各来源的有效投入，并以中心化对数比刻画相对组成。但现有质量评分对每个来源固定，$p_iQ_i$ 与 $p_i$ 在统计上不能区分独立的质量改善效应，因此这一项只表示给定质量分级下的组成暴露，不能作质量因果效应解释。
 
-最后，逐行配对的跨规模配比为检验“响应形状相对稳定、作用幅度随规模改变”的可分离假设提供了依据。用规模幂函数调节组成响应的幅度，既与经典标度律的形式协调，也避免为每个规模重新拟合一套配比函数；以参考规模归一化该幅度，并将组成响应在参考样本上中心化，可减少其与损失截距之间的混淆。由于配比维度随来源数增长，估计时还须施加正则化以控制方差。设训练语料包含任意 $m$ 个来源，$\boldsymbol p=(p_1,\ldots,p_m)$ 满足 $p_i\geq0$、$\sum_i p_i=1$，$\boldsymbol Q=(Q_1,\ldots,Q_m)$ 为相应质量属性。对于任意给定的评估目标，由此提出统一的函数结构
+最后，逐行配对的跨规模配比为检验“响应形状相对稳定、作用幅度随规模改变”的可分离假设提供了依据。用规模幂函数调节组成响应的幅度，既与经典标度律的形式协调，也避免为每个规模重新拟合一套配比函数。以参考规模归一化该幅度，并将组成响应在参考样本上中心化，可减少其与损失截距之间的混淆。由于配比维度随来源数增长，估计时还须施加正则化以控制方差。设训练语料包含任意 $m$ 个来源，$\mathbf p=(p_1,\ldots,p_m)$ 满足 $p_i\geq0$、$\sum_i p_i=1$，$\mathbf Q=(Q_1,\ldots,Q_m)$ 为相应来源质量；本文实例取 $m=17$ 和 $\mathbf Q=\mathbf Q^{(17)}$。对于任意给定的评估目标，由此提出统一的函数结构
 \begin{equation}
     \begin{aligned}
-        L(N,D,\boldsymbol p,\boldsymbol Q)
+        L(N,D,\mathbf p,\mathbf Q)
         ={} & E+A N^{-\alpha}
         +B D^{-\beta}
         +\left(\frac{N}{N_{0}}\right)^{-\eta}
         \left(\frac{D}{D_{0}}\right)^{-\zeta}
-        \phi(\boldsymbol Q,\boldsymbol p),
+        \varphi(\mathbf Q,\mathbf p),
     \end{aligned}
     \label{eq:generalized-scaling-design}
 \end{equation}
-其中$(N_{0},D_{0})$ 为参考规模。$E$、$A$ 和 $B$ 决定损失基线，$\alpha$、$\beta$ 为规模指数，$\eta$、$\zeta$ 刻画组成响应随规模变化的程度。两个规模比值在参考规模均为 $1$，故 $\phi$ 直接表示该规模下的损失修正。为避免平均质量 $\sum_i p_iQ_i$ 抹去同等级、不同知识来源之间的差别，将组成响应展开为
+其中$(N_{0},D_{0})$ 为首个观测规模锚点。$E$、$A$ 和 $B$ 决定损失基线，$\alpha$、$\beta$ 为规模指数，$\eta$、$\zeta$ 刻画组成响应随规模变化的程度。两个规模比值在参考规模均为 $1$，故 $\varphi$ 直接表示该规模下的损失修正，其符号方向与问题一的总体表现指标 $\phi(\mathbf p)$ 不同。为避免平均质量 $\sum_i p_iQ_i$ 抹去同等级、不同知识来源之间的差别，将组成响应展开为
 \begin{equation}
     \begin{aligned}
-        \phi(\boldsymbol Q,\boldsymbol p)
+        \varphi(\mathbf Q,\mathbf p)
         ={} & \sum_{i=1}^{m}w_i
         (p_iQ_i-\bar m_i) +\sum_{i=1}^{m}w_{\mathrm{clr},i}
-        \bigl(\operatorname{clr}_{\varepsilon}(\boldsymbol p)_i
+        \bigl(\operatorname{clr}_{\varepsilon}(\mathbf p)_i
         -\bar m_{\mathrm{clr},i}\bigr).
     \end{aligned}
     \label{eq:generalized-composition-response}
 \end{equation}
-这里 $w_i$ 与 $w_{\mathrm{clr},i}$ 分别为质量加权份额和相对配比的有效权重；$\bar m_i$、$\bar m_{\mathrm{clr},i}$ 是对应特征在参考规模拟合样本上的均值，使 $\phi$ 在该样本上均值为零。其中，中心化对数比定义为
+这里 $w_i$ 与 $w_{\mathrm{clr},i}$ 分别为质量加权份额和相对配比的有效权重。$\bar m_i$、$\bar m_{\mathrm{clr},i}$ 是对应特征在参考规模拟合样本上的均值，使 $\varphi$ 在该样本上均值为零。其中，中心化对数比定义为
 \begin{equation}
-    \operatorname{clr}_{\varepsilon}(\boldsymbol p)_i
+    \operatorname{clr}_{\varepsilon}(\mathbf p)_i
     =\log(p_i+\varepsilon)
     -\frac{1}{m}\sum_{j=1}^{m}\log(p_j+\varepsilon).
     \label{eq:generalized-clr-definition}
@@ -744,15 +770,171 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
 拟合时对这两组特征进行标准化与正则化，并将所得系数换算为式~\eqref{eq:generalized-composition-response}中的有效权重。
 不同评估目标均采用式~\eqref{eq:generalized-scaling-design}的函数结构，但 $E$、$A$、$B$、$\eta$、$\zeta$ 及组成权重分别估计。
 
-\subsubsection{广义标度律的估计模型建立}
+\subsubsection{广义标度律的参数辨识模型建立与验证}
 
-\subsection{问题二的结果}
+式~\eqref{eq:generalized-scaling-design}由经典规模基线与受规模因子调制的组成响应相加而成。若联合估计全部参数，仅有三个规模锚点不足以同时辨识经典律指数和组成响应指数。此外，响应形状与幅度可相互吸收，造成参数化不唯一。为此，本文按图~\ref{fig:generalized-law-identification} 所示采用“锚定标准律—分阶段参数辨识—因子对比”的递进结构，在保留经典律约束的同时辨识新增的组成项。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.94\textwidth]{figures/sacling_law_param_estimate.pdf}
+    \caption{广义标度律的三阶段参数辨识：标准律锚定规模指数，分阶段估计组成响应与基线，再由规模因子对比确定响应幅度指数。图中 $\phi$ 为组成损失修正的示意简写，正文记作 $\varphi$。}
+    \label{fig:generalized-law-identification}
+\end{figure}
+
+\paragraph{锚定标准律}
+沿用前文由充分规模变化的实验辨识出的共享指数 $\alpha=\beta=0.293183$，只借用指数而不直接移植损失基线参数。由此将广义模型的规模基线限制在 $\{1,N^{-\alpha},D^{-\beta}\}$ 张成的空间中，避免用稀疏的配比实验重新估计指数。该锚定仅约束资源收益衰减的形状。损失下界及两个规模项的系数仍由当前评估目标的数据确定，从而不强求不同目标共享损失水平。以下 $N,D$ 分别以十亿参数和十亿 Token 计。三个观测锚点依次为 $(10^{-3},1)$、$(0.06,1)$ 和 $(1,25)$，首个锚点记为 $(N_0,D_0)$。
+
+\paragraph{分阶段参数辨识}
+在参考锚点，$N,D$ 保持不变，配比之间的损失差异因而提供组成响应的识别信息。对式~\eqref{eq:generalized-composition-response}中的两组特征逐维标准化，以岭回归估计该响应，正则强度由调参折选定。将拟合响应在参考训练配比上中心化、换算至损失单位，并规定其幅度 $\kappa_1=1$：前者使组成项与常数基线在参考样本上分离，后者固定 $\kappa\varphi$ 的尺度规范。令 $s$ 表示锚点、$r$ 表示该锚点训练折中的配比，$\varphi_{sr}=\varphi(\mathbf Q,\mathbf p_{sr})$。其余幅度是损失对同一响应形状的投影斜率。扣除组成项后得到各锚点的规模基线：
+\begin{equation}
+    \begin{aligned}
+        \kappa_s & =\frac{\sum_r(\varphi_{sr}-\bar\varphi_s)(L_{sr}-\bar L_s)}
+        {\sum_r(\varphi_{sr}-\bar\varphi_s)^2},\quad s=2,3,                    \\
+        b_s      & =\bar L_s-\kappa_s\bar\varphi_s,\quad s=1,2,3.
+    \end{aligned}
+    \label{eq:generalized-stagewise-projection}
+\end{equation}
+这样，原先耦合的形状与幅度被化为参考规模的正则化回归及跨规模的一元投影。再以非负最小二乘将三个 $b_s$ 投影回锚定的经典律基底：
+\begin{equation}
+    (\widehat E,\widehat A,\widehat B)
+    =\arg\min_{E,A,B\geq0}\sum_{s=1}^{3}
+    \left(b_s-E-A N_s^{-\alpha}-B D_s^{-\beta}\right)^2.
+    \label{eq:generalized-baseline-identification}
+\end{equation}
+非负约束保持经典基线项的物理方向。由于组成修正可为负，仍须另行检查预测损失是否低于 $E$。各评估目标采用相同的函数结构，但分别估计其基线与组成权重。
+
+\paragraph{因子对比}
+对正的响应幅度取对数，得到 $\log\kappa_s=-\eta\log(N_s/N_0)-\zeta\log(D_s/D_0)$。由于前两个锚点的 $D$ 相同，其幅度比消去了数据量因子，可先辨识 $\eta$，再从第三个锚点的总幅度变化中扣除已知的参数规模效应，条件辨识 $\zeta$：
+\begin{equation}
+    \eta=-\frac{\log\kappa_2}{\log(N_2/N_1)},\qquad
+    \zeta=\frac{-\log\kappa_3-\eta\log(N_3/N_1)}{\log(D_3/D_1)}.
+    \label{eq:generalized-amplitude-identification}
+\end{equation}
+上述对比利用实验设计形成的单因子变化，而不依赖同时搜索两个指数。同一配比在前两个锚点的损失还应满足 $L_2(\mathbf p)=a+\lambda L_1(\mathbf p)$，其中 $\lambda=\kappa_2/\kappa_1$、$a=b_2-\lambda b_1$。这一配对关系消去了 $\varphi$，因而可在不依赖其具体函数形式的条件下检验可分离结构。配对回归的训练折 $R^2$ 中位数为 $0.9868$，留出配比的跨规模预测相对 RMSE 中位数为 $1.16\%$。
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[t]{0.58\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/generalized_law_domain_accuracy.png}
+        \caption{}
+        \label{fig:generalized-domain-accuracy}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.39\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/generalized_law_surface_parity.png}
+        \caption{}
+        \label{fig:generalized-surface-parity}
+    \end{subfigure}
+    \caption{广义标度律的留出配比验证：(a) 各评估目标的相对 RMSE、总体 $R^2$ 与配比效应 $R^2$；(b) 三个观测规模的实测与预测损失对比，灰色标记为同一组系数下关闭配比项的预测，实线为理想一致线，阴影表示 $\pm5\%$ 误差带。}
+    \label{fig:generalized-validation-pair}
+\end{figure}
+
+\paragraph{验证} 对逐行配对的规模采用相同配比划分，第三个规模独立划分，留出折均不参与拟合或选模。在 $13$ 个评估目标、三个已观测规模的留出配比上，三个规模的相对 RMSE 分别为 $5.84\%$、$5.49\%$ 和 $4.44\%$，汇总为 $5.54\%$。中位绝对百分比误差为 $2.40\%$，按评估目标与规模中心化的配比效应 $R^2$ 为 $0.9006$。留出预测的最小 $\widehat L-E$ 为 $0.2129$，未跌破基线下界。图~\ref{fig:generalized-validation-pair}(a) 表明多数评估目标保持较低误差和较高解释度，但数学目标的误差明显偏大，提示跨目标性能仍有差异。图~\ref{fig:generalized-validation-pair}(b) 中，三个规模的留出预测总体沿理想一致线分布。关闭配比项后，预测在固定规模与评估目标内不再随配比变化，形成水平带，说明仅靠 $N,D$ 无法解释同规模的损失波动，这些结果支持已观测规模内的配比泛化。
+
+\subsection{广义标度律指导下的语料规模--质量、配比替代}
+
+前述验证表明，资源规模项能够描述总体损失的衰减趋势，而语料质量与领域组成进一步决定相同 Token 预算下的损失差异。因而，讨论质量对规模的替代，首先需要在明确的工作点和可行配比方向上度量局部收益；不同实验尺度下的收益只有经过一致校准，才能进一步换算为等效 Token 数。
 
 \subsubsection{广义标度律各因素边际效用与弹性分析}
 
-\subsubsection{广义标度律下领域数据间关系分析}
+对标量因素 $x\in\{N,D,Q\}$，定义边际降损与损失弹性为
+\begin{equation}
+    g_x=-\frac{\partial L}{\partial x},\qquad
+    \epsilon_x=\frac{\partial\ln L}{\partial\ln x}
+    =\frac{x}{L}\frac{\partial L}{\partial x}.
+    \label{eq:generalized-factor-elasticity}
+\end{equation}
+其中，$N,D$ 的响应由广义标度律给出；整体质量等级 $Q$ 不同于固定的来源质量 $Q_i^{(17)}$，其独立边际效应由质量实验拟合的响应模型估计，而不从广义律中的 $p_iQ_i$ 项直接推断。为使收益具有可解释的扰动尺度，规模因素报告 $L(x)-L(1.01x)$，质量因素报告 $L(Q)-L(Q+0.01)$。配比受单纯形约束，增加来源 $i$ 的份额 $t$ 时，令 $p_i(t)=p_i+t$、$p_j(t)=p_j\bigl(1-t/(1-p_i)\bigr)$（$j\ne i$），并以 $L(\mathbf p)-L(\mathbf p(0.01))$ 衡量可行方向的降损。
 
-\subsubsection{广义标度律指导下的大模型训练方案选择与验证}
+图~\ref{fig:factor-scale-quality-pair}(a) 给出固定参考配比下的规模弹性及配比方向收益。在已观测的 $N=10^9$、$D=2.5\times10^{10}$ 工作点，13 个评估目标的弹性中位数分别为 $\epsilon_N=-0.0345$、$\epsilon_D=-0.0868$。这表明在该点数据量的相对增益具有更高的损失敏感度，但尚不能据此比较参数与 Token 的算力效率。图中的百亿参数点仅是模型外推，不作为观测证据。图~\ref{fig:factor-scale-quality-pair}(b) 显示质量收益随 $Q$ 提高而递减：在 $Q=0.6$ 时，质量分增加 $0.01$ 的预测降损约为 $2.15\times10^{-3}$。主组 450 组与对照组 360 组存在包含关系，后者仅检验子集一致性。质量实验与广义律的损失基准尚未统一，故不能将两组导数直接相除，解释为质量提升所等效的 Token 增量。
+
+\begin{figure}[htpb]
+    \centering
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/figure_a_scale_mixture_sensitivity.png}
+        \caption{}
+        \label{fig:factor-scale-mixture-sensitivity}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/figure_b_quality_response.png}
+        \caption{}
+        \label{fig:factor-quality-response}
+    \end{subfigure}
+    \caption{资源与质量因素的局部响应：(a) 参数量和数据量的损失弹性，以及配比份额增加 1 个百分点的方向收益分布；区间表示跨评估目标的四分位范围，百亿参数点仅为外推。(b) 独立质量实验中质量分增加 $0.01$ 的降损及损失弹性；对照组为主组子集。}
+    \label{fig:factor-scale-quality-pair}
+\end{figure}
+
+\begin{figure}[htpb]
+    \centering
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/figure_mixture_directional_gain.png}
+        \caption{}
+        \label{fig:factor-mixture-directional-gain}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/figure_mixture_share_sweep.png}
+        \caption{}
+        \label{fig:factor-mixture-share-sweep}
+    \end{subfigure}
+    \caption{领域配比的方向异质性与份额依赖：(a) 不同来源增配 1 个百分点时，各评估目标的预测降损，红色表示降损、蓝色表示增损，空白表示不满足可行方向条件；(b) 在观测支撑域内扫描来源份额所得的方向收益与弹性，色带反映跨评估目标的分布范围。两图均为模型敏感度分析，不作因果解释。}
+    \label{fig:factor-mixture-pair}
+\end{figure}
+
+配比的边际效用不具有统一符号。图~\ref{fig:factor-mixture-pair}(a) 表明，同一来源的增配方向可能降低某些评估目标的损失，却提高另一些目标的损失；在参考配比下，117 个位于观测支撑域内的可行方向中，仅 $53.8\%$ 获得正收益。图~\ref{fig:factor-mixture-pair}(b) 进一步显示，收益还随来源份额改变，不能把单点导数延伸为全区间的固定排序。因此，配比调整应被视为面向目标和当前配方的局部资源重分配。
+
+\subsubsection{广义标度律指导下的语料规模--质量、配比替代}
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/joint_iso_loss_curves_two_domains.png}
+    \caption{两种示例评估领域的质量--Token 等损失曲线。各曲线对应同一组观测配比，纵轴为保持参考目标损失所需的 Token 数；$Q_0=0.6$ 与 $Q_1=0.7$ 为质量比较点。离开 $N=10^9,D_\star=250$ 亿 Token 观测工作点后的需求量属于模型情景推算。}
+    \label{fig:joint-iso-loss}
+\end{figure}
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/joint_mixture_effect_two_domains.png}
+    \caption{同一组观测配比在两种示例评估领域中的等损失 Token 需求。各行配比保持一致，实心与空心标记分别对应 $Q_0=0.6$ 和 $Q_1=0.7$；横向差异表征模型预测的配比依赖性，并非配比干预的因果效应。}
+    \label{fig:joint-mixture-effect}
+\end{figure}
+
+为将上一节的局部降损量转换为等损失的 Token 需求，以已辨识的广义标度律为主体，对数据受限项引入整体质量等级的外部标定：
+\begin{equation}
+    L(N,D,Q,\mathbf p)=E+AN^{-\alpha}
+    +\left(\frac{Q}{Q_0}\right)^{-\gamma_Q}
+    \left[ BD^{-\beta}+M(N,D)\varphi(\mathbf Q^{(17)},\mathbf p)\right].
+    \label{eq:joint-quality-mixture-law}
+\end{equation}
+其中，$Q_0=0.6$ 是整体质量的校准点，$\mathbf Q^{(17)}$ 为问题一映射得到并在配比实验中固定的来源质量向量；$M(N,D)=(N/N_0)^{-\eta}(D/D_0)^{-\zeta}$ 为前述规模调制因子。质量指数 $\gamma_Q=0.1085$ 由独立质量实验标定，其余参数均不重估。故 $Q=Q_0$ 时，式~\eqref{eq:joint-quality-mixture-law} 严格退化为原广义律。主口径使质量同时作用于规模项与配比修正项；仅作用于 $BD^{-\beta}$ 的口径作为结构敏感性对照。主口径下，固定配比的精确局部等损失斜率为
+\begin{equation}
+    \left.\frac{\mathrm d\ln D}{\mathrm d\ln Q}\right|_{L,\mathbf p}
+    =-\gamma_Q\frac{BD^{-\beta}+M\varphi}
+    {\beta BD^{-\beta}+\zeta M\varphi},
+    \label{eq:joint-iso-loss-slope}
+\end{equation}
+其中 $M\propto D^{-\zeta}$，$\varphi=\varphi(\mathbf Q^{(17)},\mathbf p)$。因此 $-\gamma_Q/\beta$ 仅在忽略配比项或两项具有相同数据量指数时成立，有限幅度的替代量须逐目标数值求解。
+
+固定 $N=10^9$、替代工作点 Token 数 $D_\star=250$ 亿及参考配比 $\mathbf p_0$，将 $L(N,D_\star,Q_0,\mathbf p_0)$ 作为各评估目标的基准损失，求满足该目标损失时 $Q$ 与 $\mathbf p$ 对应的最小所需 $D$。这里 $D_\star$ 不同于广义律的规模归一化锚点 $D_0$。配比调整仅考虑观测支撑域内的方向：单一来源份额增加 $1$ 个百分点，其余来源按比例缩减。图~\ref{fig:joint-iso-loss} 展示两种示例评估领域的等损失曲线；在相同配比下提高质量使所需 Token 下降，而同一质量水平下不同配比对应不同的需求基线。图~\ref{fig:joint-mixture-effect} 用同一组真实配比进一步表明，这种配比效应的幅度具有明显的评估目标依赖性。
+
+逐目标先对可行配比方向取节省量中位数，再对 13 个评估目标等权汇总：质量由 $0.6$ 提至 $0.7$ 时，固定配比的 Token 节省中位数为 $13.97$ 亿，叠加可行的 $1$ 个百分点配比调整后为 $14.06$ 亿；仅缩放规模项的敏感性口径分别为 $13.30$ 亿和 $13.59$ 亿。因而，小幅配比调整的总体增益有限，但图中的完整观测配比差异可显著改变所需 Token 水平，两种比较尺度不可混同。模型在 $Q_0$ 的锚定误差小于 $5\times10^{-16}$，可行求根的最大损失残差为 $2.33\times10^{-13}$。
+
+\subsubsection{广义标度律的质量、配比替代边界}
+
+上述等损失换算由 $L(N,D,Q,\mathbf p)=L^\star$ 隐式定义，并非跨工作点通用的 Token 汇率。对式~\eqref{eq:joint-quality-mixture-law}，只有在 $BD^{-\beta}+M\varphi>0$ 且 $\beta BD^{-\beta}+\zeta M\varphi>0$ 时，提高质量和增加 Token 才同时具有降损效应，式~\eqref{eq:joint-iso-loss-slope} 的负斜率方可解释为局部替代。
+由于组成修正 $\varphi$ 可正可负，这些条件须按评估目标、配比和工作点分别核查。识别边界同样重要：配比实验中的来源质量 $Q_i^{(17)}$ 固定，不能由 $p_iQ_i^{(17)}$ 单独辨识质量提升效应。
+整体质量指数来自独立实验，其与组成项的乘性耦合是外部标定的结构假设，尚缺少同时独立改变质量与配比的实验验证。
+因此，本文仅在观测支撑域内调整配比，并在已标定的质量范围内报告两种耦合口径及逐目标差异。
+当等损失求解所需的 $D$ 偏离已观测规模，或将关系推广至更大模型时，所得节省量应视为模型情景推算，而非已实现的训练收益或因果效应。
+
+\FloatBarrier
 
 % =====================================================
 % 六、问题三
