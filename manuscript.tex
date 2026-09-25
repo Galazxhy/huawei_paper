@@ -137,7 +137,7 @@
         $S_{i\leftarrow j},C_{ij}^{\mathrm{mix}}$     & 来源份额的边际替换效应及两来源互补指数                                & 第4节   \\
         $\rho_s$                                      & Spearman 等级相关系数；不作组成响应幅度使用                         & 第4节   \\
         \midrule
-        $N,D,C$                                       & 模型参数量、训练 Token 数及近似计算量 $C=6ND$                     & 第5节   \\
+        $N,D,C$                                       & 模型参数量、训练 Token 数及总 FLOPs 预算；训练项为 $C_{\mathrm{train}}=6ND$ & 第5、6节   \\
         $E,A,B$                                       & 不可约损失及参数项、数据项的幅度系数                                 & 第5节   \\
         $\alpha,\beta$                                & 参数量与数据量的经典标度指数                                     & 第5节   \\
         $a_j,b_j,\widetilde L$                        & 来源 $j$ 的损失仿射校准系数及归一化损失                             & 第5节   \\
@@ -153,6 +153,9 @@
         $\gamma_Q$                                    & 独立质量实验标定的整体质量指数                                    & 第5节   \\
         $D_\star,\mathbf p_0$                         & 等损失替代的 Token 工作点及参考配比；$D_\star\ne D_0$             & 第5节   \\
         $g_x,\epsilon_x$                              & 因素 $x$ 的边际降损与损失弹性                                  & 第5节   \\
+        $L_{\mathrm{ctx}},\eta_{\mathrm{attn}}$      & 外生上下文长度及注意力成本系数；$C_{\mathrm{attn}}=\eta_{\mathrm{attn}}NDL_{\mathrm{ctx}}$ & 第6节 \\
+        $Q_{\mathrm{base}},Q,h(Q)$                     & 第三问治理基线质量、治理决策质量及单位 Token 增量治理成本             & 第6节 \\
+        $C_Q,C_{\mathrm{used}},a,s_Q$                  & 质量治理成本、实际总成本、合并系数 $a=6+\eta L_{\mathrm{ctx}}$ 及治理成本份额 & 第6节 \\
     \end{longtable}
 }
 
@@ -940,7 +943,20 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
 % 六、问题三
 % =====================================================
 \section{问题三：算力约束下的联合资源配置}
-% TODO
+\begingroup
+\normalsize
+\emergencystretch=2em
+\setlength{\parskip}{0pt}
+\setlength{\textfloatsep}{4pt plus 1pt minus 1pt}
+\setlength{\floatsep}{3pt plus 1pt minus 1pt}
+\setlength{\intextsep}{4pt plus 1pt minus 1pt}
+\setlength{\abovedisplayskip}{5pt}
+\setlength{\belowdisplayskip}{5pt}
+\setlength{\abovetopsep}{4pt}
+\setlength{\belowcaptionskip}{2pt}
+\captionsetup[subfigure]{font=scriptsize,skip=1pt}
+\input{q3_v005_body}
+\endgroup
 
 % =====================================================
 % 七、问题四
@@ -957,15 +973,6 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
 
 \bibliographystyle{gmcm}
 \bibliography{reference}
-
-\clearpage
-
-\section*{AI 工具使用说明}
-本文使用 AI 工具辅助数据字段理解、代码调试、图表绘制、文字润色，以及对 210 条分层抽样文本进行初步阅读。
-上述 AI 输出均由作者逐项复核并独立确认，论文中采用的原文一致性结论以作者复核结果为准。
-核心模型、公式推导、参数选择、结果解释与结论由作者完成。
-
-\clearpage
 
 \begin{appendices}
     \section{完整数据审计表}
