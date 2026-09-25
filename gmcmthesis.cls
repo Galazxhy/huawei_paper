@@ -457,6 +457,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \end{tabularx}
 
 	\makenametitle
+	\fi
 	}
 
 \def\makenametitle{

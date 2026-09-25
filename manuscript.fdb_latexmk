@@ -1,18 +1,18 @@
 # Fdb version 4
-["bibtex manuscript"] 1790327873.39185 "manuscript.aux" "manuscript.bbl" "manuscript" 1790328128.21505 0
+["bibtex manuscript"] 1790344041.5433 "manuscript.aux" "manuscript.bbl" "manuscript" 1790344965.78864 0
   "./gmcm.bst" 1790062780 35572 5928f434f6bc88e1bd9e4740e3d3e5e4 ""
   "./reference.bib" 1790322001 3085 4eb9c22ec8aa1e848d38ec6e4148ff27 ""
-  "manuscript.aux" 1790328115 37272 e9ed853327817c78de41ca6447be57c8 "xelatex"
+  "manuscript.aux" 1790344955 38018 77b45b1fa3f4ce1f60ea8fe7e0ebdfff "xelatex"
   (generated)
   "manuscript.bbl"
   "manuscript.blg"
   (rewritten before read)
-["xdvipdfmx"] 1790328116.72469 "manuscript.xdv" "manuscript.pdf" "manuscript" 1790328128.24101 0
-  "manuscript.xdv" 1790328115 761408 2990220bfc43c8d34068167f0eea66f1 "xelatex"
+["xdvipdfmx"] 1790344956.88413 "manuscript.xdv" "manuscript.pdf" "manuscript" 1790344965.82189 0
+  "manuscript.xdv" 1790344955 800644 fbf66fa48bbed9100adc7474b4a13248 "xelatex"
   (generated)
   "manuscript.pdf"
   (rewritten before read)
-["xelatex"] 1790328111.22536 "manuscript.tex" "manuscript.xdv" "manuscript" 1790328128.21566 0
+["xelatex"] 1790344951.12456 "manuscript.tex" "manuscript.xdv" "manuscript" 1790344965.79037 0
   "c:/Windows/Fonts/msyh.ttc" 1778128737 19704352 1e10e74402e59d54499af795caf0b135 ""
   "d:/Texlive/download/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1782801562 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "d:/Texlive/download/texlive/2026/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1782803929 1528 7e12f4c0fcf5a072cebdcfbfc610f54c ""
@@ -177,14 +177,14 @@
   "figures/fig4_3_conflict_resolution.pdf" 1790232331 35357 7513a7ced937705687f1b58b1d3c80c3 ""
   "figures/fig4_4_mixture_mechanism.pdf" 1790232332 61990 af5f12e701fcba7f3b1d9078bef4b41e ""
   "figures/fig4_5_transfer_boundary.pdf" 1790232333 36293 603df5aa88c516c32c3f2f9630e376d7 ""
-  "figures/fig7_1.png" 1790321382 1525608 ff159549921558531e36b707a965c1ed ""
-  "figures/fig7_2_capability_frontier.pdf" 1790327776 52477 d799da091860780a7092bbc1d1ac1ab2 ""
-  "figures/fig7_3_loss_benchmark_bridge.pdf" 1790327777 41395 1e5fb48519fc731927c2cd2ff0f5c51a ""
-  "figures/fig7_4_compute_and_support.pdf" 1790327779 56870 130f3d72fdd1000b77c3ab1488cc32b8 ""
-  "figures/fig7_5_contribution_identification.pdf" 1790327781 48059 63b4dcedc18269fa9bafd826ffd68b8c ""
-  "figures/fig7_6_capability_forecast.pdf" 1790327782 36711 45b143271501646a10a57c8edebe6116 ""
-  "figures/fig7_7_uncertainty_attribution.pdf" 1790327783 48460 05669af1dd9db2d6d1722cf69dff50e9 ""
-  "figures/fig7_8_forecast_backtest.pdf" 1790327784 47222 d22a90d954d51690124c917cd8fcd534 ""
+  "figures/fig7_1.pdf" 1790338348 272488 dfe5cdeaef85a77e2e6a4f788e4526e8 ""
+  "figures/fig7_2_capability_frontier.pdf" 1790342778 52999 c4c5e5e6348196f69769708ecce89501 ""
+  "figures/fig7_3_loss_benchmark_bridge.pdf" 1790342780 41446 082892ce7e2ffc6f4825c01243b1a13a ""
+  "figures/fig7_4_compute_and_support.pdf" 1790342781 57774 8868b1d55bb10895620bbc4f3d788e94 ""
+  "figures/fig7_5_contribution_identification.pdf" 1790342783 48144 89a9388d9620564e8f0b2fd1957e6d63 ""
+  "figures/fig7_6_capability_forecast.pdf" 1790342784 36733 fce2d05a85af0ca51086755266dda5c6 ""
+  "figures/fig7_7_uncertainty_attribution.pdf" 1790342785 48461 d0be04200c2b1d90fd488a565888df42 ""
+  "figures/fig7_8_forecast_backtest.pdf" 1790342786 47281 677f5b668b9907976850ae464e71536f ""
   "figures/figure_a_scale_mixture_sensitivity.png" 1790303271 176211 b312091ff518f875504fe9e5a669e4ec ""
   "figures/figure_b_quality_response.png" 1790303271 240973 4519ead06e6ad1a9e0de66571c356ff5 ""
   "figures/figure_mixture_directional_gain.png" 1790303271 363063 11f2c067bd83581184b27fafde80548d ""
@@ -213,14 +213,12 @@
   "figures/traditional_scaling_law_loss_vs_steps_law_b.png" 1790303271 261258 baf74e48873ec61581fab97051a807f8 ""
   "figures/traditional_scaling_law_quad_ab.png" 1790303271 330532 e1d520ce7f7f0a796e1bdbc8f71ab002 ""
   "figures/traditional_scaling_law_validation_a.png" 1790303271 242275 cc449182dff49d73e11bc679d57e0c62 ""
-  "gmcmthesis.cls" 1790303271 22393 0e92ab71e7466d5c798cd01b54ea1a59 ""
-  "manuscript.aux" 1790328115 37272 e9ed853327817c78de41ca6447be57c8 "xelatex"
-  "manuscript.bbl" 1790327873 738 c4f37a679e8957e5b1afd9b8dac5f3d7 "bibtex manuscript"
-  "manuscript.out" 1790328115 13553 c450e39a503181e58caa4731a0e348ec "xelatex"
-  "manuscript.tex" 1790327751 83374 169bc4922d83942d36e6afcb72cbfbda ""
-  "manuscript.toc" 1790328115 8393 06a54396e43e384eee633f750dc9cdc9 "xelatex"
-  "q3_v005_body.tex" 1790317565 25287 782a4a52a07ba0340d93edc7ef582cb6 ""
-  "q4_body.tex" 1790328080 28650 25380aa193a6ace4bf34572def48806b ""
+  "gmcmthesis.cls" 1790344897 22396 1c0a4ef63314d5c3462590f1f188fc29 ""
+  "manuscript.aux" 1790344955 38018 77b45b1fa3f4ce1f60ea8fe7e0ebdfff "xelatex"
+  "manuscript.bbl" 1790344042 738 c4f37a679e8957e5b1afd9b8dac5f3d7 "bibtex manuscript"
+  "manuscript.out" 1790344955 13158 8fd48f4dc6ac20327b19841e399ded0e "xelatex"
+  "manuscript.tex" 1790343835 148040 e069af18c16968393d6da695c1e5f478 ""
+  "manuscript.toc" 1790344955 8137 9feba54e0b8d6880e82598cfcfead152 "xelatex"
   (generated)
   "manuscript.aux"
   "manuscript.log"
