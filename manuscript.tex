@@ -16,6 +16,7 @@
 \usepackage{array}
 \usepackage{multirow}
 \usepackage{caption}
+\usepackage{placeins}
 \captionsetup[figure]{justification=centering,font=small,labelsep=quad}
 \captionsetup[table]{justification=centering,font=small,labelsep=quad}
 
@@ -31,7 +32,7 @@
 \renewcommand\thesubsection{\arabic{section}.\arabic{subsection}}
 \renewcommand\thesubsubsection{\thesubsection.\arabic{subsubsection}}
 
-% 统一表格格式：三线表、表内文字全部居中、紧凑但不拥挤
+% 统一表格格式：三线表；描述列左对齐，数值列居中；紧凑但不拥挤
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
@@ -60,8 +61,8 @@
 \baominghao{\hspace{6em} 20250900001}
 \schoolname{\hspace{5.8em} 中南大学}
 \membera{\hspace{6em} 彭铸}
-\memberb{\hspace{6em} 郑徐瀚宇}
-\memberc{\hspace{6em} 阳挺}
+\memberb{\hspace{6em} 阳挺}
+\memberc{\hspace{6em} 郑徐瀚宇}
 %=======================================================
 
 \begin{document}
@@ -69,7 +70,7 @@
 \maketitle
 
 \begin{abstract}
-    % TODO: 摘要
+本文围绕数据质量、领域配比、广义标度律、算力约束下的资源配置及现实模型能力演进建立统一分析框架。问题四通过来源偏差不变的 Loss--Benchmark 桥接，将前三问最优损失映射到现实能力尺度；在共同支持边界外采用部分识别而非点外推，并在统一状态方程下分析算力放缓时的未来能力前沿及其不确定性来源。
 \end{abstract}
 
 \pagestyle{plain}
@@ -954,7 +955,25 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
 % 七、问题四
 % =====================================================
 \section{问题四：技术演进分解及能力前沿预测}
-% TODO
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\setcounter{equation}{0}
+\begingroup
+\renewcommand*{\theHfigure}{q4.\arabic{figure}}
+\renewcommand*{\theHtable}{q4.\arabic{table}}
+\renewcommand*{\theHequation}{q4.\arabic{equation}}
+\normalsize
+\emergencystretch=2em
+\setlength{\parskip}{0pt}
+\setlength{\textfloatsep}{5pt plus 1pt minus 1pt}
+\setlength{\floatsep}{4pt plus 1pt minus 1pt}
+\setlength{\intextsep}{5pt plus 1pt minus 1pt}
+\setlength{\abovedisplayskip}{6pt}
+\setlength{\belowdisplayskip}{6pt}
+\setlength{\belowcaptionskip}{2pt}
+\input{q4_body}
+\FloatBarrier
+\endgroup
 
 % =====================================================
 % 八、结论、局限与推广
@@ -962,6 +981,8 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
 \section{结论、局限与推广}
 
 \clearpage
+
+问题四通过来源偏差不变的 Loss--Benchmark 桥接，将前三问最优损失映射到现实能力尺度；在共同支持边界外采用部分识别而非点外推，并在统一状态方程下分析算力放缓时的未来能力前沿及其不确定性来源。该处理将历史贡献分解与情景预测置于同一机制接口之下，同时保留桥接误差、样本依赖和支持域外推带来的不确定性。
 
 \bibliographystyle{gmcm}
 \bibliography{reference}
