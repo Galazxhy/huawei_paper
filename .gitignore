@@ -3,3 +3,31 @@
 *.log
 *.gz
 *.toc
+
+# LaTeX build intermediates; manuscript.pdf is the published artifact.
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.xdv
+*.dvi
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+*.bcf
+*.run.xml
+/build/
+
+# Local working material, not part of the paper release.
+/assets/
+/scripts/
+/figures/source_data/
+/figures/*_halfwidth.png
+/figures/*_halfwidth.svg
+/版本备份/
+/写作规划/
+/图表导出/
+__pycache__/
+*.pyc
