@@ -150,22 +150,24 @@
     \item \textbf{技术演进与能力前沿预测。}训练损失不能直接代表模型在实际任务上的能力，需要利用多项评测结果建立可比较的能力尺度，并连接损失与评测得分。结合历史模型的训练算力和发布时间，考察能力增长中有多少可由规模扩张解释，以及其他技术变化可能发挥的作用。在算力增长放缓的情景下预测开放权重模型的能力前沿，同时说明任务差异、数据口径和预测期限带来的不确定性。
 \end{enumerate}
 
+
+
 \subsection{总体技术路线}
 
 全文按语料价值、训练损失、预算配置和实际能力的顺序展开，四问之间的关系见图~\ref{fig:tech-overview}。首先统一质量指标的方向与尺度，处理相互冲突的信号，形成样本、领域和训练来源的质量描述。再把训练配比与评估损失对应起来，在来源份额之和固定的条件下分析配比变化的作用。这一步为后续标度律提供质量特征和配比的可行范围，并保留各评估目标的损失差异。固定来源质量下的配比变化不被解释为独立的质量改善。
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.96\textwidth,height=0.55\textheight,keepaspectratio]{figures/Tech-overview.pdf}
+    \caption{总体技术路线}
+    \label{fig:tech-overview}
+\end{figure}
 
 在统一损失尺度后，先从训练轨迹辨识经典标度律，确定参数量与训练 Token 数的规模基线。随后把配比响应加入这一基线，并借助单独变化质量的实验校准整体质量效应。经典律的规模指数在广义律中保持固定，使有限的配比实验主要用于识别组成响应及其跨规模变化。所得损失函数以参数量、训练 Token 数、整体质量和领域配比为输入，也为质量、配比与数据规模之间的等损失比较提供统一口径。
 
 将这一损失函数用于算力配置时，同时计入基础训练、质量治理和长上下文的计算成本。配比限制在已有训练配方覆盖的范围内，上下文长度按任务需求给定。对各档预算求得联合配置及对应损失，再与同预算下只调整规模的方案比较，判断质量和配比调整是否带来额外的模型收益。
 
 最后，利用多项评测构造可比较的能力尺度，并用同时具有损失和评测记录的模型建立二者之间的联系。第三问得到的预算与损失关系由此转化为规模投入可能带来的能力变化，历史能力增长中未被该机制解释的部分另行保留。在算力增长放缓的情景下，分别考虑算力路径与其余变化，推演未来的能力前沿。超出观测范围的配置和预测只作为条件情景解释，不与实测结果混同。
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.96\textwidth,height=0.55\textheight,keepaspectratio]{figures/Tech-overview.pdf}
-    \caption{总体技术路线}
-    \label{fig:tech-overview}
-\end{figure}
 
 % =====================================================
 % 二、符号说明
@@ -201,7 +203,7 @@
     \midrule
     $E,A,B$                                 & 不可约损失及参数项、数据项的幅度系数                                             & 第5节    \\
     $\alpha,\beta$                          & 参数量与数据量的经典标度指数                                                 & 第5节    \\
-    $\varphi(\mathbf Q,\mathbf p)$          & 给定评估目标的组成损失修正，区别于 $\phi(\mathbf p)$                            & 第5、6节  \\
+    $\varphi(\mathbf Q,\mathbf p)$          & 给定评估目标的组成损失修正，可正可负                                             & 第5、6节  \\
     $\eta,\zeta$                            & 组成响应随参数量和数据量变化的指数                                              & 第5节    \\
     $Q,Q_0,\gamma_Q$                        & 整体质量等级、问题二的质量校准点及质量响应指数                                        & 第5、6节  \\
     $g_x,\epsilon_x$                        & 因素 $x$ 的边际降损与损失弹性                                              & 第5节    \\
@@ -211,7 +213,7 @@
     $C_{\mathrm{train}},C_Q$                & 基础训练与质量治理的算力开销                                                 & 第6节    \\
     $C_{\mathrm{attn}}$                     & 长文本注意力的算力开销                                                    & 第6节    \\
     $Q_{\mathrm{base}},g(Q),h(Q)$           & 题面问题三的质量基线 $Q_0$ 在本文记为 $Q_{\mathrm{base}}$，$g$ 为质量成本，$h$ 为增量成本 & 第6节    \\
-    $\gamma,\lambda$                        & 题给质量成本函数的幅度与形状常数，正文代入数值；驻点式中的 $\lambda$ 另表示预算乘子                & 第6节    \\
+    $\gamma,\lambda$                        & 题给质量成本函数的幅度与形状常数，正文代入数值；预算乘子另记为 $\mu_C$                        & 第6节    \\
     $J$                                     & 各评估目标损失的平均值，作为资源配置目标                                           & 第6节    \\
     \midrule
     $Y_i,F_t$                               & 模型 $i$ 的综合评测得分及时间 $t$ 的能力前沿                                    & 第7节    \\
@@ -516,7 +518,7 @@ A4/A5 提供 512 组 1M 训练配方及其 13 域验证 Loss。A6/A7 构成 1M �
 $\phi(\mathbf p)$ 越大，表示该配方在 13 个验证域上的总体表现越优。
 
 上一阶段得到的七域 $Q^*$ 经 A16 映射到 17 个训练域，记为 $\mathbf Q^{(17)}=(Q_1^{(17)},\ldots,Q_{17}^{(17)})$。由于 $\sum_i p_iQ_i^{(17)}$ 是 $\mathbf p$ 的确定函数，直接作为额外线性项会与配比变量共线。
-因此以指数倾斜 $\widetilde p_i(\gamma)\propto p_i\exp[\gamma(Q_i^{(17)}-\bar Q)]$ 检验质量先验。交叉验证的最优值为 $\gamma=0$，且 $\gamma>0$ 时误差略有增加，说明 A4/A5 无法把“领域身份”与“领域质量”的独立作用分开识别。
+因此以指数倾斜 $\widetilde p_i(\gamma_{\mathrm{prior}})\propto p_i\exp[\gamma_{\mathrm{prior}}(Q_i^{(17)}-\bar Q)]$ 检验质量先验，其中 $\gamma_{\mathrm{prior}}$ 为先验强度。交叉验证的最优值为 $\gamma_{\mathrm{prior}}=0$，且 $\gamma_{\mathrm{prior}}>0$ 时误差略有增加，说明 A4/A5 无法把“领域身份”与“领域质量”的独立作用分开识别。
 据此，配比响应模型不引入质量先验。质量的独立边际效应转由校准生成的质量变化实验（B6、B7）估计，大规模扩展结果（B8）仅用于审视外推边界。
 
 \subsubsection{基于多任务稀疏Scheff\'e的配比响应建模}
@@ -611,9 +613,9 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
 
 \subsection{本问结论}
 
-问题一形成四项主要结论。第一，域均衡公共标尺与信息簇层次合成能够在样本量不平衡条件下保留领域差异，最终质量方案与分层人工复核的 Spearman 相关为0.666，同源扩展集合的分布差异很小。第二，域感知冲突校正保持了总体质量次序，$Q^*$ 与 $Q^{(0)}$ 的全样本 Spearman 为0.9992，修正量主要集中于高冲突尾部。第三，质量先验在现有配比实验中的最优强度为 $\gamma=0$，表明领域身份与来源质量的独立作用无法由 A4/A5 进一步分离。第四，配比响应在真实1M--1B范围内保持正向迁移，但10B和70B外推结果发生方向反转，因而不支持尺度不变的配比规律。
+问题一形成四项主要结论。第一，域均衡公共标尺与信息簇层次合成能够在样本量不平衡条件下保留领域差异，最终质量方案与分层人工复核的 Spearman 相关为0.666，同源扩展集合的分布差异很小。第二，域感知冲突校正保持了总体质量次序，$Q^*$ 与 $Q^{(0)}$ 的全样本 Spearman 为0.9992，修正量主要集中于高冲突尾部。第三，质量先验在现有配比实验中的最优强度为 $\gamma_{\mathrm{prior}}=0$，表明领域身份与来源质量的独立作用无法由 A4/A5 进一步分离。第四，配比响应在真实1M--1B范围内保持正向迁移，但10B和70B外推结果发生方向反转，因而不支持尺度不变的配比规律。
 
-上述结论沿同一数据接口逐层传递。初始质量 $Q^{(0)}$ 给出统一评价尺度，域感知可靠性校正将其更新为 $Q^*$，A16进一步形成17域质量描述 $\mathbf Q^{(17)}$，配比模型则输出总体效应 $\phi(\mathbf p)$、替换效应 $S_{i\leftarrow j}$ 和互补指数 $C_{ij}^{\mathrm{mix}}$。其中 $U$ 与 $C$ 记录质量证据的不确定性，配比支持范围和跨尺度检验限定机制结论的外推边界。这些输出共同构成问题二广义标度关系的数据侧输入。
+上述结论沿同一数据接口逐层传递。初始质量 $Q^{(0)}$ 给出统一评价尺度，域感知可靠性校正将其更新为 $Q^*$，A16进一步形成17域质量描述 $\mathbf Q^{(17)}$，配比模型则输出总体效应 $\phi(\mathbf p)$、替换效应 $S_{i\leftarrow j}$ 和互补指数 $C_{ij}^{\mathrm{mix}}$。其中 $U_i$ 与 $C_i$ 分别记录样本质量证据的可信度与冲突程度，配比支持范围和跨尺度检验限定机制结论的外推边界。这些输出共同构成问题二广义标度关系的数据侧输入。
 
 % =====================================================
 % 五、问题二
@@ -774,10 +776,10 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
 候选结构的最终选择分数定义为
 \begin{equation}
     J_m=\sum_j \omega_j \operatorname{MedAPE}_{jm}
-    +\lambda\max(0,k_m),
+    +\lambda_{\mathrm{stop}}\max(0,k_m),
     \label{eq:early-stopping-score}
 \end{equation}
-其中，$\operatorname{MedAPE}$ 衡量归一化后的相对预测偏差, $k_m$ 为有效自由参数数目，第二项用于要求新增指数自由度给出足以抵消复杂度增长的外部收益。候选结构首先需要满足主拟合样本上的最低拟合门槛。随后，只有当$ J_m<J_{\mathrm{best}}-\delta $时，才将其视为实质改善并更新历史最优结构。
+其中，$\operatorname{MedAPE}$ 衡量归一化后的相对预测偏差，$k_m$ 为有效自由参数数目，$\lambda_{\mathrm{stop}}$ 为复杂度惩罚权重。第二项要求新增指数自由度给出足以抵消复杂度增长的外部收益。候选结构首先需要满足主拟合样本上的最低拟合门槛。随后，只有当 $J_m<J_{\mathrm{best}}-\delta$ 时，才将其视为实质改善并更新历史最优结构。
 
 \paragraph{经典标度律的拟合、验证与外推}
 
@@ -866,7 +868,7 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
     \end{aligned}
     \label{eq:generalized-scaling-design}
 \end{equation}
-其中$(N_{0},D_{0})$ 为首个观测规模锚点。$E$、$A$ 和 $B$ 决定损失基线，$\alpha$、$\beta$ 为规模指数，$\eta$、$\zeta$ 刻画组成响应随规模变化的程度。两个规模比值在参考规模均为 $1$，故 $\varphi$ 直接表示该规模下的损失修正，其符号方向与问题一的总体表现指标 $\phi(\mathbf p)$ 不同。为避免平均质量 $\sum_i p_iQ_i$ 抹去同等级、不同知识来源之间的差别，将组成响应展开为
+其中$(N_{0},D_{0})$ 为首个观测规模锚点。$E$、$A$ 和 $B$ 决定损失基线，$\alpha$、$\beta$ 为规模指数，$\eta$、$\zeta$ 刻画组成响应随规模变化的程度。两个规模比值在参考规模均为 $1$，故 $\varphi$ 直接表示该规模下配比变化对验证损失的增量修正，可正可负。为避免平均质量 $\sum_i p_iQ_i$ 抹去同等级、不同知识来源之间的差别，将组成响应展开为
 \begin{equation}
     \begin{aligned}
         \varphi(\mathbf Q,\mathbf p)
@@ -922,7 +924,7 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
     \zeta=\frac{-\log\kappa_3-\eta\log(N_3/N_1)}{\log(D_3/D_1)}.
     \label{eq:generalized-amplitude-identification}
 \end{equation}
-上述对比利用实验设计形成的单因子变化，而不依赖同时搜索两个指数。同一配比在前两个锚点的损失还应满足 $L_2(\mathbf p)=a+\lambda L_1(\mathbf p)$，其中 $\lambda=\kappa_2/\kappa_1$、$a=b_2-\lambda b_1$。这一配对关系消去了 $\varphi$，因而可在不依赖其具体函数形式的条件下检验可分离结构。配对回归的训练折 $R^2$ 中位数为 $0.9868$，留出配比的跨规模预测相对 RMSE 中位数为 $1.16\%$。
+上述对比利用实验设计形成的单因子变化，而不依赖同时搜索两个指数。同一配比在前两个锚点的损失还应满足 $L_2(\mathbf p)=a+r_{21}L_1(\mathbf p)$，其中 $r_{21}=\kappa_2/\kappa_1$、$a=b_2-r_{21}b_1$。这一配对关系消去了 $\varphi$，因而可在不依赖其具体函数形式的条件下检验可分离结构。配对回归的训练折 $R^2$ 中位数为 $0.9868$，留出配比的跨规模预测相对 RMSE 中位数为 $1.16\%$。
 
 \begin{figure}[htbp]
     \centering
@@ -1150,13 +1152,13 @@ qthree decision/.style={diamond,aspect=2.25,draw=QThreeRed,
 \begin{equation}\label{eq:q3_3}
     x=(p\odot\mathbf q,\operatorname{clr}_{\delta}(p)),\qquad
     z=\frac{x-\mu}{\sigma},\qquad
-    \Phi_k=s_k(\beta_{0k}+\boldsymbol\theta_k^{\mathsf T}z-c_k).
+    \varphi_k=s_k(\beta_{0k}+\boldsymbol\theta_k^{\mathsf T}z-c_k).
 \end{equation}
 
-其中，$k=1,\ldots,13$ 对应评测域，$\mu,\sigma$ 为特征标准化参数，其余系数均取第二问估计结果。规模衰减项与基础损失响应为
+其中，$k=1,\ldots,13$ 对应评测域，$\mu,\sigma$ 为特征标准化参数；$\varphi_k$ 为第二问估计的逐目标组成损失修正。规模衰减项与基础损失响应为
 \begin{equation}\label{eq:q3_4}
     S_k=(n/0.001)^{-\eta_k}(d/1)^{-\zeta_k},\qquad
-    L_{2,k}=E_k+A_kn^{-\alpha}+B_kd^{-\beta}+S_k\Phi_k,
+    L_{2,k}=E_k+A_kn^{-\alpha}+B_kd^{-\beta}+S_k\varphi_k,
 \end{equation}
 
 这里 $\alpha=\beta=0.2931826439$。固定领域质量已通过 $p\odot\mathbf q$ 进入基础响应，整体治理带来的变化则由B7质量律补充：
@@ -1253,12 +1255,6 @@ qthree decision/.style={diamond,aspect=2.25,draw=QThreeRed,
 
 其中，$N_{\mathrm{cap}}$、$D_{\mathrm{cap}}$ 为规模范围与预算共同限定的搜索上界。主求解器采用SLSQP，设置三个确定性起点，并在满足预算、质量边界、凸组合及13域损失为正的候选中选择目标值最低者；独立复算采用COBYQA。
 
-初始搜索使用25个锚点以降低权重维度，但其凸包只是完整A4凸包的子集，不能据此排除其他真实配方方向上的改善。为检查锚点缩减的影响，固定 $N,D,Q$，对全部512个配方沿下式作方向扫描：
-\begin{equation}\label{eq:q3_17}
-    p(t)=(1-t)p+ta_r,\qquad r=1,\ldots,512,\qquad t\in\{10^{-4},10^{-3}\}
-\end{equation}
-
-这里 $a_r$ 为第 $r$ 个真实配方。发现下降方向后，将相应配方加入锚点集合并重新求解。由于 $p$ 和 $a_r$ 均属于完整A4凸包，增广过程始终保留真实配方支持约束。图~\ref{fig:q3_4}给出候选增广与复核流程；该检查用于寻找遗漏方向，不构成连续域全局最优证明。
 \begin{figure}[htbp]
     \centering
     \begin{tikzpicture}[font=\small]
@@ -1302,6 +1298,13 @@ qthree decision/.style={diamond,aspect=2.25,draw=QThreeRed,
     \caption{真实配方约束下的候选增广与求解复核流程}
     \label{fig:q3_4}
 \end{figure}
+初始搜索使用25个锚点以降低权重维度，但其凸包只是完整A4凸包的子集，不能据此排除其他真实配方方向上的改善。为检查锚点缩减的影响，固定 $N,D,Q$，对全部512个配方沿下式作方向扫描：
+\begin{equation}\label{eq:q3_17}
+    p(t)=(1-t)p+ta_r,\qquad r=1,\ldots,512,\qquad t\in\{10^{-4},10^{-3}\}
+\end{equation}
+
+
+这里 $a_r$ 为第 $r$ 个真实配方。发现下降方向后，将相应配方加入锚点集合并重新求解。由于 $p$ 和 $a_r$ 均属于完整A4凸包，增广过程始终保留真实配方支持约束。图~\ref{fig:q3_4}给出候选增广与复核流程；该检查用于寻找遗漏方向，不构成连续域全局最优证明。
 
 为使配置结果具有可比性，主实验在相同预算、上下文和成本条件下设置四组对照：仅优化 $N,D$ 的规模基线，进一步释放配比的配比组，释放治理质量的质量组，以及同时释放两者的联合组。11档预算、5档上下文和3类成本共形成165个情景、660项求解，其他敏感性与复算安排见表~\ref{tab:q3_5}。
 \begin{table}[htbp]\centering\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.12}
@@ -1371,17 +1374,19 @@ qthree decision/.style={diamond,aspect=2.25,draw=QThreeRed,
         \bottomrule\end{tabularx}
 \end{table}
 
-对全部A4配方作方向检查后，165个原联合配置均发现初始25锚点凸包之外的改善方向。上下文4096的33组增广求解最终使用39--42个锚点，较原联合解进一步改善 $0.8383\%$--$2.5512\%$，配比的 $L_1$ 距离变化为 $0.5280$--$0.6468$。图~\ref{fig:q3_7}说明初始搜索范围对配置有实质影响；这部分收益单独报告，不并入原四组消融结果。
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=.98\textwidth]{figures/result_q3_hull_expansion.pdf}
+    \includegraphics[width=.9\textwidth]{figures/result_q3_hull_expansion.pdf}
     \caption{上下文4096时33组锚点增广配置相对原25锚点联合解的变化}\label{fig:q3_7}
 \end{figure}
 
+对全部A4配方作方向检查后，165个原联合配置均发现初始25锚点凸包之外的改善方向。上下文4096的33组增广求解最终使用39--42个锚点，较原联合解进一步改善 $0.8383\%$--$2.5512\%$，配比的 $L_1$ 距离变化为 $0.5280$--$0.6468$。图~\ref{fig:q3_7}说明初始搜索范围对配置有实质影响；这部分收益单独报告，不并入原四组消融结果。
+
 整体损失下降也不意味着每个评测域同时改善。原165组联合情景中，162组至少有一个评测域损失上升，最多涉及2个领域；最大退步为 $0.0867182$ nats，出现在 $C=3\times10^{20}$、上下文2048、幂成本条件下的dm mathematics。图~\ref{fig:q3_6}保留13域的变化，说明均值目标下存在领域间权衡，不能仅凭平均改善判断全部任务受益。
+
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=.82\textwidth]{figures/result_q3_domain_tradeoffs.pdf}
+    \includegraphics[width=.88\textwidth]{figures/result_q3_domain_tradeoffs.pdf}
     \caption{典型配置的逐域代价；热力图保留13个评测域和9组预算--成本组合，颜色表示相对原配方的Loss变化}
     \label{fig:q3_6}
 \end{figure}
@@ -1395,13 +1400,33 @@ qthree decision/.style={diamond,aspect=2.25,draw=QThreeRed,
     H=J_{\mathrm{quality}}+J_{\mathrm{mixture}}-J_{\mathrm{base}}-J_{\mathrm{joint}}.
 \end{equation}
 
+\begin{figure}[tpb]
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[width=.90\linewidth]{figures/result_q3_finite_regret.pdf}
+        \caption{有限候选的情景后悔值}
+        \label{fig:q3_12}
+    \end{subfigure}\par\medskip
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[width=.90\linewidth]{figures/process_q3_solver_agreement.pdf}
+        \caption{两种求解器的一致性}
+        \label{fig:q3_13}
+    \end{subfigure}
+    \caption{有限情景下的稳健配置与求解器一致性检验}
+    \label{fig:q3_robust_solver}
+\end{figure}
+
 图~\ref{fig:q3_5}给出指数成本、上下文4096的四组轨迹。165个情景中，联合配置相对规模基线的平均损失改善为 $4.1603\%$--$5.8086\%$；$H$ 在71组为正、47组为负、47组接近零。因此，配比和治理的联合收益取决于预算与响应曲率，不能把两者单独优化的收益直接相加。上述改善均为响应模型预测。
+
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=.72\textwidth]{figures/result_q3_loss_ablation.pdf}
+    \includegraphics[width=.90\textwidth]{figures/result_q3_loss_ablation.pdf}
     \caption{指数成本、上下文4096时11档预算的四组消融；各组均联动优化N/D}
     \label{fig:q3_5}
 \end{figure}
+
 
 其次，质量收益的幅度与桥接形式可能影响候选排序。对同一候选集分别采用两种桥接和三种正收益强度，构成六个情景。设 $X$ 为共同可行候选集，以各情景中的最佳候选为参照，定义相对后悔值
 \begin{equation}\label{eq:q3_21}
@@ -1418,25 +1443,7 @@ qthree decision/.style={diamond,aspect=2.25,draw=QThreeRed,
 165组中的最大相对后悔值为 $1.5465\%$，在另设的零收益压力情景下为 $2.5946\%$。图~\ref{fig:q3_12}表明，候选对已考察的质量收益变化保持有限幅度的稳定性；这一结论限定于共同候选集和给定情景集合。
 
 最后，以相同25锚点、相同三个起点和相同配置进行SLSQP与COBYQA的30对复算。60个结果均满足基本可行条件，59个通过扰动检查，其中SLSQP为30/30、COBYQA为29/30，最大均值损失差为 $0.000168474$。图~\ref{fig:q3_13}同时比较损失差与函数调用次数，用于检查结果对求解器的依赖，而非证明全局最优。
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{\textwidth}
-        \centering
-        \includegraphics[width=.98\linewidth]{figures/result_q3_finite_regret.pdf}
-        \caption{有限候选的情景后悔值}
-        \label{fig:q3_12}
-    \end{subfigure}\par\medskip
-    \begin{subfigure}[b]{\textwidth}
-        \centering
-        \includegraphics[width=.98\linewidth]{figures/process_q3_solver_agreement.pdf}
-        \caption{两种求解器的一致性}
-        \label{fig:q3_13}
-    \end{subfigure}
-    \caption{有限情景下的稳健配置与求解器一致性检验}
-    \label{fig:q3_robust_solver}
-\end{figure}
 
-\FloatBarrier
 \subsection{质量成本与上下文长度的配置影响}
 
 \subsubsection{基于边际弹性的资源替代关系}
@@ -1448,11 +1455,12 @@ qthree decision/.style={diamond,aspect=2.25,draw=QThreeRed,
     T_Q=J_Q-\frac{J_DDg'(Q)}{aN+h(Q)}.
 \end{equation}
 
+
 $T_Q$ 是沿预算边界提高质量时的净损失变化。若 $T_Q<0$，局部增加治理质量仍有利；内点驻值要求 $T_Q=0$。在下界处，$T_Q\ge0$ 对应继续治理缺乏局部收益；上界处则应结合相应的单侧条件判断，不能仅凭质量触及上界认定模型失效。
 
-对未触及规模边界的配置，$N,D$ 的驻点条件为
+以 $\mu_C$ 表示算力预算约束的乘子，对未触及规模边界的配置，$N,D$ 的驻点条件为
 \begin{equation}\label{eq:q3_13}
-    J_N+\lambda aD=0,\qquad J_D+\lambda(aN+h)=0.
+    J_N+\mu_C aD=0,\qquad J_D+\mu_C(aN+h)=0.
 \end{equation}
 
 进而得到损失弹性与治理成本份额之间的关系：
@@ -1471,7 +1479,7 @@ $T_Q$ 是沿预算边界提高质量时的净损失变化。若 $T_Q<0$，局部
 式~\eqref{eq:q3_14}说明，治理成本占比越高，可分配给模型与数据规模的相对空间越小；式~\eqref{eq:q3_15}则表明，固定质量和上下文且 $h(Q)>0$ 时，模型规模增加会降低治理成本份额。因此，质量治理的绝对投入与预算占比不能互相替代。
 
 图~\ref{fig:q3_8}给出三项成本分解。以增广后的幂成本配置为例，预算从 $10^{22}$ 增至 $10^{24}$ FLOPs时，治理占比由 $19.2241\%$ 降至 $2.6935\%$，绝对成本却从 $1.9224\times10^{21}$ 增至 $2.6935\times10^{22}$ FLOPs。图~\ref{fig:q3_9}进一步复核原165组联合配置的局部资源均衡关系，最大归一化残差为 $2.04434\times10^{-6}$。
-\begin{figure}[H]
+\begin{figure}[tpb]
     \centering
     \begin{subfigure}[b]{.49\textwidth}
         \centering
@@ -1489,18 +1497,7 @@ $T_Q$ 是沿预算边界提高质量时的净损失变化。若 $T_Q<0$，局部
     \label{fig:q3_cost_balance}
 \end{figure}
 
-\subsubsection{基于端点归一化的质量成本比较}
-
-三类成本不仅曲率不同，价格量级也不同。直接比较原参数下的解，无法区分配置变化究竟来自函数形状还是治理价格。为此，以指数成本从基础质量提升至1的增量价格为参照，对其余形式作端点归一化：
-\begin{equation}\label{eq:q3_19}
-    \lambda_f=\frac{g_{\exp}(1)-g_{\exp}(Q_{\mathrm{base}})}{g_f(1)-g_f(Q_{\mathrm{base}})},
-    \qquad h_f^{\mathrm{norm}}(Q)=\lambda_f[g_f(Q)-g_f(Q_{\mathrm{base}})]_+.
-\end{equation}
-
-其中 $f$ 表示成本类型。归一化后，各成本在 $Q=1$ 处具有相同增量价格，但区间内的边际成本仍保留各自形状，从而可以比较不同治理路径对配置的影响。
-
-图~\ref{fig:q3_11}比较原参数与归一化参数下的质量轨迹；55个预算--上下文组合中，有19组的最低损失所对应成本形式发生变化。这说明质量投入同时受价格量级和曲率影响，不能据原参数下的一次排序断言某种函数普遍更优。图~\ref{fig:q3_10}同时给出各成本下的预算--上下文轨迹，供下一节比较注意力开销的影响。
-\begin{figure}[H]
+\begin{figure}[tpb]
     \centering
     \begin{subfigure}[b]{.49\textwidth}
         \centering
@@ -1517,6 +1514,18 @@ $T_Q$ 是沿预算边界提高质量时的净损失变化。若 $T_Q<0$，局部
     \caption{不同预算、上下文与成本口径下的质量配置轨迹}
     \label{fig:q3_quality_paths}
 \end{figure}
+
+\subsubsection{基于端点归一化的质量成本比较}
+
+三类成本不仅曲率不同，价格量级也不同。直接比较原参数下的解，无法区分配置变化究竟来自函数形状还是治理价格。为此，以指数成本从基础质量提升至1的增量价格为参照，对其余形式作端点归一化：
+\begin{equation}\label{eq:q3_19}
+    \nu_f=\frac{g_{\exp}(1)-g_{\exp}(Q_{\mathrm{base}})}{g_f(1)-g_f(Q_{\mathrm{base}})},
+    \qquad h_f^{\mathrm{norm}}(Q)=\nu_f[g_f(Q)-g_f(Q_{\mathrm{base}})]_+.
+\end{equation}
+
+其中 $f$ 表示成本类型。归一化后，各成本在 $Q=1$ 处具有相同增量价格，但区间内的边际成本仍保留各自形状，从而可以比较不同治理路径对配置的影响。
+
+图~\ref{fig:q3_11}比较原参数与归一化参数下的质量轨迹；55个预算--上下文组合中，有19组的最低损失所对应成本形式发生变化。这说明质量投入同时受价格量级和曲率影响，不能据原参数下的一次排序断言某种函数普遍更优。图~\ref{fig:q3_10}同时给出各成本下的预算--上下文轨迹，供下一节比较注意力开销的影响。
 
 \subsubsection{注意力临界长度与上下文敏感性检验}
 
@@ -1617,7 +1626,7 @@ $T_Q$ 是沿预算边界提高质量时的净损失变化。若 $T_Q<0$，局部
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.88\textwidth]{figures/fig7_1.pdf}
+    \includegraphics[width=0.90\textwidth]{figures/fig7_1.pdf}
     \caption{前三问机制输出与能力前沿分析的统一框架}
     \label{fig:q4-framework}
 \end{figure}
