@@ -4,96 +4,76 @@
 \expandafter\ifx\csname urlstyle\endcsname\relax\relax\else
   \urlstyle{same}\fi
 
-\bibitem[{卢经纬\ 等(2023)卢经纬, 郭超, 戴星原, 缪青海,
-  王兴霞, 杨静, and 王飞跃}]{lu2023chatgpt}
+\bibitem[{卢经纬\ 等(2023)卢经纬, 郭超, 戴星原, 缪青海, 王兴霞, 杨静, and 王飞跃}]{lu2023chatgpt}
 卢经纬, 郭超, 戴星原, 等,
 \newblock 问答ChatGPT之后：超大预训练模型的机遇和挑战,
 \newblock 自动化学报, 49\penalty0 (4):\penalty0 705-717, 2023.
 
-\bibitem[{彭泽顺\ 等(2026)彭泽顺, 韩智博, 张岩峰, 李晓华,
-  于明鹤, 范吉立, and 于戈}]{peng2026pretraining}
+\bibitem[{彭泽顺\ 等(2026)彭泽顺, 韩智博, 张岩峰, 李晓华, 于明鹤, 范吉立, and 于戈}]{peng2026pretraining}
 彭泽顺, 韩智博, 张岩峰, 等,
 \newblock 大语言模型预训练系统关键技术综述,
 \newblock 软件学报, 37\penalty0 (1):\penalty0 200-229, 2026.
 
-\bibitem[{刘泽垣\ 等(2025)刘泽垣, 王鹏江, 宋晓斌, 张欣, and
-  江奔奔}]{liu2025hallucination}
+\bibitem[{刘泽垣\ 等(2025)刘泽垣, 王鹏江, 宋晓斌, 张欣, and 江奔奔}]{liu2025hallucination}
 刘泽垣, 王鹏江, 宋晓斌, 等,
 \newblock 大语言模型的幻觉问题研究综述,
 \newblock 软件学报, 36\penalty0 (3):\penalty0 1152-1185, 2025.
 
-\bibitem[{Xie et~al.(2023)Xie, Pham, Dong, Du, Liu, Lu, Liang, Le, Ma, and
-  Yu}]{xie2023doremi}
+\bibitem[{Xie et~al.(2023)Xie, Pham, Dong, Du, Liu, Lu, Liang, Le, Ma, and Yu}]{xie2023doremi}
 Xie~S~M, Pham~H, Dong~X, et~al.,
-\newblock {DoReMi}: Optimizing Data Mixtures Speeds Up Language Model
-  Pretraining,
+\newblock {DoReMi}: Optimizing Data Mixtures Speeds Up Language Model Pretraining,
 \newblock Advances in Neural Information Processing Systems: volume~36,
 \newblock 69798-69818, 2023.
 
-\bibitem[{Muennighoff et~al.(2023)Muennighoff, Rush, Barak, Le~Scao, Tazi,
-  Piktus, Pyysalo, Wolf, and Raffel}]{muennighoff2023scaling}
+\bibitem[{Muennighoff et~al.(2023)Muennighoff, Rush, Barak, Le~Scao, Tazi, Piktus, Pyysalo, Wolf, and Raffel}]{muennighoff2023scaling}
 Muennighoff~N, Rush~A, Barak~B, et~al.,
 \newblock Scaling Data-Constrained Language Models,
 \newblock Advances in Neural Information Processing Systems: volume~36,
 \newblock 50358-50376, 2023.
 
-\bibitem[{Schaeffer et~al.(2023)Schaeffer, Miranda, and
-  Koyejo}]{schaeffer2023emergent}
+\bibitem[{Schaeffer et~al.(2023)Schaeffer, Miranda, and Koyejo}]{schaeffer2023emergent}
 Schaeffer~R, Miranda~B, Koyejo~S,
 \newblock Are Emergent Abilities of Large Language Models a Mirage?,
 \newblock Advances in Neural Information Processing Systems: volume~36,
 \newblock 55565-55581, 2023.
 
-\bibitem[{Zheng et~al.(2023)Zheng, Chiang, Sheng, Zhuang, Wu, Zhuang, Lin, Li,
-  Li, Xing, Zhang, Gonzalez, and Stoica}]{zheng2023judge}
+\bibitem[{Zheng et~al.(2023)Zheng, Chiang, Sheng, Zhuang, Wu, Zhuang, Lin, Li, Li, Xing, Zhang, Gonzalez, and Stoica}]{zheng2023judge}
 Zheng~L, Chiang~W~L, Sheng~Y, et~al.,
 \newblock Judging {LLM}-as-a-Judge with {MT-Bench} and Chatbot Arena,
 \newblock Advances in Neural Information Processing Systems: volume~36,
 \newblock 46595-46623, 2023.
 
-\bibitem[{Li et~al.(2024)Li, Fang, Smyrnis, Ivgi, Jordan, Gadre,
-  et~al.}]{li2024datacomp}
+\bibitem[{Li et~al.(2024)Li, Fang, Smyrnis, Ivgi, Jordan, Gadre, et~al.}]{li2024datacomp}
 Li~J, Fang~A, Smyrnis~G, et~al.,
-\newblock {DataComp-LM}: In Search of the Next Generation of Training Sets for
-  Language Models,
+\newblock {DataComp-LM}: In Search of the Next Generation of Training Sets for Language Models,
 \newblock Advances in Neural Information Processing Systems: volume~37,
 \newblock 14200-14282, 2024.
 
-\bibitem[{Penedo et~al.(2024)Penedo, Kydl{\'{i}}{\v{c}}ek, Allal, Lozhkov,
-  Mitchell, Raffel, von Werra, and Wolf}]{penedo2024fineweb}
+\bibitem[{Penedo et~al.(2024)Penedo, Kydl{\'{i}}{\v{c}}ek, Allal, Lozhkov, Mitchell, Raffel, von Werra, and Wolf}]{penedo2024fineweb}
 Penedo~G, Kydl{\'{i}}{\v{c}}ek~H, Allal~L~B, et~al.,
-\newblock The {FineWeb} Datasets: Decanting the Web for the Finest Text Data at
-  Scale,
+\newblock The {FineWeb} Datasets: Decanting the Web for the Finest Text Data at Scale,
 \newblock Advances in Neural Information Processing Systems: volume~37,
 \newblock 30811-30849, 2024.
 
-\bibitem[{Porian et~al.(2024)Porian, Wortsman, Jitsev, Schmidt, and
-  Carmon}]{porian2024resolving}
+\bibitem[{Porian et~al.(2024)Porian, Wortsman, Jitsev, Schmidt, and Carmon}]{porian2024resolving}
 Porian~T, Wortsman~M, Jitsev~J, et~al.,
-\newblock Resolving Discrepancies in Compute-Optimal Scaling of Language
-  Models,
+\newblock Resolving Discrepancies in Compute-Optimal Scaling of Language Models,
 \newblock Advances in Neural Information Processing Systems: volume~37,
 \newblock 100535-100570, 2024.
 
-\bibitem[{Ruan et~al.(2024)Ruan, Maddison, and
-  Hashimoto}]{ruan2024observational}
+\bibitem[{Ruan et~al.(2024)Ruan, Maddison, and Hashimoto}]{ruan2024observational}
 Ruan~Y, Maddison~C~J, Hashimoto~T,
-\newblock Observational Scaling Laws and the Predictability of Language Model
-  Performance,
+\newblock Observational Scaling Laws and the Predictability of Language Model Performance,
 \newblock Advances in Neural Information Processing Systems: volume~37,
 \newblock 15841-15892, 2024.
 
-\bibitem[{Chiang et~al.(2024)Chiang, Zheng, Sheng, Angelopoulos, Li, Li, Zhu,
-  Zhang, Jordan, Gonzalez, and Stoica}]{chiang2024arena}
+\bibitem[{Chiang et~al.(2024)Chiang, Zheng, Sheng, Angelopoulos, Li, Li, Zhu, Zhang, Jordan, Gonzalez, and Stoica}]{chiang2024arena}
 Chiang~W~L, Zheng~L, Sheng~Y, et~al.,
-\newblock Chatbot Arena: An Open Platform for Evaluating {LLM}s by Human
-  Preference,
-\newblock Proceedings of the 41st International Conference on Machine Learning:
-  volume 235,
+\newblock Chatbot Arena: An Open Platform for Evaluating {LLM}s by Human Preference,
+\newblock Proceedings of the 41st International Conference on Machine Learning: volume 235,
 \newblock 8359-8388, 2024.
 
-\bibitem[{Liu et~al.(2025)Liu, Zheng, Muennighoff, Zeng, Dou, Pang, Jiang, and
-  Lin}]{liu2025regmix}
+\bibitem[{Liu et~al.(2025)Liu, Zheng, Muennighoff, Zeng, Dou, Pang, Jiang, and Lin}]{liu2025regmix}
 Liu~Q, Zheng~X, Muennighoff~N, et~al.,
 \newblock {RegMix}: Data Mixture as Regression for Language Model Pre-training,
 \newblock International Conference on Learning Representations,
@@ -101,13 +81,11 @@ Liu~Q, Zheng~X, Muennighoff~N, et~al.,
 
 \bibitem[{Ye et~al.(2025)Ye, Liu, Sun, Zhan, Zhou, and Qiu}]{ye2025mixing}
 Ye~J, Liu~P, Sun~T, et~al.,
-\newblock Data Mixing Laws: Optimizing Data Mixtures by Predicting Language
-  Modeling Performance,
+\newblock Data Mixing Laws: Optimizing Data Mixtures by Predicting Language Modeling Performance,
 \newblock International Conference on Learning Representations,
 \newblock 82263-82287, 2025.
 
-\bibitem[{White et~al.(2025)White, Dooley, Roberts, Pal, Feuer, Jain,
-  Shwartz-Ziv, Jain, Saifullah, Dey, et~al.}]{white2025livebench}
+\bibitem[{White et~al.(2025)White, Dooley, Roberts, Pal, Feuer, Jain, Shwartz-Ziv, Jain, Saifullah, Dey, et~al.}]{white2025livebench}
 White~C, Dooley~S, Roberts~M, et~al.,
 \newblock {LiveBench}: A Challenging, Contamination-Limited {LLM} Benchmark,
 \newblock International Conference on Learning Representations,
