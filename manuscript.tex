@@ -18,9 +18,35 @@
 \usepackage{caption}
 \usepackage{placeins}
 \usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{listings}
 \usetikzlibrary{arrows.meta,shapes.geometric}
 \captionsetup[figure]{justification=centering,font=small,labelsep=quad}
 \captionsetup[table]{justification=centering,font=small,labelsep=quad}
+
+\lstdefinestyle{appendixcode}{
+    language=Python,
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\bfseries,
+    commentstyle=\itshape\color{black!55},
+    stringstyle=\ttfamily,
+    numbers=left,
+    numberstyle=\tiny\color{black!50},
+    numbersep=6pt,
+    frame=single,
+    framerule=0.3pt,
+    rulecolor=\color{black!35},
+    backgroundcolor=\color{black!3},
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    xleftmargin=1.5em,
+    framexleftmargin=1.1em,
+    aboveskip=0.45em,
+    belowskip=0.7em
+}
 
 % 算法
 \usepackage[noend]{algpseudocode}
@@ -1919,13 +1945,15 @@ $R_j$衡量固定单一来源后总方差的相对缩减。由于各来源存在
 
 \subsection{主要结论}
 
-问题一将异质质量信号统一为可比较的样本与领域质量分，并在配比单纯形上刻画逐目标损失响应。质量分与人工复核结果的 Spearman 相关为 $0.666$，配比预测模型在真实留出配方上的平均 $R^2$ 为 $0.765$，表明质量评价与来源组成均包含可利用的信息。但配比排序的一致性随模型规模增大而减弱，不能将小模型的最优配方直接推广到大模型。
+问题一将异质质量信号统一为可比较的样本与领域质量分，并在配比单纯形上刻画逐目标损失响应。质量分与人工复核结果的 Spearman 相关为 $0.666$，高冲突前 $10\%$ 样本贡献了 $64.8\%$ 的总绝对修正量，表明可靠性校正主要作用于异常尾部而非整体重排。配比预测模型在真实留出配方上的平均 $R^2$ 为 $0.765$，说明来源组成包含可利用的预测信息。但配比排序的一致性随模型规模增大而减弱，不能将小模型的最优配方直接推广到大模型。
 
 问题二以归一化经典律锚定规模效应，再辨识质量加权的组成响应。广义律在三个已观测规模上的留出相对 RMSE 为 $5.54\%$，中心化配比效应的 $R^2$ 为 $0.9006$，说明组成信息能够解释同等规模下经典律未刻画的损失差异。在参考工作点，质量由 $0.6$ 提高至 $0.7$ 对应的等损失 Token 节省中位数为 $13.97$ 亿，叠加可行的一个百分点配比调整后为 $14.06$ 亿。这是给定质量标定与耦合形式的模型推算，不是普适的 Token 兑换率。
 
-问题三在统一 FLOPs 预算下联合配置参数量、训练量、治理质量和领域配比。相对同预算的规模基线，$165$ 个情景的平均损失改善为 $4.16\%$--$5.81\%$，但其中 $162$ 个情景至少有一个评估目标退步。由此，平均最优不等于逐领域最优，实际配置还须明确任务权重与最低性能要求。
+问题三在统一 FLOPs 预算下联合配置参数量、训练量、治理质量和领域配比。相对同预算的规模基线，$165$ 个情景的平均损失改善为 $4.16\%$--$5.81\%$，但其中 $162$ 个情景至少有一个评估目标退步。多情景检验也未发现联合配置下稳定的结构性转移，说明最优资源比例并不存在随预算变化的统一阶段切换。由此，平均最优不等于逐领域最优，实际配置还须明确任务权重与最低性能要求。
 
 问题四进一步将最优损失连接到综合能力尺度。观测期开放权重模型的能力前沿提高 $8.307$ 分，而固定桥接样本下规模贡献份额只能部分识别为 $0\%$--$8.52\%$。算力平台情景的 12 个月点预测为 $53.358$ 分，短期回测的点预测精度并未优于最后值保持。该框架的作用在于比较算力路径与非规模技术路径的条件影响，而非给出唯一的历史归因比例或保证更准确的短期预测。
+
+综合四问可见，训练资源的边际价值不能仅由参数规模和 Token 数决定。语料质量与领域组成改变同等规模下的损失响应，预算约束进一步决定这些数据价值能否转化为有效配置，而现实能力增长还包含无法由规模机制单独解释的非规模因素。因此，本文形成了“数据价值--损失响应--预算配置--现实能力”的递进分析链，各层结论均受相应数据支持域和识别条件约束。
 
 \subsection{局限与适用边界}
 
@@ -1940,20 +1968,186 @@ $R_j$衡量固定单一来源后总方差的相对缩减。由于各来源存在
 \clearpage
 \begingroup
 \interlinepenalty=10000
-\nocite{lu2023chatgpt,peng2026pretraining,liu2025hallucination,xie2023doremi,muennighoff2023scaling,schaeffer2023emergent,zheng2023judge,li2024datacomp,penedo2024fineweb,porian2024resolving,ruan2024observational,chiang2024arena,liu2025regmix,ye2025mixing,white2025livebench}
+\nocite{lu2023chatgpt,gao2026pretraining,liu2025hallucination,xie2023doremi,muennighoff2023scaling,schaeffer2023emergent,zheng2023judge,li2024datacomp,penedo2024fineweb,porian2024resolving,ruan2024observational,chiang2024arena,liu2025regmix,ye2025mixing,white2025livebench}
 \bibliographystyle{gmcm}
 \bibliography{reference}
 \endgroup
 
+\clearpage
 \begin{appendices}
-    \section{完整数据审计表}
-    % TODO
+\renewcommand{\thetable}{\Alph{section}.\arabic{table}}
+\renewcommand*{\theHtable}{appendix.\Alph{section}.\arabic{table}}
+\renewcommand{\thesubsection}{\Alph{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
 
-    \section{关键参数与敏感性结果}
-    % TODO
+\section{数据使用清单}
 
-    \section{程序代码}
-    % TODO
+本文按实际进入计算的接口整理数据，而不把题目附件简单等同为同一等级的观测。问题一直接处理 A1--A16，问题二以 B1--B7 为估计与验证主体，并将 B8--B10限于外推诊断。问题三接收前两问的模型接口，同时使用 A4 的真实配方凸包、B7 的质量响应和 C7 的上下文范围。问题四使用 C1--C8 中与能力、算力、桥接和逐任务审计有关的数据。各文件的关键字段与用途见表~\ref{tab:appendix-data-use}。
+
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{longtable}{P{1.15cm} C{3.65cm} C{4.25cm} C{5.55cm}}
+    \caption{实际使用的数据、关键字段与证据角色}\label{tab:appendix-data-use}\\
+    \toprule
+    数据编号 & 文件内容与规模 & 关键字段 & 本文中的用途 \\
+    \midrule
+    \endfirsthead
+    \multicolumn{4}{c}{\small 表~\thetable\quad 实际使用的数据、关键字段与证据角色（续）}\\
+    \toprule
+    数据编号 & 文件内容与规模 & 关键字段 & 本文中的用途 \\
+    \midrule
+    \endhead
+    \midrule
+    \multicolumn{4}{r}{\small 接下页}\\
+    \endfoot
+    \bottomrule
+    \endlastfoot
+    A1--A3 & 质量信号主样本与 arxiv、github 扩展集，共 272505 条 JSONL 记录 & \texttt{\_source\_domain}、文本、长度及 22 项质量信号 & 构造七域质量分，识别冲突证据，并检验主样本对同源扩展数据的代表性。A1 用于主估计，A2、A3 用于外部一致性检查 \\
+    A4--A5 & 512 组 1M 训练配方及对应的 13 域验证损失 & \texttt{index}、17 个 \texttt{train\_the\_pile\_*}、13 个 \texttt{*\_val\_loss} & 由 \texttt{index} 严格配对，估计组成响应并形成问题三的真实配方凸包 \\
+    A6--A11 & 1M、60M 和 1B 三个尺度的检验配方与损失 & \texttt{index}、17 域份额、13 域验证损失 & 检查配比模型的同尺度泛化和跨尺度迁移，不参与 A4--A5 的训练拟合 \\
+    A12--A15 & 10B、70B 的配方子集与估算损失，每个尺度 63 组 & \texttt{index}、17 域份额、13 域估算损失 & 只用于审视远距离外推的方向反转，不作为真实训练证据 \\
+    A16 & 17 个配方域到质量域的参考映射 & \texttt{mixture\_domain}、\texttt{quality\_domain}、\texttt{mapping\_type} & 将七域质量结果转为 17 域质量描述，并保留人工映射带来的解释边界 \\
+    B1 & Pythia 真实训练日志，共 1176 行 & \texttt{N\_params\_B}、\texttt{D\_tokens\_B}、\texttt{C\_FLOPs\_1e21}、\texttt{val\_loss} & 辨识经典标度律的误差下界与规模指数，是问题二和问题三的规模基线 \\
+    B2--B5 & 族外日志、插值轨迹、跨族终点和文献观测 & 模型族、参数量、Token 数、验证损失及来源标识 & 分层检验 B1 所得结构的跨来源稳定性。插值和半合成记录不与真实观测混合解释 \\
+    B6--B7 & 含质量变化的 N--D--Q 实验，其中 B6 是 B7 的子集 & \texttt{experiment\_id}、\texttt{N\_params\_B}、\texttt{D\_tokens\_B}、\texttt{Q\_score}、\texttt{val\_loss} & 以 B7 的质量网格校准整体质量响应。B6 不作为独立重复样本 \\
+    B8 & 含大规模推算的质量扩展实验，共 1704 行 & 参数量、Token 数、质量分和估算损失 & 仅用于发现大规模区间的方向反转和下界截断，不进入质量主拟合 \\
+    B9--B10 & 超大模型元数据与 100B--10000B 预估损失 & 模型、参数量、Token 数、算力和预估损失 & 作为经典律的外推对照，区分模型资料与估算结果的证据等级 \\
+    C1--C2 & 开放模型排行榜及增强元数据 & \texttt{Model}、\texttt{\#Params (B)}、\texttt{Submission Date}、许可证、类型和六项得分 & 筛选六项完整的开放权重 chat/finetuned 模型，构造三个月滚动 90\% 能力前沿。C2 用于补充类型和开放性字段 \\
+    C3 & 历史排行榜时序记录 & 年份、模型、综合评测和来源字段 & 只用于长期量级核验，不与 2024--2025 年主前沿直接拼接 \\
+    C4 & Epoch 全模型元数据 & 领域、任务、发布日期、训练算力、置信度和权重开放性 & 筛选开放权重 Language LM/QA 模型，构造月度算力前沿。$6ND$ 估计仅进入敏感性分析 \\
+    C5--C6 & Loss--Benchmark 桥接样本，C6 共 75 条 & \texttt{Val\_Loss}、\texttt{LB\_Average}、六项得分、\texttt{Loss\_Source}、\texttt{Loss\_Comparability} & C6 按 High 和 Medium 分层建立来源校准单调桥接，C5 用于口径核对 \\
+    C7 & 模型架构与上下文元数据 & \texttt{n\_layers}、\texttt{n\_heads}、\texttt{d\_model}、\texttt{max\_position\_embeddings} & 提取五档可行上下文长度，作为问题三的外生情景输入 \\
+    C8 & 1863 个模型目录中的逐任务 JSON 快照 & \texttt{results}、任务指标键、文件时间戳和模型目录名 & 重建六项逐任务得分，检验综合能力增长的任务广度，并审计零值、缺失、重复与损坏快照 \\
+\end{longtable}
+\endgroup
+
+\subsection{C8逐任务JSON的解析与异常处理}
+
+C8 共含 1958 个 JSON 文件。本文采用严格 JSON 解析，不修补不完整文本。1954 个文件解析成功，4 个文件因字符串或对象在文件末尾截断而失败。对同一模型存在多个快照时保留时间戳最新的可解析记录，因此其中 1 个受损模型可由较早快照恢复。其余 3 个模型目录没有任何可解析记录，未进入逐任务统计。处理结果见表~\ref{tab:appendix-c8-audit}。
+
+\begin{table}[H]
+    \caption{C8逐任务JSON的解析审计}
+    \label{tab:appendix-c8-audit}
+    \TableSetup
+    \begin{tabular}{P{4.2cm} C{2.4cm} C{7.0cm}}
+        \toprule
+        审计项目 & 数量 & 处理口径 \\
+        \midrule
+        JSON 文件 & 1958 & 逐文件严格解析，拒绝截断文件 \\
+        成功解析文件 & 1954 & 同一模型保留最新的可解析快照 \\
+        截断文件 & 4 & 记录 \texttt{JSONDecodeError} 后跳过，不进行字符串补全 \\
+        模型目录 & 1863 & 1860 个目录至少存在一条可解析记录 \\
+        六项完整模型 & 1854 & 用于逐任务前沿和任务广度分析 \\
+        重复与精确零值 & 0 个重复模型 & MATH 的 154 个零值和 IFEval 的 4 个零值保留为有效困难任务得分 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+六项任务的缺失数均不超过 6 条，解析后的 1860 个模型没有重复模型行或重复结果文件，也未发现集中于同一时段的快照故障。由此，正文使用的 1854 个六维完整模型来自可复核的严格解析样本，而非对损坏 JSON 或零分记录进行插补后的结果。
+
+\clearpage
+\section{程序代码}
+
+\begin{center}
+\small 完整代码已开源\quad
+\url{https://github.com/Galazxhy/huawei_code}
+\end{center}
+
+仓库按问题保存数据审计、模型估计、情景求解和结果复核脚本。以下代码均为主程序中的代表性核心节选，省略文件读写、绘图和日志输出。随机种子、数据合同与完整参数保留在仓库对应目录中。
+
+\subsection{问题一的层次质量合成}
+
+问题一先在信息簇内部由域均衡相关矩阵确定非负权重，再对各信息簇等权平均。该实现避免同类冗余指标因数量较多而重复放大。
+
+\begin{lstlisting}[style=appendixcode]
+def derive_weights(group, correlations):
+    if len(group) == 1:
+        return np.ones(1)
+    corr = correlations.loc[group, group].to_numpy(float)
+    _, vectors = np.linalg.eigh(np.abs(corr))
+    weights = np.abs(vectors[:, -1])
+    return weights / weights.sum()
+
+def score_clusters(frame, group_weights):
+    components = {}
+    for group, weights in group_weights.items():
+        x = frame[list(weights)].to_numpy(float)
+        components[f"H_{group}"] = x @ np.array(list(weights.values()))
+    result = pd.DataFrame(components)
+    result["Q0"] = result.mean(axis=1)
+    return result
+\end{lstlisting}
+
+\subsection{问题二的广义标度律计算}
+
+问题二将经典规模项与质量加权的组成响应置于同一设计矩阵中，并逐评测域估计非负系数。规模指数来自真实训练轨迹，不在有限配比样本上重复辨识。
+
+\begin{lstlisting}[style=appendixcode]
+def design(data, q, w, gamma, alpha, beta, include_mixture):
+    x = np.maximum(data.p @ (q * w), 1e-12)
+    multiplier = 1 + x**gamma if include_mixture else np.ones_like(x)
+    return np.stack((
+        np.ones((len(x), data.y.shape[1])),
+        np.broadcast_to(data.n[:, None]**(-alpha), data.y.shape),
+        np.broadcast_to((data.d**(-beta) * multiplier)[:, None],
+                        data.y.shape)), axis=2)
+
+def predict(data, model, q, alpha, beta):
+    features = design(data, q / model.q_reference, model.w,
+                      model.gamma, alpha, beta, model.form != "no_mixture")
+    return np.einsum("nkj,kj->nk", features, model.coefficients)
+\end{lstlisting}
+
+\newpage
+\subsection{问题三的预算保持联合求解}
+
+问题三在归一化坐标中搜索参数量、Token 数、质量和配方。每次展开决策变量时先计算预算允许的上界，使候选点始终满足算力约束，配方则由真实配方锚点的凸组合给出。
+
+\begin{lstlisting}[style=appendixcode]
+def unpack(x):
+    q = float(x[2])
+    n_cap = min(n_hi, max(n_lo, (budget / d_lo - h(q)) / a))
+    n = np.exp(np.log(n_lo) + x[0] * np.log(n_cap / n_lo))
+    d_cap = min(d_hi, max(d_lo, budget / (a * n + h(q))))
+    d = np.exp(np.log(d_lo) + x[1] * np.log(d_cap / d_lo))
+    if free_p:
+        weights = np.maximum(x[3:], 0)
+        weights = weights / weights.sum()
+        p = weights @ anchors
+    else:
+        p = p_reference
+    return float(n), float(d), q, p
+\end{lstlisting}
+
+\subsection{问题四的分层桥接验证}
+
+问题四对 Medium 样本按模型族留一，对 High 样本逐观测留一，并在相同划分下比较线性、保序与来源校准单调模型。该划分同时控制了模型族内相关性和高可比样本量较少的问题。
+
+\begin{lstlisting}[style=appendixcode]
+def bridge_cv_splits(c6):
+    data = c6.copy()
+    data["family"] = data["Model"].str.split("/").str[0]
+    medium = ~data["Loss_Comparability"].str.contains("High", na=False)
+    for family, test in data[medium].groupby("family"):
+        yield f"Medium_family:{family}", data.drop(test.index), test
+    for idx in data.index[~medium]:
+        yield f"High_LOO:{idx}", data.drop(idx), data.loc[[idx]]
+
+def state_component(frontier, lstar, bridge):
+    scale_term = bridge.predict(lstar, medium=False)
+    technical_state = frontier - scale_term
+    return scale_term, technical_state
+\end{lstlisting}
+
+\clearpage
+\section{AI工具使用披露}
+
+本队在竞赛期间使用 OpenAI Codex（GPT-5 系列模型）辅助概念理解与资料线索整理、方法备选讨论、代码实现检查与调试、结果一致性核查以及部分文字表达优化。AI 工具不直接决定本文的模型形式、关键假设、参数口径和研究结论。研究问题的最终分解、数学推导、模型选择、实验设计、结果解释与取舍均由团队成员在理解和复核后独立确认。
+
+对 AI 辅助形成或修改的程序，团队检查其算法逻辑，并使用题目数据完成复算、边界测试和结果核验。对 AI 提供的资料线索与文字建议，均重新核对原始数据、公式或正式文献后再决定是否采用。本文未将 AI 输出作为数据来源、实证证据或学术依据，也未直接复制未经团队独立推导和验证的 AI 建模方案。论文与程序的正确性、可复现性和合规性由参赛队伍承担。
+
 \end{appendices}
 
 
