@@ -21,6 +21,8 @@
 \usepackage{xcolor}
 \usepackage{listings}
 \usetikzlibrary{arrows.meta,shapes.geometric}
+% 代码附录直接内嵌于本文，使用 fvextra 排版，无需 -shell-escape。
+\usepackage{fvextra}
 \captionsetup[figure]{justification=centering,font=small,labelsep=quad}
 \captionsetup[table]{justification=centering,font=small,labelsep=quad}
 
@@ -1059,12 +1061,12 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
 \definecolor{QThreeGreen}{HTML}{5A8D36}
 \renewcommand{\tabularxcolumn}[1]{m{#1}}
 \tikzset{
-    qthree box/.style={draw=black!60,fill=white,line width=.5pt,
+qthree box/.style={draw=black!60,fill=white,line width=.5pt,
         text width=4.25cm,minimum height=.92cm,inner sep=4pt,align=center},
-    qthree heading/.style={text=white,text width=5.05cm,
+qthree heading/.style={text=white,text width=5.05cm,
         minimum height=.8cm,inner sep=0pt,align=center,font=\small\bfseries},
-    qthree arrow/.style={-{Stealth[length=2.2mm]},line width=.8pt},
-    qthree decision/.style={diamond,aspect=2.25,draw=QThreeRed,
+qthree arrow/.style={-{Stealth[length=2.2mm]},line width=.8pt},
+qthree decision/.style={diamond,aspect=2.25,draw=QThreeRed,
         fill=QThreeRed!7,text width=2.65cm,inner sep=1.5pt,align=center}
 }
 
@@ -1075,50 +1077,50 @@ $S_{i\leftarrow j}<0$ 表示在当前配比附近将份额从 $j$ 转移到 $i$ 
 本文沿用第二问的13个评测域响应，将A4的512组真实配方作为配比约束依据，以B7质量响应描述整体治理收益，并采用C7的五档上下文长度构造外生情景。A6--A11用于复算前问响应在检验配方上的一致性，A12--A15用于说明跨尺度外推边界，不与真实训练观测混合。图~\ref{fig:q3_1}给出前问输入、联合求解和结果检验的衔接。
 
 \begin{figure}[htbp]
-\centering
-\begin{tikzpicture}[font=\small]
-\filldraw[fill=QThreeBlue!12,draw=black!45] (-8.05,.4) rectangle (-2.95,-6.65);
-\filldraw[fill=QThreeRed!10,draw=black!45] (-2.55,.4) rectangle (2.55,-6.65);
-\filldraw[fill=QThreeGreen!14,draw=black!45] (2.95,.4) rectangle (8.05,-6.65);
-\node[qthree heading,fill=QThreeBlue] at (-5.5,0) {前两问输入};
-\node[qthree heading,fill=QThreeRed] at (0,0) {联合优化};
-\node[qthree heading,fill=QThreeGreen] at (5.5,0) {结果检验};
-\node[align=center] at (-5.5,-.78) {质量、配方与响应接口};
-\node[align=center] at (0,-.78) {成本约束与配方支持域};
-\node[align=center] at (5.5,-.78) {候选配置与结构判定};
-\node[qthree box] (inone) at (-5.5,-1.6) {问题一：固定 $\mathbf Q^{(17)}$};
-\node[qthree box] (intwo) at (-5.5,-3.05) {A4 真实配方：512 行};
-\node[qthree box] (inthree) at (-5.5,-4.5) {问题二：13 域响应\\$L_k(N,D,\mathbf p)$};
-\node[qthree box] (opone) at (0,-1.6) {外生 $L_{\mathrm{ctx}}$\\C7 五个可行值};
-\node[qthree box] (optwo) at (0,-3.05) {决策变量：$N,D,\mathbf p,Q$};
-\node[qthree box] (opthree) at (0,-4.5) {$C_{\mathrm{train}}+C_{\mathrm{attn}}+C_Q\le C$};
-\node[qthree box] (opfour) at (0,-5.95) {$\mathbf p=A^{\mathsf T}w$\\$w\ge0,\quad\mathbf1^{\mathsf T}w=1$};
-\node[qthree box] (checkone) at (5.5,-1.6) {多起点约束求解};
-\node[qthree box] (checktwo) at (5.5,-3.05) {消融、敏感性\\与独立复算};
-\node[qthree box] (checkthree) at (5.5,-4.5) {有限候选与\\结构转移判定};
-\node[qthree box,draw=QThreeGreen,fill=QThreeGreen,text=white] (result) at (5.5,-5.95)
-    {$N^*,D^*,\mathbf p^*,Q^*$\\及预测损失};
-\draw[qthree arrow,QThreeBlue] (inone) -- (intwo);
-\draw[qthree arrow,QThreeBlue] (intwo) -- (inthree);
-\draw[qthree arrow,QThreeBlue] (inthree) -- (opthree);
-\draw[qthree arrow,QThreeRed] (opone) -- (optwo);
-\draw[qthree arrow,QThreeRed] (optwo) -- (opthree);
-\draw[qthree arrow,QThreeRed] (opthree) -- (opfour);
-\draw[qthree arrow,QThreeRed] (opthree) -- (checkthree);
-\draw[qthree arrow,QThreeGreen] (checkone) -- (checktwo);
-\draw[qthree arrow,QThreeGreen] (checktwo) -- (checkthree);
-\draw[qthree arrow,QThreeGreen] (checkthree) -- (result);
-\node[align=center,text width=15.8cm] at (0,-7.15)
-    {$\mathbf Q^{(17)}$ 为前两问交接的固定域质量向量；$Q$ 为联合优化中的治理质量变量。};
-\end{tikzpicture}
-\caption{质量、配方及规模响应的衔接与联合求解流程}\label{fig:q3_1}
+    \centering
+    \begin{tikzpicture}[font=\small]
+        \filldraw[fill=QThreeBlue!12,draw=black!45] (-8.05,.4) rectangle (-2.95,-6.65);
+        \filldraw[fill=QThreeRed!10,draw=black!45] (-2.55,.4) rectangle (2.55,-6.65);
+        \filldraw[fill=QThreeGreen!14,draw=black!45] (2.95,.4) rectangle (8.05,-6.65);
+        \node[qthree heading,fill=QThreeBlue] at (-5.5,0) {前两问输入};
+        \node[qthree heading,fill=QThreeRed] at (0,0) {联合优化};
+        \node[qthree heading,fill=QThreeGreen] at (5.5,0) {结果检验};
+        \node[align=center] at (-5.5,-.78) {质量、配方与响应接口};
+        \node[align=center] at (0,-.78) {成本约束与配方支持域};
+        \node[align=center] at (5.5,-.78) {候选配置与结构判定};
+        \node[qthree box] (inone) at (-5.5,-1.6) {问题一：固定 $\mathbf Q^{(17)}$};
+        \node[qthree box] (intwo) at (-5.5,-3.05) {A4 真实配方：512 行};
+        \node[qthree box] (inthree) at (-5.5,-4.5) {问题二：13 域响应\\$L_k(N,D,\mathbf p)$};
+        \node[qthree box] (opone) at (0,-1.6) {外生 $L_{\mathrm{ctx}}$\\C7 五个可行值};
+        \node[qthree box] (optwo) at (0,-3.05) {决策变量：$N,D,\mathbf p,Q$};
+        \node[qthree box] (opthree) at (0,-4.5) {$C_{\mathrm{train}}+C_{\mathrm{attn}}+C_Q\le C$};
+        \node[qthree box] (opfour) at (0,-5.95) {$\mathbf p=A^{\mathsf T}w$\\$w\ge0,\quad\mathbf1^{\mathsf T}w=1$};
+        \node[qthree box] (checkone) at (5.5,-1.6) {多起点约束求解};
+        \node[qthree box] (checktwo) at (5.5,-3.05) {消融、敏感性\\与独立复算};
+        \node[qthree box] (checkthree) at (5.5,-4.5) {有限候选与\\结构转移判定};
+        \node[qthree box,draw=QThreeGreen,fill=QThreeGreen,text=white] (result) at (5.5,-5.95)
+        {$N^*,D^*,\mathbf p^*,Q^*$\\及预测损失};
+        \draw[qthree arrow,QThreeBlue] (inone) -- (intwo);
+        \draw[qthree arrow,QThreeBlue] (intwo) -- (inthree);
+        \draw[qthree arrow,QThreeBlue] (inthree) -- (opthree);
+        \draw[qthree arrow,QThreeRed] (opone) -- (optwo);
+        \draw[qthree arrow,QThreeRed] (optwo) -- (opthree);
+        \draw[qthree arrow,QThreeRed] (opthree) -- (opfour);
+        \draw[qthree arrow,QThreeRed] (opthree) -- (checkthree);
+        \draw[qthree arrow,QThreeGreen] (checkone) -- (checktwo);
+        \draw[qthree arrow,QThreeGreen] (checktwo) -- (checkthree);
+        \draw[qthree arrow,QThreeGreen] (checkthree) -- (result);
+        \node[align=center,text width=15.8cm] at (0,-7.15)
+        {$\mathbf Q^{(17)}$ 为前两问交接的固定域质量向量；$Q$ 为联合优化中的治理质量变量。};
+    \end{tikzpicture}
+    \caption{质量、配方及规模响应的衔接与联合求解流程}\label{fig:q3_1}
 \end{figure}
 
 记参数个数和训练Token数为 $N,D$，17域配比为 $\mathbf p=(p_1,\ldots,p_{17})$。第一问的 $\mathbf q=\mathbf Q^{(17)}$ 是固定领域属性，因跨域映射而只有6个不同取值；本问另以标量 $Q$ 表示整体治理质量，不将17个领域的质量提升分别设为自由变量。为衔接第二问的规模单位，定义
 \begin{equation}\label{eq:q3_1}
-n=\frac{N}{10^9},\qquad d=\frac{D}{10^9},\qquad
-q_{\mathrm{mix}}=\sum_{i=1}^{17}p_iq_i,\qquad
-Q_{\mathrm{base}}=\frac{1}{17}\sum_{i=1}^{17}q_i=0.6219326581.
+    n=\frac{N}{10^9},\qquad d=\frac{D}{10^9},\qquad
+    q_{\mathrm{mix}}=\sum_{i=1}^{17}p_iq_i,\qquad
+    Q_{\mathrm{base}}=\frac{1}{17}\sum_{i=1}^{17}q_i=0.6219326581.
 \end{equation}
 
 其中，$q_{\mathrm{mix}}$ 随配比变化，$Q$ 则通过质量收益和治理成本参与优化，二者不作等同。主分析取 $Q\in[Q_{\mathrm{base}},1]$；训练平均配方加权基线 $0.6193580512$ 用于敏感性比较，B7的校准点 $Q_0=0.6$ 仅作为质量响应标尺。表中 $N,D$ 统一以B表示（$1\,\mathrm B=10^9$），算力计算仍采用绝对个数。
@@ -1129,99 +1131,99 @@ Q_{\mathrm{base}}=\frac{1}{17}\sum_{i=1}^{17}q_i=0.6219326581.
 
 领域配比属于组成数据，不能把各分量视为互不约束的投入。沿用第二问的特征构造，对配比作带平滑项的中心化对数比变换，并与质量加权份额拼接为34维特征：
 \begin{equation}\label{eq:q3_2}
-\operatorname{clr}_{\delta}(p)_i=\ln(p_i+\delta)-\frac{1}{17}\sum_{j=1}^{17}\ln(p_j+\delta),
-\qquad \delta=0.001.
+    \operatorname{clr}_{\delta}(p)_i=\ln(p_i+\delta)-\frac{1}{17}\sum_{j=1}^{17}\ln(p_j+\delta),
+    \qquad \delta=0.001.
 \end{equation}
 
 \begin{equation}\label{eq:q3_3}
-x=(p\odot\mathbf q,\operatorname{clr}_{\delta}(p)),\qquad
-z=\frac{x-\mu}{\sigma},\qquad
-\Phi_k=s_k(\beta_{0k}+\boldsymbol\theta_k^{\mathsf T}z-c_k).
+    x=(p\odot\mathbf q,\operatorname{clr}_{\delta}(p)),\qquad
+    z=\frac{x-\mu}{\sigma},\qquad
+    \Phi_k=s_k(\beta_{0k}+\boldsymbol\theta_k^{\mathsf T}z-c_k).
 \end{equation}
 
 其中，$k=1,\ldots,13$ 对应评测域，$\mu,\sigma$ 为特征标准化参数，其余系数均取第二问估计结果。规模衰减项与基础损失响应为
 \begin{equation}\label{eq:q3_4}
-S_k=(n/0.001)^{-\eta_k}(d/1)^{-\zeta_k},\qquad
-L_{2,k}=E_k+A_kn^{-\alpha}+B_kd^{-\beta}+S_k\Phi_k,
+    S_k=(n/0.001)^{-\eta_k}(d/1)^{-\zeta_k},\qquad
+    L_{2,k}=E_k+A_kn^{-\alpha}+B_kd^{-\beta}+S_k\Phi_k,
 \end{equation}
 
 这里 $\alpha=\beta=0.2931826439$。固定领域质量已通过 $p\odot\mathbf q$ 进入基础响应，整体治理带来的变化则由B7质量律补充：
 \begin{equation}\label{eq:q3_5}
-F_7(n,d,Q)=0.9654077057+0.5307187920n^{-0.2825}
-              +1.6157571765(dQ)^{-0.108}.
+    F_7(n,d,Q)=0.9654077057+0.5307187920n^{-0.2825}
+    +1.6157571765(dQ)^{-0.108}.
 \end{equation}
 
 为使治理前后的响应在基线质量处一致，主模型采用比值桥接，并以加性桥接作为敏感性对照：
 \begin{equation}\label{eq:q3_6}
-\begin{aligned}
-L_k^{(r)}&=L_{2,k}\left[\frac{F_7(n,d,Q)}{F_7(n,d,Q_{\mathrm{base}})}\right]^{\kappa},\\
-L_k^{(a)}&=L_{2,k}+\kappa\left[F_7(n,d,Q)-F_7(n,d,Q_{\mathrm{base}})\right].
-\end{aligned}
+    \begin{aligned}
+        L_k^{(r)} & =L_{2,k}\left[\frac{F_7(n,d,Q)}{F_7(n,d,Q_{\mathrm{base}})}\right]^{\kappa}, \\
+        L_k^{(a)} & =L_{2,k}+\kappa\left[F_7(n,d,Q)-F_7(n,d,Q_{\mathrm{base}})\right].
+    \end{aligned}
 \end{equation}
 
 两种形式在 $Q=Q_{\mathrm{base}}$ 时均还原第二问响应。主模型取 $\kappa=1$，另以 $0.5$、$1.5$ 检验收益强度，$\kappa=0$ 构成零收益对照。固定 $N,D,Q$ 时，质量项不改变配方排序；联合配置的收益来自配比、规模与治理投入在同一预算下的相互调整。
 
 图~\ref{fig:q3_2}区分三个直接观测尺度与本问的条件预测配置；图~\ref{fig:q3_3}展示三类质量成本的差异。前者说明规模外推范围，后者说明质量收益必须与其额外开销共同考虑。
 \begin{figure}[htbp]
-\centering
-\begin{subfigure}[b]{.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{figures/raw_q3_scale_support_halfwidth.pdf}
-\caption{直接支持尺度与联合配置}
-\label{fig:q3_2}
-\end{subfigure}\hfill
-\begin{subfigure}[b]{.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{figures/process_q3_quality_cost_halfwidth.pdf}
-\caption{三种质量成本的增量曲线}
-\label{fig:q3_3}
-\end{subfigure}
-\caption{直接观测尺度与联合配置及三类质量治理成本}\label{fig:q3_support_cost}
+    \centering
+    \begin{subfigure}[b]{.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/raw_q3_scale_support_halfwidth.pdf}
+        \caption{直接支持尺度与联合配置}
+        \label{fig:q3_2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/process_q3_quality_cost_halfwidth.pdf}
+        \caption{三种质量成本的增量曲线}
+        \label{fig:q3_3}
+    \end{subfigure}
+    \caption{直接观测尺度与联合配置及三类质量治理成本}\label{fig:q3_support_cost}
 \end{figure}
 
 单位Token的治理成本采用表~\ref{tab:q3_3}所列三种形式。治理只计算相对于基础质量的增量，不把原有数据质量重复计费。
 \begin{table}[htbp]\centering\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.12}
-\caption{质量成本函数及题给参数}\label{tab:q3_3}
-\begin{tabularx}{\textwidth}{@{}P{2.2cm}C{5.5cm}L@{}}\toprule
-形式 & $g(Q)$ & 单位与说明 \\
-\midrule
-指数 & $10^7\exp(6Q)$ & FLOPs/Token，随质量凸增 \\
-幂函数 & $5\times10^9Q^4$ & FLOPs/Token，四次幂 \\
-对数 & $2\times10^9\ln(1+10Q)$ & FLOPs/Token，上界处有限 \\
-\bottomrule\end{tabularx}
+    \caption{质量成本函数及题给参数}\label{tab:q3_3}
+    \begin{tabularx}{\textwidth}{@{}P{2.2cm}C{5.5cm}L@{}}\toprule
+        形式  & $g(Q)$                  & 单位与说明             \\
+        \midrule
+        指数  & $10^7\exp(6Q)$          & FLOPs/Token，随质量凸增 \\
+        幂函数 & $5\times10^9Q^4$        & FLOPs/Token，四次幂   \\
+        对数  & $2\times10^9\ln(1+10Q)$ & FLOPs/Token，上界处有限 \\
+        \bottomrule\end{tabularx}
 \end{table}
 
 令 $L_{\mathrm{ctx}}$ 为外生上下文长度，将训练与注意力的合并系数及增量质量成本分别记为
 \begin{equation}\label{eq:q3_7}
-a=6+\eta_{\mathrm{attn}}L_{\mathrm{ctx}},\qquad
-h(Q)=[g(Q)-g(Q_{\mathrm{base}})]_+,\qquad
-\eta_{\mathrm{attn}}=2\times10^{-4}.
+    a=6+\eta_{\mathrm{attn}}L_{\mathrm{ctx}},\qquad
+    h(Q)=[g(Q)-g(Q_{\mathrm{base}})]_+,\qquad
+    \eta_{\mathrm{attn}}=2\times10^{-4}.
 \end{equation}
 
 训练、质量处理与注意力计算使用同一训练数据量 $D$，故总成本为
 \begin{equation}\label{eq:q3_8}
-C_{\mathrm{used}}=C_{\mathrm{train}}+C_{\mathrm{attn}}+C_Q
-=6ND+\eta_{\mathrm{attn}}NDL_{\mathrm{ctx}}+Dh(Q)
-=D[aN+h(Q)].
+    C_{\mathrm{used}}=C_{\mathrm{train}}+C_{\mathrm{attn}}+C_Q
+    =6ND+\eta_{\mathrm{attn}}NDL_{\mathrm{ctx}}+Dh(Q)
+    =D[aN+h(Q)].
 \end{equation}
 
 设 $A\in\mathbb R^{m\times17}$ 为所选真实配方组成的锚点矩阵，$w$ 为非负权重，$\mathbf p=A^{\mathsf T}w$。以13域平均损失衡量整体表现，并将训练成本、质量边界和配方支持统一纳入约束。
 
 \begin{samepage}
-\noindent\textbf{问题三的联合配置模型写为}
-\begin{equation}\label{eq:q3_9}
-\begin{aligned}
-\min_{N,D,Q,w}\quad &J(N,D,Q,w)=\frac{1}{13}\sum_{k=1}^{13}L_k(N,D,Q,A^{\mathsf T}w),\\
-\mathrm{s.t.}\quad &\left\{
-\begin{aligned}
-&D\left[(6+\eta_{\mathrm{attn}}L_{\mathrm{ctx}})N+h(Q)\right]\le C, &&\text{(C1)}\\
-&Q_{\mathrm{base}}\le Q\le1, &&\text{(C2)}\\
-&10^6\le N\le10^{11},\quad 10^9\le D\le10^{13}, &&\text{(C3)}\\
-&p=A^{\mathsf T}w,\quad w\ge0,\quad \mathbf1^{\mathsf T}w=1, &&\text{(C4)}\\
-&L_k(N,D,Q,p)\ge10^{-6},\quad k=1,\ldots,13. &&\text{(C5)}
-\end{aligned}\right.
-\end{aligned}
-\end{equation}
+    \noindent\textbf{问题三的联合配置模型写为}
+    \begin{equation}\label{eq:q3_9}
+        \begin{aligned}
+            \min_{N,D,Q,w}\quad & J(N,D,Q,w)=\frac{1}{13}\sum_{k=1}^{13}L_k(N,D,Q,A^{\mathsf T}w), \\
+            \mathrm{s.t.}\quad  & \left\{
+            \begin{aligned}
+                 & D\left[(6+\eta_{\mathrm{attn}}L_{\mathrm{ctx}})N+h(Q)\right]\le C, &  & \text{(C1)} \\
+                 & Q_{\mathrm{base}}\le Q\le1,                                        &  & \text{(C2)} \\
+                 & 10^6\le N\le10^{11},\quad 10^9\le D\le10^{13},                     &  & \text{(C3)} \\
+                 & p=A^{\mathsf T}w,\quad w\ge0,\quad \mathbf1^{\mathsf T}w=1,        &  & \text{(C4)} \\
+                 & L_k(N,D,Q,p)\ge10^{-6},\quad k=1,\ldots,13.                        &  & \text{(C5)}
+            \end{aligned}\right.
+        \end{aligned}
+    \end{equation}
 \end{samepage}
 
 约束(C1)限定总FLOPs，(C2)限定治理质量，(C3)给出规模计算范围，(C4)使配比位于真实配方的凸包内，(C5)排除非正损失预测。由此，优化对象是四类资源的联合配置，而非四个独立目标；$L_{\mathrm{ctx}}$ 仅改变给定情景下的成本，不参与内点寻优。
@@ -1230,82 +1232,82 @@ C_{\mathrm{used}}=C_{\mathrm{train}}+C_{\mathrm{attn}}+C_Q
 
 参数量与数据量横跨多个数量级，直接以原始数值求解容易造成搜索尺度失衡。本文采用对数参数化，将规模坐标归一化至 $[0,1]$，并根据预算计算可行质量上界：
 \begin{equation}\label{eq:q3_16}
-\begin{aligned}
-Q_{\mathrm{hi}}&=\max\{Q\in[Q_{\mathrm{base}},1]:D_{\min}[aN_{\min}+h(Q)]\le C\},\\
-N&=\exp\{\ln N_{\min}+u\ln(N_{\mathrm{cap}}/N_{\min})\},\\
-D&=\exp\{\ln D_{\min}+v\ln(D_{\mathrm{cap}}/D_{\min})\},\qquad u,v\in[0,1].
-\end{aligned}
+    \begin{aligned}
+        Q_{\mathrm{hi}} & =\max\{Q\in[Q_{\mathrm{base}},1]:D_{\min}[aN_{\min}+h(Q)]\le C\},         \\
+        N               & =\exp\{\ln N_{\min}+u\ln(N_{\mathrm{cap}}/N_{\min})\},                    \\
+        D               & =\exp\{\ln D_{\min}+v\ln(D_{\mathrm{cap}}/D_{\min})\},\qquad u,v\in[0,1].
+    \end{aligned}
 \end{equation}
 
 其中，$N_{\mathrm{cap}}$、$D_{\mathrm{cap}}$ 为规模范围与预算共同限定的搜索上界。主求解器采用SLSQP，设置三个确定性起点，并在满足预算、质量边界、凸组合及13域损失为正的候选中选择目标值最低者；独立复算采用COBYQA。
 
 初始搜索使用25个锚点以降低权重维度，但其凸包只是完整A4凸包的子集，不能据此排除其他真实配方方向上的改善。为检查锚点缩减的影响，固定 $N,D,Q$，对全部512个配方沿下式作方向扫描：
 \begin{equation}\label{eq:q3_17}
-p(t)=(1-t)p+ta_r,\qquad r=1,\ldots,512,\qquad t\in\{10^{-4},10^{-3}\}
+    p(t)=(1-t)p+ta_r,\qquad r=1,\ldots,512,\qquad t\in\{10^{-4},10^{-3}\}
 \end{equation}
 
 这里 $a_r$ 为第 $r$ 个真实配方。发现下降方向后，将相应配方加入锚点集合并重新求解。由于 $p$ 和 $a_r$ 均属于完整A4凸包，增广过程始终保留真实配方支持约束。图~\ref{fig:q3_4}给出候选增广与复核流程；该检查用于寻找遗漏方向，不构成连续域全局最优证明。
 \begin{figure}[htbp]
-\centering
-\begin{tikzpicture}[font=\small]
-\filldraw[fill=QThreeBlue!12,draw=black!45] (-8.05,.4) rectangle (-2.95,-7.6);
-\filldraw[fill=QThreeRed!10,draw=black!45] (-2.55,.4) rectangle (2.55,-7.6);
-\filldraw[fill=QThreeGreen!14,draw=black!45] (2.95,.4) rectangle (8.05,-7.6);
-\node[qthree heading,fill=QThreeBlue] at (-5.5,0) {支持域建立};
-\node[qthree heading,fill=QThreeRed] at (0,0) {改善方向扫描};
-\node[qthree heading,fill=QThreeGreen] at (5.5,0) {候选复核};
-\node[align=center] at (-5.5,-.8) {真实配方与候选锚点};
-\node[align=center] at (0,-.8) {有限方向与重新求解};
-\node[align=center] at (5.5,-.8) {场景稳健性与识别边界};
-\node[qthree box] (source) at (-5.5,-1.6) {A4 真实配方：512 行};
-\node[qthree box] (anchors) at (-5.5,-3.1) {25 个初始锚点 /\\97 个扩展锚点};
-\node[qthree box] (hull) at (-5.5,-4.65) {有限凸组合\\$\mathbf p=A^{\mathsf T}w$\\$w\ge0,\quad\mathbf1^{\mathsf T}w=1$};
-\node[qthree box] (scan) at (0,-1.6) {固定 $N,D,Q$\\扫描 512 个真实配方};
-\node[qthree box] (step) at (0,-3.1) {两步长方向检查\\$t\in\{10^{-4},10^{-3}\}$};
-\node[qthree decision] (decision) at (0,-4.75) {发现严格\\改善？};
-\node[qthree box] (keep) at (-5.5,-6.65) {否：保留候选\\并记录方向};
-\node[qthree box] (expand) at (0,-6.65) {是：加入至多 4 个配方\\重新求解};
-\node[qthree box] (feasible) at (5.5,-1.6) {可行、有限且\\各域 Loss 为正};
-\node[qthree box] (perturb) at (5.5,-3.1) {预算、上下文\\与成本情景复核};
-\node[qthree box] (equivalent) at (5.5,-4.65) {近等价配置与\\跨阈值反例审查};
-\node[qthree box,draw=QThreeGreen,fill=QThreeGreen,text=white] (audit) at (5.5,-6.65)
-    {有限候选库\\推荐配置与复核结果};
-\draw[qthree arrow,QThreeBlue] (source) -- (anchors);
-\draw[qthree arrow,QThreeBlue] (anchors) -- (hull);
-\draw[qthree arrow,QThreeBlue] (hull.east) -- (-2.75,-4.65) -- (-2.75,-1.6) -- (scan.west);
-\draw[qthree arrow,QThreeRed] (scan) -- (step);
-\draw[qthree arrow,QThreeRed] (step) -- (decision);
-\draw[qthree arrow,QThreeRed] (decision.south) -- (expand.north);
-\draw[qthree arrow,QThreeRed] (decision.west) -- (-2.75,-4.75) -- (-2.75,-5.8) -| (keep.north);
-\draw[qthree arrow,QThreeRed] (expand.east) -- (2.75,-6.65) -- (2.75,-1.6) -- (scan.east);
-\draw[qthree arrow,QThreeGreen] (feasible) -- (perturb);
-\draw[qthree arrow,QThreeGreen] (perturb) -- (equivalent);
-\draw[qthree arrow,QThreeGreen] (equivalent) -- (audit);
-\draw[qthree arrow,QThreeRed] (keep.south) -- (-5.5,-7.3) -- (8.2,-7.3) -- (8.2,-1.6) -- (feasible.east);
-\node[align=center,text width=15.8cm] at (0,-8.15)
-    {方向扫描用于检查候选遗漏；最终配置仍须满足可行性与数值稳定性要求。};
-\end{tikzpicture}
-\caption{真实配方约束下的候选增广与求解复核流程}
-\label{fig:q3_4}
+    \centering
+    \begin{tikzpicture}[font=\small]
+        \filldraw[fill=QThreeBlue!12,draw=black!45] (-8.05,.4) rectangle (-2.95,-7.6);
+        \filldraw[fill=QThreeRed!10,draw=black!45] (-2.55,.4) rectangle (2.55,-7.6);
+        \filldraw[fill=QThreeGreen!14,draw=black!45] (2.95,.4) rectangle (8.05,-7.6);
+        \node[qthree heading,fill=QThreeBlue] at (-5.5,0) {支持域建立};
+        \node[qthree heading,fill=QThreeRed] at (0,0) {改善方向扫描};
+        \node[qthree heading,fill=QThreeGreen] at (5.5,0) {候选复核};
+        \node[align=center] at (-5.5,-.8) {真实配方与候选锚点};
+        \node[align=center] at (0,-.8) {有限方向与重新求解};
+        \node[align=center] at (5.5,-.8) {场景稳健性与识别边界};
+        \node[qthree box] (source) at (-5.5,-1.6) {A4 真实配方：512 行};
+        \node[qthree box] (anchors) at (-5.5,-3.1) {25 个初始锚点 /\\97 个扩展锚点};
+        \node[qthree box] (hull) at (-5.5,-4.65) {有限凸组合\\$\mathbf p=A^{\mathsf T}w$\\$w\ge0,\quad\mathbf1^{\mathsf T}w=1$};
+        \node[qthree box] (scan) at (0,-1.6) {固定 $N,D,Q$\\扫描 512 个真实配方};
+        \node[qthree box] (step) at (0,-3.1) {两步长方向检查\\$t\in\{10^{-4},10^{-3}\}$};
+        \node[qthree decision] (decision) at (0,-4.75) {发现严格\\改善？};
+        \node[qthree box] (keep) at (-5.5,-6.65) {否：保留候选\\并记录方向};
+        \node[qthree box] (expand) at (0,-6.65) {是：加入至多 4 个配方\\重新求解};
+        \node[qthree box] (feasible) at (5.5,-1.6) {可行、有限且\\各域 Loss 为正};
+        \node[qthree box] (perturb) at (5.5,-3.1) {预算、上下文\\与成本情景复核};
+        \node[qthree box] (equivalent) at (5.5,-4.65) {近等价配置与\\跨阈值反例审查};
+        \node[qthree box,draw=QThreeGreen,fill=QThreeGreen,text=white] (audit) at (5.5,-6.65)
+        {有限候选库\\推荐配置与复核结果};
+        \draw[qthree arrow,QThreeBlue] (source) -- (anchors);
+        \draw[qthree arrow,QThreeBlue] (anchors) -- (hull);
+        \draw[qthree arrow,QThreeBlue] (hull.east) -- (-2.75,-4.65) -- (-2.75,-1.6) -- (scan.west);
+        \draw[qthree arrow,QThreeRed] (scan) -- (step);
+        \draw[qthree arrow,QThreeRed] (step) -- (decision);
+        \draw[qthree arrow,QThreeRed] (decision.south) -- (expand.north);
+        \draw[qthree arrow,QThreeRed] (decision.west) -- (-2.75,-4.75) -- (-2.75,-5.8) -| (keep.north);
+        \draw[qthree arrow,QThreeRed] (expand.east) -- (2.75,-6.65) -- (2.75,-1.6) -- (scan.east);
+        \draw[qthree arrow,QThreeGreen] (feasible) -- (perturb);
+        \draw[qthree arrow,QThreeGreen] (perturb) -- (equivalent);
+        \draw[qthree arrow,QThreeGreen] (equivalent) -- (audit);
+        \draw[qthree arrow,QThreeRed] (keep.south) -- (-5.5,-7.3) -- (8.2,-7.3) -- (8.2,-1.6) -- (feasible.east);
+        \node[align=center,text width=15.8cm] at (0,-8.15)
+        {方向扫描用于检查候选遗漏；最终配置仍须满足可行性与数值稳定性要求。};
+    \end{tikzpicture}
+    \caption{真实配方约束下的候选增广与求解复核流程}
+    \label{fig:q3_4}
 \end{figure}
 
 为使配置结果具有可比性，主实验在相同预算、上下文和成本条件下设置四组对照：仅优化 $N,D$ 的规模基线，进一步释放配比的配比组，释放治理质量的质量组，以及同时释放两者的联合组。11档预算、5档上下文和3类成本共形成165个情景、660项求解，其他敏感性与复算安排见表~\ref{tab:q3_5}。
 \begin{table}[htbp]\centering\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.12}
-\caption{四组消融与条件实验矩阵}\label{tab:q3_5}
-\begin{tabularx}{\textwidth}{@{}P{3.6cm}P{6.8cm}L@{}}\toprule
-类别 & 自由变量或变化因素 & 数量及用途 \\
-\midrule
-规模基线 & $N,D$；固定平均配方与基础质量 & 联合配置的基准 \\
-配比组 & $N,D,p$；固定基础质量 & 分离配比调整收益 \\
-质量组 & $N,D,Q$；固定平均配方 & 分离治理收益及成本 \\
-联合组 & $N,D,p,Q$ & 评价联合资源配置 \\
-主矩阵 & 11预算、5上下文、3成本、4组 & 660项 \\
-成本对照 & 统一 $Q_{\mathrm{base}}$ 至 1 的端点增量价格 & 检验价格尺度影响 \\
-桥接对照 & 2种桥接、3种强度、2种基线质量 & 检验接口影响 \\
-搜索敏感性 & 49/97锚点、6起点、边界扰动 & 检验求解稳定性 \\
-零收益与预算加密 & $\kappa=0$；41档预算 & 检验治理收益与阈值 \\
-算法对照 & 5预算、2上下文、3成本、2求解器 & 60项 \\
-\bottomrule\end{tabularx}
+    \caption{四组消融与条件实验矩阵}\label{tab:q3_5}
+    \begin{tabularx}{\textwidth}{@{}P{3.6cm}P{6.8cm}L@{}}\toprule
+        类别       & 自由变量或变化因素                          & 数量及用途     \\
+        \midrule
+        规模基线     & $N,D$；固定平均配方与基础质量                  & 联合配置的基准   \\
+        配比组      & $N,D,p$；固定基础质量                     & 分离配比调整收益  \\
+        质量组      & $N,D,Q$；固定平均配方                     & 分离治理收益及成本 \\
+        联合组      & $N,D,p,Q$                          & 评价联合资源配置  \\
+        主矩阵      & 11预算、5上下文、3成本、4组                   & 660项      \\
+        成本对照     & 统一 $Q_{\mathrm{base}}$ 至 1 的端点增量价格 & 检验价格尺度影响  \\
+        桥接对照     & 2种桥接、3种强度、2种基线质量                   & 检验接口影响    \\
+        搜索敏感性    & 49/97锚点、6起点、边界扰动                   & 检验求解稳定性   \\
+        零收益与预算加密 & $\kappa=0$；41档预算                   & 检验治理收益与阈值 \\
+        算法对照     & 5预算、2上下文、3成本、2求解器                  & 60项       \\
+        \bottomrule\end{tabularx}
 \end{table}
 
 \FloatBarrier
@@ -1313,63 +1315,63 @@ p(t)=(1-t)p+ta_r,\qquad r=1,\ldots,512,\qquad t\in\{10^{-4},10^{-3}\}
 
 表~\ref{tab:q3_6}给出上下文4096、预算为 $10^{19}$、$10^{22}$、$10^{24}$ FLOPs时的代表性配置。各行均从相同响应与约束下的可行候选中选取，候选来源分别列明，避免将原25锚点结果与增广后的结果混为一谈。
 \begin{table}[htbp]\centering\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.12}
-\caption{上下文4096时有限候选集中的典型资源配置}\label{tab:q3_6}
-\begin{tabularx}{\textwidth}{@{}P{2.1cm}C{1.0cm}Y Y Y Y C{2.4cm}@{}}\toprule
-$C$（FLOPs） & 成本 & $N$（B） & $D$（B） & $Q$ & $J$ & 候选来源 \\
-\midrule
-$10^{19}$ & 指数 & 0.0678 & 21.64 & 0.6219 & 2.38753 & 扩展锚点 \\
-$10^{19}$ & 幂 & 0.0678 & 21.64 & 0.6219 & 2.38753 & 扩展锚点 \\
-$10^{19}$ & 对数 & 0.0678 & 21.64 & 0.6219 & 2.38753 & 扩展锚点 \\
-$10^{22}$ & 指数 & 2.5115 & 491.40 & 0.9829 & 1.66994 & 扩展锚点 \\
-$10^{22}$ & 幂 & 2.6199 & 452.13 & 1.0000 & 1.67192 & 扩展锚点 \\
-$10^{22}$ & 对数 & 2.2175 & 626.41 & 1.0000 & 1.66062 & 97锚点 \\
-$10^{24}$ & 指数 & 21.9273 & 6529.84 & 1.0000 & 1.46600 & 97锚点 \\
-$10^{24}$ & 幂 & 22.0068 & 6480.02 & 1.0000 & 1.46612 & 97锚点 \\
-$10^{24}$ & 对数 & 21.5744 & 6758.48 & 1.0000 & 1.46547 & 97锚点 \\
-\bottomrule\end{tabularx}
+    \caption{上下文4096时有限候选集中的典型资源配置}\label{tab:q3_6}
+    \begin{tabularx}{\textwidth}{@{}P{2.1cm}C{1.0cm}Y Y Y Y C{2.4cm}@{}}\toprule
+        $C$（FLOPs） & 成本 & $N$（B）  & $D$（B）  & $Q$    & $J$     & 候选来源 \\
+        \midrule
+        $10^{19}$  & 指数 & 0.0678  & 21.64   & 0.6219 & 2.38753 & 扩展锚点 \\
+        $10^{19}$  & 幂  & 0.0678  & 21.64   & 0.6219 & 2.38753 & 扩展锚点 \\
+        $10^{19}$  & 对数 & 0.0678  & 21.64   & 0.6219 & 2.38753 & 扩展锚点 \\
+        $10^{22}$  & 指数 & 2.5115  & 491.40  & 0.9829 & 1.66994 & 扩展锚点 \\
+        $10^{22}$  & 幂  & 2.6199  & 452.13  & 1.0000 & 1.67192 & 扩展锚点 \\
+        $10^{22}$  & 对数 & 2.2175  & 626.41  & 1.0000 & 1.66062 & 97锚点 \\
+        $10^{24}$  & 指数 & 21.9273 & 6529.84 & 1.0000 & 1.46600 & 97锚点 \\
+        $10^{24}$  & 幂  & 22.0068 & 6480.02 & 1.0000 & 1.46612 & 97锚点 \\
+        $10^{24}$  & 对数 & 21.5744 & 6758.48 & 1.0000 & 1.46547 & 97锚点 \\
+        \bottomrule\end{tabularx}
 \end{table}
 
 低预算时，三类成本均选择基础质量，新增算力主要用于参数量与数据量；预算提高后，治理质量逐步进入内点或达到上界。相同预算下，成本形式改变了治理投入与数据量之间的取舍，例如 $10^{22}$ FLOPs时指数成本对应 $Q=0.9829$，而另两类成本达到质量上界。这里的上界解是当前质量响应与成本共同作用的结果，并不表示真实语料已经达到完美质量。
 
 完整配方见表~\ref{tab:q3_7}。以幂成本为例，预算提高时wikipedia en与gutenberg pg 19的份额增加，stackexchange的份额下降；pile cc则先增后减。这表明配方调整并非对某一来源持续加码，而是随规模和治理投入共同变化。
 \begin{table}[H]\centering\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.12}
-\caption{幂成本条件下典型有限候选的完整领域配方（\%）}\label{tab:q3_7}
-\begin{tabularx}{\textwidth}{@{}P{5.9cm}Y Y Y@{}}\toprule
-领域 & $10^{19}$ & $10^{22}$ & $10^{24}$ \\
-\midrule
-arxiv & 3.45 & 2.62 & 1.79 \\
-freelaw & 7.67 & 7.44 & 5.25 \\
-nih exporter & 0.02 & 0.01 & 4.88 \\
-pubmed central & 2.93 & 1.46 & 3.63 \\
-wikipedia en & 6.84 & 7.74 & 19.69 \\
-dm mathematics & 4.73 & 5.06 & 0.84 \\
-github & 11.40 & 12.92 & 12.12 \\
-philpapers & <0.005 & <0.005 & <0.005 \\
-stackexchange & 14.07 & 13.10 & 3.83 \\
-enron emails & 0 & <0.005 & 0.08 \\
-gutenberg pg 19 & 6.55 & 9.03 & 15.90 \\
-pile cc & 17.87 & 28.14 & 11.49 \\
-ubuntu irc & 5.10 & 5.13 & 14.81 \\
-europarl & <0.005 & <0.005 & 0.09 \\
-hackernews & 6.16 & 4.63 & 5.22 \\
-pubmed abstracts & 9.81 & 0.05 & <0.005 \\
-uspto backgrounds & 3.41 & 2.67 & 0.36 \\
-\bottomrule\end{tabularx}
+    \caption{幂成本条件下典型有限候选的完整领域配方（\%）}\label{tab:q3_7}
+    \begin{tabularx}{\textwidth}{@{}P{5.9cm}Y Y Y@{}}\toprule
+        领域                & $10^{19}$ & $10^{22}$ & $10^{24}$ \\
+        \midrule
+        arxiv             & 3.45      & 2.62      & 1.79      \\
+        freelaw           & 7.67      & 7.44      & 5.25      \\
+        nih exporter      & 0.02      & 0.01      & 4.88      \\
+        pubmed central    & 2.93      & 1.46      & 3.63      \\
+        wikipedia en      & 6.84      & 7.74      & 19.69     \\
+        dm mathematics    & 4.73      & 5.06      & 0.84      \\
+        github            & 11.40     & 12.92     & 12.12     \\
+        philpapers        & <0.005    & <0.005    & <0.005    \\
+        stackexchange     & 14.07     & 13.10     & 3.83      \\
+        enron emails      & 0         & <0.005    & 0.08      \\
+        gutenberg pg 19   & 6.55      & 9.03      & 15.90     \\
+        pile cc           & 17.87     & 28.14     & 11.49     \\
+        ubuntu irc        & 5.10      & 5.13      & 14.81     \\
+        europarl          & <0.005    & <0.005    & 0.09      \\
+        hackernews        & 6.16      & 4.63      & 5.22      \\
+        pubmed abstracts  & 9.81      & 0.05      & <0.005    \\
+        uspto backgrounds & 3.41      & 2.67      & 0.36      \\
+        \bottomrule\end{tabularx}
 \end{table}
 
 对全部A4配方作方向检查后，165个原联合配置均发现初始25锚点凸包之外的改善方向。上下文4096的33组增广求解最终使用39--42个锚点，较原联合解进一步改善 $0.8383\%$--$2.5512\%$，配比的 $L_1$ 距离变化为 $0.5280$--$0.6468$。图~\ref{fig:q3_7}说明初始搜索范围对配置有实质影响；这部分收益单独报告，不并入原四组消融结果。
 \begin{figure}[htbp]
-\centering
-\includegraphics[width=.98\textwidth]{figures/result_q3_hull_expansion.pdf}
-\caption{上下文4096时33组锚点增广配置相对原25锚点联合解的变化}\label{fig:q3_7}
+    \centering
+    \includegraphics[width=.98\textwidth]{figures/result_q3_hull_expansion.pdf}
+    \caption{上下文4096时33组锚点增广配置相对原25锚点联合解的变化}\label{fig:q3_7}
 \end{figure}
 
 整体损失下降也不意味着每个评测域同时改善。原165组联合情景中，162组至少有一个评测域损失上升，最多涉及2个领域；最大退步为 $0.0867182$ nats，出现在 $C=3\times10^{20}$、上下文2048、幂成本条件下的dm mathematics。图~\ref{fig:q3_6}保留13域的变化，说明均值目标下存在领域间权衡，不能仅凭平均改善判断全部任务受益。
 \begin{figure}[htbp]
-\centering
-\includegraphics[width=.82\textwidth]{figures/result_q3_domain_tradeoffs.pdf}
-\caption{典型配置的逐域代价；热力图保留13个评测域和9组预算--成本组合，颜色表示相对原配方的Loss变化}
-\label{fig:q3_6}
+    \centering
+    \includegraphics[width=.82\textwidth]{figures/result_q3_domain_tradeoffs.pdf}
+    \caption{典型配置的逐域代价；热力图保留13个评测域和9组预算--成本组合，颜色表示相对原配方的Loss变化}
+    \label{fig:q3_6}
 \end{figure}
 
 \FloatBarrier
@@ -1377,49 +1379,49 @@ uspto backgrounds & 3.41 & 2.67 & 0.36 \\
 
 首先在原25锚点条件下比较四组配置，以相同预算、上下文和成本的规模基线为参照，定义平均改善率及非加性项
 \begin{equation}\label{eq:q3_18}
-G=100\frac{J_{\mathrm{base}}-J_{\mathrm{joint}}}{J_{\mathrm{base}}},\qquad
-H=J_{\mathrm{quality}}+J_{\mathrm{mixture}}-J_{\mathrm{base}}-J_{\mathrm{joint}}.
+    G=100\frac{J_{\mathrm{base}}-J_{\mathrm{joint}}}{J_{\mathrm{base}}},\qquad
+    H=J_{\mathrm{quality}}+J_{\mathrm{mixture}}-J_{\mathrm{base}}-J_{\mathrm{joint}}.
 \end{equation}
 
 图~\ref{fig:q3_5}给出指数成本、上下文4096的四组轨迹。165个情景中，联合配置相对规模基线的平均损失改善为 $4.1603\%$--$5.8086\%$；$H$ 在71组为正、47组为负、47组接近零。因此，配比和治理的联合收益取决于预算与响应曲率，不能把两者单独优化的收益直接相加。上述改善均为响应模型预测。
 \begin{figure}[htbp]
-\centering
-\includegraphics[width=.72\textwidth]{figures/result_q3_loss_ablation.pdf}
-\caption{指数成本、上下文4096时11档预算的四组消融；各组均联动优化N/D}
-\label{fig:q3_5}
+    \centering
+    \includegraphics[width=.72\textwidth]{figures/result_q3_loss_ablation.pdf}
+    \caption{指数成本、上下文4096时11档预算的四组消融；各组均联动优化N/D}
+    \label{fig:q3_5}
 \end{figure}
 
 其次，质量收益的幅度与桥接形式可能影响候选排序。对同一候选集分别采用两种桥接和三种正收益强度，构成六个情景。设 $X$ 为共同可行候选集，以各情景中的最佳候选为参照，定义相对后悔值
 \begin{equation}\label{eq:q3_21}
-J_s^{\mathrm{best}}=\min_{x\in X}J_s(x),\qquad
-R_s(x)=\frac{J_s(x)-J_s^{\mathrm{best}}}{|J_s^{\mathrm{best}}|}.
+    J_s^{\mathrm{best}}=\min_{x\in X}J_s(x),\qquad
+    R_s(x)=\frac{J_s(x)-J_s^{\mathrm{best}}}{|J_s^{\mathrm{best}}|}.
 \end{equation}
 
 再以最小化最坏情景后悔值选择稳健候选：
 \begin{equation}\label{eq:q3_22}
-x_{\mathrm{rob}}\in\mathop{\arg\min}_{x\in X}\max_sR_s(x),\qquad
-v_{\mathrm{rob}}=\min_{x\in X}\max_sR_s(x).
+    x_{\mathrm{rob}}\in\mathop{\arg\min}_{x\in X}\max_sR_s(x),\qquad
+    v_{\mathrm{rob}}=\min_{x\in X}\max_sR_s(x).
 \end{equation}
 
 165组中的最大相对后悔值为 $1.5465\%$，在另设的零收益压力情景下为 $2.5946\%$。图~\ref{fig:q3_12}表明，候选对已考察的质量收益变化保持有限幅度的稳定性；这一结论限定于共同候选集和给定情景集合。
 
 最后，以相同25锚点、相同三个起点和相同配置进行SLSQP与COBYQA的30对复算。60个结果均满足基本可行条件，59个通过扰动检查，其中SLSQP为30/30、COBYQA为29/30，最大均值损失差为 $0.000168474$。图~\ref{fig:q3_13}同时比较损失差与函数调用次数，用于检查结果对求解器的依赖，而非证明全局最优。
 \begin{figure}[H]
-\centering
-\begin{subfigure}[b]{\textwidth}
-\centering
-\includegraphics[width=.98\linewidth]{figures/result_q3_finite_regret.pdf}
-\caption{有限候选的情景后悔值}
-\label{fig:q3_12}
-\end{subfigure}\par\medskip
-\begin{subfigure}[b]{\textwidth}
-\centering
-\includegraphics[width=.98\linewidth]{figures/process_q3_solver_agreement.pdf}
-\caption{两种求解器的一致性}
-\label{fig:q3_13}
-\end{subfigure}
-\caption{有限情景下的稳健配置与求解器一致性检验}
-\label{fig:q3_robust_solver}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[width=.98\linewidth]{figures/result_q3_finite_regret.pdf}
+        \caption{有限候选的情景后悔值}
+        \label{fig:q3_12}
+    \end{subfigure}\par\medskip
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[width=.98\linewidth]{figures/process_q3_solver_agreement.pdf}
+        \caption{两种求解器的一致性}
+        \label{fig:q3_13}
+    \end{subfigure}
+    \caption{有限情景下的稳健配置与求解器一致性检验}
+    \label{fig:q3_robust_solver}
 \end{figure}
 
 \FloatBarrier
@@ -1429,104 +1431,104 @@ v_{\mathrm{rob}}=\min_{x\in X}\max_sR_s(x).
 
 联合配置的变化需要从预算约束下的边际收益解释。当总预算约束取等号、其余相关边界未激活时，可消去 $D$。提高质量一方面直接降低损失，另一方面增加单位Token成本并压缩可训练的数据量，因此
 \begin{equation}\label{eq:q3_12}
-D=\frac{C}{aN+h(Q)},\qquad
-\frac{\mathrm dD}{\mathrm dQ}=-\frac{Dg'(Q)}{aN+h(Q)},\qquad
-T_Q=J_Q-\frac{J_DDg'(Q)}{aN+h(Q)}.
+    D=\frac{C}{aN+h(Q)},\qquad
+    \frac{\mathrm dD}{\mathrm dQ}=-\frac{Dg'(Q)}{aN+h(Q)},\qquad
+    T_Q=J_Q-\frac{J_DDg'(Q)}{aN+h(Q)}.
 \end{equation}
 
 $T_Q$ 是沿预算边界提高质量时的净损失变化。若 $T_Q<0$，局部增加治理质量仍有利；内点驻值要求 $T_Q=0$。在下界处，$T_Q\ge0$ 对应继续治理缺乏局部收益；上界处则应结合相应的单侧条件判断，不能仅凭质量触及上界认定模型失效。
 
 对未触及规模边界的配置，$N,D$ 的驻点条件为
 \begin{equation}\label{eq:q3_13}
-J_N+\lambda aD=0,\qquad J_D+\lambda(aN+h)=0.
+    J_N+\lambda aD=0,\qquad J_D+\lambda(aN+h)=0.
 \end{equation}
 
 进而得到损失弹性与治理成本份额之间的关系：
 \begin{equation}\label{eq:q3_14}
-\varepsilon_N=-\frac{NJ_N}{J},\qquad
-\varepsilon_D=-\frac{DJ_D}{J},\qquad
-\frac{\varepsilon_N}{\varepsilon_D}=\frac{aN}{aN+h}=1-s_Q,
+    \varepsilon_N=-\frac{NJ_N}{J},\qquad
+    \varepsilon_D=-\frac{DJ_D}{J},\qquad
+    \frac{\varepsilon_N}{\varepsilon_D}=\frac{aN}{aN+h}=1-s_Q,
 \end{equation}
 
 \begin{equation}\label{eq:q3_15}
-s_Q=\frac{C_Q}{C_{\mathrm{used}}}=\frac{h(Q)}{aN+h(Q)},\qquad
-\left.\frac{\partial s_Q}{\partial N}\right|_{Q,L_{\mathrm{ctx}}}
-=-\frac{ah(Q)}{[aN+h(Q)]^2}.
+    s_Q=\frac{C_Q}{C_{\mathrm{used}}}=\frac{h(Q)}{aN+h(Q)},\qquad
+    \left.\frac{\partial s_Q}{\partial N}\right|_{Q,L_{\mathrm{ctx}}}
+    =-\frac{ah(Q)}{[aN+h(Q)]^2}.
 \end{equation}
 
 式~\eqref{eq:q3_14}说明，治理成本占比越高，可分配给模型与数据规模的相对空间越小；式~\eqref{eq:q3_15}则表明，固定质量和上下文且 $h(Q)>0$ 时，模型规模增加会降低治理成本份额。因此，质量治理的绝对投入与预算占比不能互相替代。
 
 图~\ref{fig:q3_8}给出三项成本分解。以增广后的幂成本配置为例，预算从 $10^{22}$ 增至 $10^{24}$ FLOPs时，治理占比由 $19.2241\%$ 降至 $2.6935\%$，绝对成本却从 $1.9224\times10^{21}$ 增至 $2.6935\times10^{22}$ FLOPs。图~\ref{fig:q3_9}进一步复核原165组联合配置的局部资源均衡关系，最大归一化残差为 $2.04434\times10^{-6}$。
 \begin{figure}[H]
-\centering
-\begin{subfigure}[b]{.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{figures/result_q3_cost_allocation_halfwidth.pdf}
-\caption{训练、注意力及治理份额}
-\label{fig:q3_8}
-\end{subfigure}\hfill
-\begin{subfigure}[b]{.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{figures/process_q3_resource_balance_halfwidth.pdf}
-\caption{资源均衡残差}
-\label{fig:q3_9}
-\end{subfigure}
-\caption{训练成本分解与局部资源均衡检验}
-\label{fig:q3_cost_balance}
+    \centering
+    \begin{subfigure}[b]{.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/result_q3_cost_allocation_halfwidth.pdf}
+        \caption{训练、注意力及治理份额}
+        \label{fig:q3_8}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/process_q3_resource_balance_halfwidth.pdf}
+        \caption{资源均衡残差}
+        \label{fig:q3_9}
+    \end{subfigure}
+    \caption{训练成本分解与局部资源均衡检验}
+    \label{fig:q3_cost_balance}
 \end{figure}
 
 \subsubsection{基于端点归一化的质量成本比较}
 
 三类成本不仅曲率不同，价格量级也不同。直接比较原参数下的解，无法区分配置变化究竟来自函数形状还是治理价格。为此，以指数成本从基础质量提升至1的增量价格为参照，对其余形式作端点归一化：
 \begin{equation}\label{eq:q3_19}
-\lambda_f=\frac{g_{\exp}(1)-g_{\exp}(Q_{\mathrm{base}})}{g_f(1)-g_f(Q_{\mathrm{base}})},
-\qquad h_f^{\mathrm{norm}}(Q)=\lambda_f[g_f(Q)-g_f(Q_{\mathrm{base}})]_+.
+    \lambda_f=\frac{g_{\exp}(1)-g_{\exp}(Q_{\mathrm{base}})}{g_f(1)-g_f(Q_{\mathrm{base}})},
+    \qquad h_f^{\mathrm{norm}}(Q)=\lambda_f[g_f(Q)-g_f(Q_{\mathrm{base}})]_+.
 \end{equation}
 
 其中 $f$ 表示成本类型。归一化后，各成本在 $Q=1$ 处具有相同增量价格，但区间内的边际成本仍保留各自形状，从而可以比较不同治理路径对配置的影响。
 
 图~\ref{fig:q3_11}比较原参数与归一化参数下的质量轨迹；55个预算--上下文组合中，有19组的最低损失所对应成本形式发生变化。这说明质量投入同时受价格量级和曲率影响，不能据原参数下的一次排序断言某种函数普遍更优。图~\ref{fig:q3_10}同时给出各成本下的预算--上下文轨迹，供下一节比较注意力开销的影响。
 \begin{figure}[H]
-\centering
-\begin{subfigure}[b]{.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{figures/result_q3_quality_regimes_halfwidth.pdf}
-\caption{质量边界轨迹}
-\label{fig:q3_10}
-\end{subfigure}\hfill
-\begin{subfigure}[b]{.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{figures/result_q3_quality_cost_normalized_halfwidth.pdf}
-\caption{归一化成本下的质量轨迹}
-\label{fig:q3_11}
-\end{subfigure}
-\caption{不同预算、上下文与成本口径下的质量配置轨迹}
-\label{fig:q3_quality_paths}
+    \centering
+    \begin{subfigure}[b]{.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/result_q3_quality_regimes_halfwidth.pdf}
+        \caption{质量边界轨迹}
+        \label{fig:q3_10}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/result_q3_quality_cost_normalized_halfwidth.pdf}
+        \caption{归一化成本下的质量轨迹}
+        \label{fig:q3_11}
+    \end{subfigure}
+    \caption{不同预算、上下文与成本口径下的质量配置轨迹}
+    \label{fig:q3_quality_paths}
 \end{figure}
 
 \subsubsection{注意力临界长度与上下文敏感性检验}
 
 上下文长度不改变本问的决策维度，而是通过注意力开销改变预算约束。由注意力成本与训练成本之比可直接得到临界长度：
 \begin{equation}\label{eq:q3_10}
-\frac{C_{\mathrm{attn}}}{C_{\mathrm{train}}}
-=\frac{\eta_{\mathrm{attn}}L_{\mathrm{ctx}}}{6},\qquad
-L_{\mathrm{ctx}}^{\mathrm{crit}}=\frac{6}{\eta_{\mathrm{attn}}}=30000.
+    \frac{C_{\mathrm{attn}}}{C_{\mathrm{train}}}
+    =\frac{\eta_{\mathrm{attn}}L_{\mathrm{ctx}}}{6},\qquad
+    L_{\mathrm{ctx}}^{\mathrm{crit}}=\frac{6}{\eta_{\mathrm{attn}}}=30000.
 \end{equation}
 
 这一比值与 $N,D$ 和预算均无关。C7的五档长度2048、4096、8192、32768、131072均纳入比较，其中32768和131072已超过临界值，注意力开销大于基础训练开销。
 
 表~\ref{tab:q3_4}固定预算为 $10^{22}$ FLOPs并采用幂成本，比较原25锚点联合解在五档上下文下的变化。随着上下文增大，注意力/训练成本比由 $0.06827$ 增至 $4.36907$，配置中的 $N$ 由 $2.8157$ B降至 $1.1338$ B，$D$ 由 $448.44$ B降至 $245.24$ B，平均损失相应上升。结合图~\ref{fig:q3_10}可见，上下文需求既压缩规模预算，也会影响治理质量达到边界的预算区间。
 \begin{table}[htbp]\centering\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.12}
-\caption{原25锚点联合解的上下文配置比较}\label{tab:q3_4}
-\begin{tabularx}{\textwidth}{@{}P{2.0cm}C{3.1cm}Y Y Y Y@{}}\toprule
-$L_{\mathrm{ctx}}$ & 注意力/训练比 & $N$（B） & $D$（B） & $Q$ & $J$ \\
-\midrule
-2048 & 0.06827 & 2.8157 & 448.44 & 1.0000 & 1.69176 \\
-4096 & 0.13653 & 2.7163 & 439.08 & 1.0000 & 1.69523 \\
-8192 & 0.27307 & 2.5438 & 422.26 & 1.0000 & 1.70169 \\
-32768 & 1.09227 & 1.9152 & 353.43 & 1.0000 & 1.73153 \\
-131072 & 4.36907 & 1.1338 & 245.24 & 1.0000 & 1.79558 \\
-\bottomrule\end{tabularx}
+    \caption{原25锚点联合解的上下文配置比较}\label{tab:q3_4}
+    \begin{tabularx}{\textwidth}{@{}P{2.0cm}C{3.1cm}Y Y Y Y@{}}\toprule
+        $L_{\mathrm{ctx}}$ & 注意力/训练比 & $N$（B） & $D$（B） & $Q$    & $J$     \\
+        \midrule
+        2048               & 0.06827 & 2.8157 & 448.44 & 1.0000 & 1.69176 \\
+        4096               & 0.13653 & 2.7163 & 439.08 & 1.0000 & 1.69523 \\
+        8192               & 0.27307 & 2.5438 & 422.26 & 1.0000 & 1.70169 \\
+        32768              & 1.09227 & 1.9152 & 353.43 & 1.0000 & 1.73153 \\
+        131072             & 4.36907 & 1.1338 & 245.24 & 1.0000 & 1.79558 \\
+        \bottomrule\end{tabularx}
 \end{table}
 
 \FloatBarrier
@@ -1536,9 +1538,9 @@ $L_{\mathrm{ctx}}$ & 注意力/训练比 & $N$（B） & $D$（B） & $Q$ & $J$ \
 
 预算增加时，资源数值变化是普遍现象，但平滑的数量增长不等于策略发生质变。本文从质量约束是否激活以及配方主要支持是否改变两个方面表征结构，并要求变化具有持续性。质量状态按 $Q$ 与上下界的距离划分为下界、内点和上界；配方支持集与相邻配置的支持距离定义为
 \begin{equation}\label{eq:q3_20}
-S_\tau(p)=\{i:p_i>\tau\},\qquad
-d_J(S_0,S_1)=1-\frac{|S_0\cap S_1|}{|S_0\cup S_1|},
-\qquad \tau=0.01.
+    S_\tau(p)=\{i:p_i>\tau\},\qquad
+    d_J(S_0,S_1)=1-\frac{|S_0\cap S_1|}{|S_0\cup S_1|},
+    \qquad \tau=0.01.
 \end{equation}
 
 仅有支持集跨阈值还不足以判定转移。本文同时要求 $d_J\ge0.2$ 与 $\|p_1-p_0\|_1\ge0.02$，并检查该变化在后续预算点及加密预算中是否保持。候选事件先由11档预算定位，再以41档预算复核，从而将单点波动与持续变化分开。
@@ -1549,17 +1551,17 @@ d_J(S_0,S_1)=1-\frac{|S_0\cap S_1|}{|S_0\cup S_1|},
 
 表~\ref{tab:q3_8}汇总识别结果。固定配方、指数成本且上下文为131072时，出现一次治理质量由下界进入内点的启动事件；预算加密将区间从 $[3\times10^{19},10^{20}]$ 缩小至约 $[7.50\times10^{19},10^{20}]$ FLOPs，粗细扫描对应同一事件。
 \begin{table}[H]\centering\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.12}
-\caption{结构转移识别与阈值敏感性}\label{tab:q3_8}
-\begin{tabularx}{\textwidth}{@{}P{3.3cm}C{8.3cm}Y@{}}\toprule
-项目 & 实际结果 & 判断 \\
-\midrule
-固定配方质量启动 & 指数成本、$L_{\mathrm{ctx}}=131072$：下界$\to$内点 & 质量治理由下界进入内点 \\
-预算区间（FLOPs） & 粗 $[3\times10^{19},10^{20}]$；细 $[7.50\times10^{19},10^{20}]$ & 两个区间属于同一事件 \\
-情景支持比例 & $16/21=76.19\%$ & 通过70\%门槛，未通过80\%门槛 \\
-质量方向容差 & $10^{-4}$通过；$10^{-5}$不通过 & 阈值会影响事件识别 \\
-联合配置 & 70\%门槛下无稳定事件 & 联合策略未形成稳定结构转移 \\
-光滑配方负对照 & 占比均为正，仍跨 $1\%$ 阈值 & 配方支持变化具有连续性 \\
-\bottomrule\end{tabularx}
+    \caption{结构转移识别与阈值敏感性}\label{tab:q3_8}
+    \begin{tabularx}{\textwidth}{@{}P{3.3cm}C{8.3cm}Y@{}}\toprule
+        项目          & 实际结果                                                         & 判断                 \\
+        \midrule
+        固定配方质量启动    & 指数成本、$L_{\mathrm{ctx}}=131072$：下界$\to$内点                     & 质量治理由下界进入内点        \\
+        预算区间（FLOPs） & 粗 $[3\times10^{19},10^{20}]$；细 $[7.50\times10^{19},10^{20}]$ & 两个区间属于同一事件         \\
+        情景支持比例      & $16/21=76.19\%$                                              & 通过70\%门槛，未通过80\%门槛 \\
+        质量方向容差      & $10^{-4}$通过；$10^{-5}$不通过                                     & 阈值会影响事件识别          \\
+        联合配置        & 70\%门槛下无稳定事件                                                 & 联合策略未形成稳定结构转移      \\
+        光滑配方负对照     & 占比均为正，仍跨 $1\%$ 阈值                                            & 配方支持变化具有连续性        \\
+        \bottomrule\end{tabularx}
 \end{table}
 
 该事件获得16/21，即 $76.19\%$ 的情景支持，通过70\%门槛，但未达到80\%；方向容差由 $10^{-4}$ 收紧至 $10^{-5}$ 后也不再通过。因此，它反映的是特定配置下的局部质量启动，不能推广为所有配置共有的相变。
@@ -2149,7 +2151,6 @@ def state_component(frontier, lstar, bridge):
 对 AI 辅助形成或修改的程序，团队检查其算法逻辑，并使用题目数据完成复算、边界测试和结果核验。对 AI 提供的资料线索与文字建议，均重新核对原始数据、公式或正式文献后再决定是否采用。本文未将 AI 输出作为数据来源、实证证据或学术依据，也未直接复制未经团队独立推导和验证的 AI 建模方案。论文与程序的正确性、可复现性和合规性由参赛队伍承担。
 
 \end{appendices}
-
 
 
 \end{document}
