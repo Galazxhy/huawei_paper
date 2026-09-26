@@ -32,6 +32,16 @@
 \renewcommand\thesubsection{\arabic{section}.\arabic{subsection}}
 \renewcommand\thesubsubsection{\thesubsection.\arabic{subsubsection}}
 
+% 图、表和公式均按章独立编号，并保持 PDF 交叉引用锚点全局唯一
+\makeatletter
+\@addtoreset{figure}{section}
+\@addtoreset{table}{section}
+\@addtoreset{equation}{section}
+\makeatother
+\renewcommand*{\theHfigure}{\arabic{section}.\arabic{figure}}
+\renewcommand*{\theHtable}{\arabic{section}.\arabic{table}}
+\renewcommand*{\theHequation}{\arabic{section}.\arabic{equation}}
+
 % 统一表格格式：三线表；描述列左对齐，数值列居中；紧凑但不拥挤
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
@@ -1469,13 +1479,7 @@ SLSQP 与 COBYQA 在相同 25 锚点、相同 3 起点和相同配置上进行 3
 % 七、问题四
 % =====================================================
 \section{问题四：技术演进分解及能力前沿预测}
-\setcounter{figure}{0}
-\setcounter{table}{0}
-\setcounter{equation}{0}
 \begingroup
-\renewcommand*{\theHfigure}{q4.\arabic{figure}}
-\renewcommand*{\theHtable}{q4.\arabic{table}}
-\renewcommand*{\theHequation}{q4.\arabic{equation}}
 \normalsize
 \emergencystretch=2em
 \setlength{\parskip}{0pt}
@@ -1533,7 +1537,7 @@ SLSQP 与 COBYQA 在相同 25 锚点、相同 3 起点和相同配置上进行 3
 
 六项指标分别刻画指令遵循、综合推理、数学、研究生层次问答、多步软推理与专业知识。为避免由样本方差替研究目标赋权，主分析采用等权均值 $Y_i=\frac{1}{6}\sum_{k=1}^{6}S_{ik}$，使结果仍保持0--100分的直观解释。等权并不意味着六项完全同质，其作用是构造稳定、透明的共同能力坐标，PCA和任务内标准化均值只用于检验该坐标是否被单项量纲支配。
 
-六项原始得分的 Cronbach $\alpha=0.826$，达到较好的内部一致性\cite{cronbach1951}，标准化 PCA 的第一主成分解释率为65.1\%，等权得分与第一主成分、任务内标准化均值的相关系数分别为0.960和0.977。三种能力口径的前沿净变化方向均为正，说明等权指标既保留可解释性，也未偏离数据中的主要共同变化方向。
+六项原始得分的 Cronbach $\alpha=0.826$，达到较好的内部一致性，标准化 PCA 的第一主成分解释率为65.1\%，等权得分与第一主成分、任务内标准化均值的相关系数分别为0.960和0.977。三种能力口径的前沿净变化方向均为正，说明等权指标既保留可解释性，也未偏离数据中的主要共同变化方向。
 
 \subsubsection{基于滚动分位的能力前沿建模}
 
@@ -1675,7 +1679,7 @@ $H(L_1)-H(L_0)$，故固定来源偏差严格抵消。该“来源截距可变�
     \qquad \theta\in[0,1].
     \label{eq:q4-partial-id}
 \end{equation}
-该构造不声称$\theta$具有可估计概率，而是用两个可解释边界形成部分识别集合\cite{manski2003}。将观测增长8.307分代入式~\eqref{eq:q4-state}，得到
+该构造不声称$\theta$具有可估计概率，而是用两个可解释边界形成部分识别集合。将观测增长8.307分代入式~\eqref{eq:q4-state}，得到
 \[
     0\le \Delta F_{\mathrm{scale}}\le0.708,
     \qquad
@@ -1724,7 +1728,7 @@ $H(L_1)-H(L_0)$，故固定来源偏差严格抵消。该“来源截距可变�
 
 \subsubsection{算力平台与技术漂移的双状态建模}
 
-历史残差由$T_t=F_t-F_{t_0}-[B(C_t)-B(C_{t_0})]$锚定。对其采用带漂移随机游走$T_{t+1}=T_t+b+\eta_t$，其中$b$用Theil--Sen稳健斜率估计\cite{sen1968}，得到每月1.191分，创新标准差为2.663分。该漂移描述短期非规模综合项的延续速度，不解释为某项技术的因果效应。算力主情景令未来$\log_{10}C$增速为0，无放缓反事实则延续早期每月0.0812的增速。
+历史残差由$T_t=F_t-F_{t_0}-[B(C_t)-B(C_{t_0})]$锚定。对其采用带漂移随机游走$T_{t+1}=T_t+b+\eta_t$，其中$b$用Theil--Sen稳健斜率估计，得到每月1.191分，创新标准差为2.663分。该漂移描述短期非规模综合项的延续速度，不解释为某项技术的因果效应。算力主情景令未来$\log_{10}C$增速为0，无放缓反事实则延续早期每月0.0812的增速。
 
 将两种状态代回统一方程，$h$个月后的前沿为
 \begin{equation}
@@ -1858,8 +1862,13 @@ $R_j$衡量固定单一来源后总方差的相对缩减。由于各来源存在
 
 要进一步辨识质量、配比与规模的联合作用，应在多个独立的 $N,D$ 水平上交叉设置质量等级与配方，并对相同设置重复训练。这类实验既可分离训练随机性与配比效应，也可检验质量--组成耦合形式及等损失边界是否随规模改变。在资源配置层面，可将真实治理开销、硬件效率与逐领域性能下限纳入预算约束，使优化结果从平均损失最小化转向满足应用需求的多目标配置。能力映射则需要更多具有一致训练记录和可比评测的模型，并随新观测更新桥接支撑域与滚动回测。这样，本文的分层方法可以从当前数据下的条件决策工具，逐步推广为可持续校准的算力与语料配置框架。
 
+\clearpage
+\begingroup
+\interlinepenalty=10000
+\nocite{lu2023chatgpt,peng2026pretraining,liu2025hallucination,xie2023doremi,muennighoff2023scaling,schaeffer2023emergent,zheng2023judge,li2024datacomp,penedo2024fineweb,porian2024resolving,ruan2024observational,chiang2024arena,liu2025regmix,ye2025mixing,white2025livebench}
 \bibliographystyle{gmcm}
 \bibliography{reference}
+\endgroup
 
 \begin{appendices}
     \section{完整数据审计表}
